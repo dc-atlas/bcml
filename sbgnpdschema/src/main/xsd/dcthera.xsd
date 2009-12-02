@@ -1,0 +1,70 @@
+<schema targetNamespace="http://www.miravtech.com/SBGN" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sbgn="http://www.miravtech.com/SBGN" attributeFormDefault="unqualified"
+	elementFormDefault="unqualified" >
+
+	<redefine schemaLocation="SBGN.xsd">
+
+		<annotation>
+			<documentation>
+				Additions of the DC Thera group to the standard SBGN
+				data model.
+			</documentation>
+		</annotation>
+
+
+		<complexType name="SBGNGlyphType">
+			<complexContent>
+				<extension base="sbgn:SBGNGlyphType">
+					<sequence>
+						<element name="Organism" type="string" minOccurs="0" />
+						<element name="OrganismPart" type="string" minOccurs="0" />
+						<element name="CellType" type="string" minOccurs="0" />
+						<element name="Localization" type="string" minOccurs="0" />
+						<element name="ProvenIn" type="string" minOccurs="0" />
+						<element name="ExperimentDesign" type="string" minOccurs="0" />
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+
+		<complexType name="ProcessType">
+
+			<complexContent>
+				<extension base="sbgn:ProcessType">
+					<sequence>
+						<element name="ReactionType" type="sbgn:ReactionsEnum"
+							minOccurs="0">
+							<annotation>
+								<documentation>Reaction type belongs only to the process.
+								</documentation>
+							</annotation>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+	</redefine>
+
+
+	<simpleType name="ReactionsEnum">
+		<annotation>
+			<documentation>
+				The list of possible reaction types (sub-type of
+				string).	
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="Enzimatic reaction"></enumeration>
+			<enumeration value="Transference"></enumeration>
+			<enumeration value="Oxidation/reduction"></enumeration>
+			<enumeration value="Lyase process"></enumeration>
+			<enumeration value="Hydrolysis"></enumeration>
+			<enumeration value="Ligation"></enumeration>
+			<enumeration value="Isomerization"></enumeration>
+			<enumeration value="Degradation"></enumeration>
+			<enumeration value="Non enzimatic reaction"></enumeration>
+		</restriction>
+	</simpleType>
+
+</schema>
+    

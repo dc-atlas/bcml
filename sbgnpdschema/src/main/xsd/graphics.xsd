@@ -1,0 +1,193 @@
+<xs:schema targetNamespace="http://www.miravtech.com/SBGN-GRAPHICS"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:sg="http://www.miravtech.com/SBGN-GRAPHICS"
+	elementFormDefault="unqualified"
+	>
+	<xs:complexType name="graphic">
+		<xs:annotation>
+			<xs:documentation>
+				The graphic object provides the hints about the
+				coloring and positioning of a given object.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="visible" minOccurs="0" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>
+						Boolean, specifies if the object is visible or
+						not.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="color" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Foreground color, can be either a hexadecimal
+						representation or a word, such
+						as "red", "yellow", etc.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="borderColor" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Border color, can be either a hexadecimal
+						representation or a word, such
+						as "red", "yellow", etc.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bgColor" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Background color, can be either a hexadecimal
+						representation or a word, such
+						as "red", "yellow", etc.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="path" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Optional. The parameter can be either a word like
+						"line, arc ,rectangle, ellipse, circle, roundcornerrectangle"
+						or a
+						full SVG path. Some nodes have a predefined shape and according to
+						SBGN cannot be overwritten.
+						The Compartments can have any shape.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="location" minOccurs="0" type="sg:point">
+				<xs:annotation>
+					<xs:documentation>
+						Optional parameter. The location in the XY plane.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="size" minOccurs="0" type="sg:point">
+				<xs:annotation>
+					<xs:documentation>
+						Optional. The size hint. Ignored if the required
+						size is larger than the specified one.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="edgeLocation" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						The edge location describes the positioning of
+						the object reporting
+						to the edge of its parent.
+						For instance, it
+						specifies the place where an unit of information
+						has to be rendered
+						relative
+						to the edges of the EPN owning the node.
+
+						The possible
+						values are:
+						1. two letters: first one of the L (left) M (middle) R
+						(right) for the horizontal positioning and second UMD (up middle
+						down) to
+						describe the vertical layout.
+						2. an hour - the angle of the
+						hours hand of the clock (such as 12:00 to
+						display the unit in the
+						previously defined MU position)
+						3. An angle (0-360)
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="OutsidePercent" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						This optional parameter describes by which degree
+						should the node be
+						represented
+						outside of the parent container. By
+						default, Unit of information and
+						variable are
+						represented 50%
+						outside of the containers. The parameter should be used for
+						the	EPN
+						rendered partially outside of their container, and when
+						describing
+						the overlap
+						of the two compartments. The values of this parameter
+						are between
+						"0%" (completely contained) to
+						"100%" (completely
+						outside).
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="Direction" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Provides a way to describe the directionality of the current object.
+						For instance, a process may be represented either "Left to Right" or
+						"Top to Down".
+
+						Possible values: any angle (0 to 360 degree), an hour (angle of the hours hand),
+						or a cardinal points direction (NS, EW, SN, WE).
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+
+		<xs:attribute name="id" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The ID is a unique identifier for a graphic style.
+					Using an ID is optional, the reason for using is is describing a
+					named style.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+
+		<xs:attribute name="ref" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The ref attributes initializes the current graphic
+					object with the value of an existing style.
+					The usage of the ref is
+					optional.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="point">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies a point in the two dimensional space. Can
+				be used
+				both for describing sizes or locations. Both X and Y
+				parameters are
+				optional.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="x" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The X axis parameter.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="y" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The Y axis parameter.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
+    

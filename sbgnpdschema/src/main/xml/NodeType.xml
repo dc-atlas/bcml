@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- this file is going to be included in the SBGN.xsd. It is not a standalone schema  -->
+<xs:choice xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns="http://www.miravtech.com/SBGN">
+	<xs:annotation>
+		<xs:documentation>
+			Any node type can be provided here.
+		</xs:documentation>
+	</xs:annotation>
+
+
+	<xs:element name="Process" type="ProcessType"></xs:element>
+	<xs:element name="OmittedProcess" type="OmittedProcessType"></xs:element>
+	<xs:element name="UncertainProcess" type="UncertainProcessType"></xs:element>
+	<xs:element name="Association" type="AssociationType"></xs:element>
+	<xs:element name="Dissasociation" type="DissasociationType"></xs:element>
+	<xs:element name="Phenotype" type="PhenotypeType"></xs:element>
+
+	<xs:element name="Compartment" type="CompartmentType"></xs:element>
+
+	<xs:element name="Submap" type="SubmapType"></xs:element>
+	<xs:element name="Tag" type="TagType"></xs:element>
+
+	<xs:element name="AndNode" type="AndNodeType"></xs:element>
+	<xs:element name="OrNode" type="OrNodeType"></xs:element>
+	<xs:element name="NotNode" type="NotNodeType"></xs:element>
+	<xs:element name="XOrNode" type="XOrNodeType"></xs:element>
+
+
+	<xs:element name="UnitOfInformation" type="UnitOfInformationType"></xs:element>
+	<xs:element name="StateVariable" type="StateVariableType"></xs:element>
+	<xs:element name="CloneMarker" type="CloneMarkerType"></xs:element>
+
+
+	<xs:element name="SimpleChemical" type="SimpleChemicalType"></xs:element>
+	<xs:element name="Source" type="SourceType"></xs:element>
+	<xs:element name="Sink" type="SinkType"></xs:element>
+	<xs:element name="UnspecifiedEntity" type="UnspecifiedEntityType"></xs:element>
+	<xs:element name="PerturbingAgent" type="PerturbingAgentType"></xs:element>
+	<xs:element name="NucleicAcidFeature" type="NucleicAcidFeatureType"></xs:element>
+	<xs:element name="Complex" type="ComplexType"></xs:element>
+	<xs:element name="Macromolecule" type="MacromoleculeType"></xs:element>
+
+</xs:choice>

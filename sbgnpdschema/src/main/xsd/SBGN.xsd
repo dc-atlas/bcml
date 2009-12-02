@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE doc [ <!ENTITY allNodes SYSTEM "../xml/NodeType.xml"> <!ENTITY
+	allArcs SYSTEM "../xml/ArcType.xml"> ]>
+
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:sg="http://www.miravtech.com/SBGN-GRAPHICS" xmlns:schemaLocation="http://www.miravtech.com/SBGN-GRAPHICS graphics.xsd"
+	targetNamespace="http://www.miravtech.com/SBGN" xmlns="http://www.miravtech.com/SBGN">
+
+	<xs:import namespace="http://www.miravtech.com/SBGN-GRAPHICS"
+		schemaLocation="graphics.xsd" />
+
+
+
+	<xs:annotation>
+		<xs:documentation>
+			This schema describes the SBGN PD Level 1 elements
+			as described by the released specification.
+			Element outside the
+			specification are described in different schemata.
+			</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="SBGN.PD.L1">
+		<xs:annotation>
+			<xs:documentation>
+				SBGN PD Level 1 diagram. It is a set of SBGNGlyphs
+				as described in the specification.
+			</xs:documentation>
+		</xs:annotation>
+
+		<xs:complexType>
+
+
+			<xs:sequence maxOccurs="unbounded" id="nodes">
+			&allNodes;
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="SBGNGlyphType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				The type of the generic Glyph. Nodes and arcs are
+				glyphs.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="graphic" type="sg:graphic" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Graphic hint(s) for the current element.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ID" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					This is an unique identifier for all of the
+					glyphs. Use this ID when
+					needed to refer another object. Under no
+					circumstances should an
+					ID be replicated within the same diagram.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="SBGNNodeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				A node is a glyph capable of being connected (with
+				arcs).
+				Auxiliary units are not nodes, since they don't connect. They
+				are instantiated within the
+				Node type, since they are decorators.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNGlyphType">
+				<xs:sequence>
+					<!--TODO    -->
+					<xs:element name="Connection" maxOccurs="unbounded"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								List of possible connection arcs. Most of the
+								nodes have connections
+								but this element is optional since a
+								Compartment doesn't usually
+								have arcs assigned. Also, it can be
+								that the arcs are defined
+								within the associated node.
+								The
+								connection requires a node (specified as reference) and
+								an arc, described within the connection
+							</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								&allArcs;
+							</xs:sequence>
+							<xs:attribute name="refNode" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										The ID of the node connected with the current
+										node.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<!--TODO  list of contained entities comes here  -->
+					<xs:element name="Content" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+							&allNodes;
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="label" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							A label is the text shown on the screen
+							describing the current node.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="ProcessType">
+		<xs:annotation>
+			<xs:documentation>
+				A process is a transformation of multiple EPNs.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="OmittedProcessType">
+		<xs:annotation>
+			<xs:documentation>
+				An omitted process type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ProcessType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="UncertainProcessType">
+		<xs:annotation>
+			<xs:documentation>
+				An uncertain process type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ProcessType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="AssociationType">
+		<xs:annotation>
+			<xs:documentation>
+				A process of type association.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ProcessType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DissasociationType">
+		<xs:annotation>
+			<xs:documentation>
+				A process of type disassociation.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ProcessType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PhenotypeType">
+		<xs:annotation>
+			<xs:documentation>
+				A process of type phenotype. The name must be
+				provided though the "Label" attribute.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ProcessType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CompartmentType">
+		<xs:annotation>
+			<xs:documentation>
+				A compartment, used to contain multiple nodes.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="ReferenceNodeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				An abstract node, modeling the sub-map concepts.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SubmapType">
+		<xs:annotation>
+			<xs:documentation>
+				The submap node; each submap is described in
+				another diagram.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ReferenceNodeType">
+				<xs:sequence>
+					<xs:element name="fileLocation" type="xs:string"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="TagType">
+		<xs:annotation>
+			<xs:documentation>
+				The submap node; each submap is described in
+				another diagram.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ReferenceNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="LogicalOperatorNodeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				An abstract node, modeling the logical operator
+				concepts.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AndNodeType">
+		<xs:annotation>
+			<xs:documentation>
+				And node.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LogicalOperatorNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="OrNodeType">
+		<xs:annotation>
+			<xs:documentation>
+				Or node.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LogicalOperatorNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="NotNodeType">
+		<xs:annotation>
+			<xs:documentation>
+				Not node.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LogicalOperatorNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="XOrNodeType">
+		<xs:annotation>
+			<xs:documentation>
+				XOr (either - or) node.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="LogicalOperatorNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="AuxiliaryUnitType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				An auxiliary unit type. Used to decorate existing
+				nodes.
+				Can contain connections, for instance the inner Tag of a map.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="UnitOfInformationType">
+		<xs:annotation>
+			<xs:documentation>
+				An unit of information. prefix:label
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AuxiliaryUnitType">
+				<xs:sequence>
+					<xs:element name="prefix" type="xs:string"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="StateVariableType">
+		<xs:annotation>
+			<xs:documentation>
+				A state variable. Variable@label;
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AuxiliaryUnitType">
+				<xs:sequence>
+					<xs:element name="variable" type="xs:string"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CloneMarkerType">
+		<xs:annotation>
+			<xs:documentation>
+				A clone marker decoration.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AuxiliaryUnitType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="EntityPoolNodeType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				Entity pool node. Incorporates multimer
+				functionality as well.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNNodeType">
+				<xs:sequence>
+					<xs:annotation>
+						<xs:documentation>
+							If the cardinality is not null, the entity pool
+							node will be
+							rendered as a multimer.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:element name="cardinality" type="xs:integer"
+						minOccurs="0"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="SimpleChemicalType">
+		<xs:annotation>
+			<xs:documentation>
+				Simple chemical node.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EntityPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SourceType">
+		<xs:annotation>
+			<xs:documentation>
+				A source node type. A source cannot have a
+				cardinality.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EntityPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="SinkType">
+		<xs:annotation>
+			<xs:documentation>
+				A sync node type. A sync cannot have a cardinality.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EntityPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="UnspecifiedEntityType">
+		<xs:annotation>
+			<xs:documentation>
+				An unspecified entity node type. This entity cannot
+				have a cardinality.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EntityPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PerturbingAgentType">
+		<xs:annotation>
+			<xs:documentation>
+				An perturbing agent entity node type. This entity
+				cannot have a cardinality.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EntityPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="StatefulEntiyPoolNodeType"
+		abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				Stateful entiy pool node type. These entities can
+				own StateVariables and cardinality,
+				in this last case they become
+				multimers.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="EntityPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="NucleicAcidFeatureType">
+		<xs:annotation>
+			<xs:documentation>
+				The nucleic acid feature type. Can contain
+				conceptualType as an unit of information.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="StatefulEntiyPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ComplexType">
+		<xs:annotation>
+			<xs:documentation>
+				The complex type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="StatefulEntiyPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MacromoleculeType">
+		<xs:annotation>
+			<xs:documentation>
+				The macromolecule type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="StatefulEntiyPoolNodeType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AnyNodeType">
+		<xs:annotation>
+			<xs:documentation>
+				Any Node of instantiable type
+			</xs:documentation>
+		</xs:annotation>
+		&allNodes;
+	</xs:complexType>
+
+
+
+
+	<!--
+		<xs:complexType name="ProcessSideType"> <xs:sequence> <xs:element
+		name="From" type="xs:string" /> <xs:element name="To" type="xs:string"
+		/> <xs:element name="Cardinality" type="xs:string" /> </xs:sequence>
+		</xs:complexType> <xs:complexType name="Process" abstract="true">
+		<xs:complexContent> <xs:extension base="SBGNNode"> <xs:sequence>
+		<xs:element name="LeftHandSide" type="ProcessSideType"></xs:element>
+		<xs:element name="RightHandSide" type="ProcessSideType"></xs:element>
+		</xs:sequence> </xs:extension> </xs:complexContent> </xs:complexType>
+
+		<xs:complexType name="AssociationType"> <xs:complexContent>
+		<xs:extension base="Process"> </xs:extension> </xs:complexContent>
+		</xs:complexType> <xs:complexType name="EntityPoolNodeType"
+		abstract="true"> <xs:complexContent> <xs:extension base="SBGNNode">
+		<xs:sequence> <xs:element name="name" type="xs:string" />
+		</xs:sequence> </xs:extension> </xs:complexContent> </xs:complexType>
+		<xs:complexType name="SimpleChemicalType"> <xs:complexContent>
+		<xs:extension base="EntityPoolNodeType"> <xs:sequence> <xs:any
+		namespace="##any" processContents="lax" minOccurs="0"
+		maxOccurs="unbounded" /> </xs:sequence> </xs:extension>
+		</xs:complexContent> </xs:complexType> <xs:complexType
+		name="SimpleChemicalMultimerType"> <xs:complexContent> <xs:extension
+		base="SimpleChemicalType"> </xs:extension> </xs:complexContent>
+		</xs:complexType>
+	-->
+
+
+	<xs:complexType name="ArcType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				An abstract arc, parent of all existing arcs.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SBGNGlyphType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FluxArcType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+				A flux arc, expressing either a consumption or a
+				production.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ArcType">
+				<xs:sequence>
+					<xs:element name="stoichiometry" type="xs:string"
+						minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								The cardinality label, optional.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="ProductionArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The production arc.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="FluxArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ConsumptionArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The consumption arc.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="FluxArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="LogicArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The logic arc type, binds nodes with a logic node.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="EquivalenceArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The equivalence arc type, used to bind tags with
+				their associated nodes.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="ModulationArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The modulation arc type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="InhibitionArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The inhibition arc type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ModulationArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="StimulationArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The stimulation arc type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ModulationArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="NecessaryStimulationArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The necessary stimulation arc type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ModulationArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CatalysisArcType">
+		<xs:annotation>
+			<xs:documentation>
+				The catalysis arc type.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="StimulationArcType">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="AnyArcType">
+		<xs:annotation>
+			<xs:documentation>
+				Any arc of instantiable type
+			</xs:documentation>
+		</xs:annotation>
+		&allArcs;
+	</xs:complexType>
+
+
+</xs:schema>

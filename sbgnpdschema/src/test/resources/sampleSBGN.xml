@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/dcthera.xsd">
+
+	<Macromolecule label="RAS">
+		<Connection refNode="RAStag">
+			<Equivalence />
+		</Connection>
+	</Macromolecule>
+	<Macromolecule label="RAS" ID="RASact">
+		<Content>
+			<StateVariable label="active">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<Macromolecule label="RAF" ID="RAF">
+		<Content>
+			<StateVariable label=" ">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<Macromolecule label="RAF" ID="RAFp">
+		<Content>
+			<StateVariable label="p">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<SimpleChemical label="ATP" />
+	<SimpleChemical label="ADP" />
+
+	<Process>
+		<Connection refNode="RAF">
+			<Consumption/>
+		</Connection>
+		<Connection refNode="ATP">
+			<Consumption/>
+		</Connection>
+		<Connection refNode="ADP">
+			<Production></Production>
+		</Connection>
+		<Connection refNode="RAFp">
+			<Production/>
+		</Connection>
+		<Connection refNode="RASact">
+			<Modulation/>
+		</Connection>
+	</Process>
+
+
+</sbgn:SBGN.PD.L1>

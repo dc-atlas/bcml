@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- this file is going to be included in the SBGN.xsd. It is not a standalone schema  -->
+<xs:choice  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="http://www.miravtech.com/SBGN">
+	<xs:annotation>
+		<xs:documentation>
+			Any arc type can be provided here.
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:element name="Production" type="ProductionArcType"></xs:element>
+	<xs:element name="Consumption" type="ConsumptionArcType"></xs:element>
+	<xs:element name="Inhibition" type="InhibitionArcType"></xs:element>
+	<xs:element name="Modulation" type="ModulationArcType"></xs:element>
+	<xs:element name="Stimulation" type="StimulationArcType"></xs:element>
+	<xs:element name="Catalysis" type="CatalysisArcType"></xs:element>
+	<xs:element name="Equivalence" type="EquivalenceArcType"></xs:element>
+	<xs:element name="NecessaryStimulation" type="NecessaryStimulationArcType"></xs:element>
+	<xs:element name="Logic" type="LogicArcType"></xs:element>
+</xs:choice>
