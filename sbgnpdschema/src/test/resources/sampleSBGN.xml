@@ -3,11 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/dcthera.xsd">
 
+
+	<Tag label="RAS" ID="RASTag">
+	</Tag>
+
 	<Macromolecule label="RAS">
 		<Connection refNode="RAStag">
 			<Equivalence />
 		</Connection>
 	</Macromolecule>
+
 	<Macromolecule label="RAS" ID="RASact">
 		<Content>
 			<StateVariable label="active">
@@ -32,26 +37,174 @@
 		</Content>
 	</Macromolecule>
 
-	<SimpleChemical label="ATP" />
-	<SimpleChemical label="ADP" />
+	<SimpleChemical label="ATP" ID="ATP" />
+	<SimpleChemical label="ADP" ID="ADP" />
 
 	<Process>
 		<Connection refNode="RAF">
-			<Consumption/>
+			<Consumption />
 		</Connection>
 		<Connection refNode="ATP">
-			<Consumption/>
+			<Consumption />
 		</Connection>
 		<Connection refNode="ADP">
 			<Production></Production>
 		</Connection>
 		<Connection refNode="RAFp">
-			<Production/>
+			<Production />
 		</Connection>
 		<Connection refNode="RASact">
-			<Modulation/>
+			<Modulation />
 		</Connection>
 	</Process>
 
+	<Macromolecule label="MEK" ID="MEK_">
+		<Content>
+			<StateVariable label=" ">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<Macromolecule label="MEK" ID="MEKp">
+		<Content>
+			<StateVariable label="p">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<Macromolecule label="MEK" ID="MEK2p">
+		<Content>
+			<StateVariable label="2p">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+
+	<SimpleChemical cloneref="ATP" ID="ATP1" />     <!-- the new entity ID is ATP1, but behavioral, it is an ATP  -->
+	<SimpleChemical cloneref="ADP" ID="ADP1" />
+
+	<SimpleChemical cloneref="ATP" ID="ATP2" />
+	<SimpleChemical cloneref="ADP" ID="ADP2" />
+
+	<SimpleChemical cloneref="ATP" ID="ATP3" />
+	<SimpleChemical cloneref="ADP" ID="ADP3" />
+
+	<SimpleChemical cloneref="ATP" ID="ATP4" />
+	<SimpleChemical cloneref="ADP" ID="ADP4" />
+
+	<Process>
+		<Connection refNode="MEK_">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ATP1">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ADP1">
+			<Production></Production>
+		</Connection>
+		<Connection refNode="MEKp">
+			<Production />
+		</Connection>
+		<Connection refNode="RAFp">
+			<Modulation />
+		</Connection>
+	</Process>
+
+	<Process>
+		<Connection refNode="MEKp">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ATP2">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ADP2">
+			<Production></Production>
+		</Connection>
+		<Connection refNode="MEK2p">
+			<Production />
+		</Connection>
+		<Connection refNode="RAFp">
+			<Modulation />
+		</Connection>
+	</Process>
+
+
+	<Macromolecule label="ERK" ID="ERK_">
+		<Content>
+			<StateVariable label=" ">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<Macromolecule label="ERK" ID="ERK_">
+		<Content>
+			<StateVariable label=" ">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<Macromolecule label="ERK" ID="ERKp">
+		<Content>
+			<StateVariable label="p">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+	<Macromolecule label="ERK" ID="ERK2p">
+		<Content>
+			<StateVariable label="p">
+				<variable></variable>
+			</StateVariable>
+		</Content>
+	</Macromolecule>
+
+
+	<Process>
+		<Connection refNode="ERK_">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ATP2">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ADP2">
+			<Production></Production>
+		</Connection>
+		<Connection refNode="ERKp">
+			<Production />
+		</Connection>
+		<Connection refNode="MEK2p">
+			<Modulation />
+		</Connection>
+	</Process>
+
+	<Process>
+		<Connection refNode="ERKp">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ATP3">
+			<Consumption />
+		</Connection>
+		<Connection refNode="ADP3">
+			<Production></Production>
+		</Connection>
+		<Connection refNode="ERK2p">
+			<Production />
+		</Connection>
+		<Connection refNode="MEK2p">
+			<Modulation />
+		</Connection>
+	</Process>
+
+	<Tag label="ERK" ID="ERK_ref">
+		<Connection refNode="MEK2p">
+			<Equivalence></Equivalence>
+		</Connection>
+	</Tag>
 
 </sbgn:SBGN.PD.L1>

@@ -131,6 +131,18 @@
 						</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
+				
+				<xs:attribute name="cloneref" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							This attribute states that the current node is
+							a clone of an existing node. Anything else except of
+							the ID is optional, since the attributes will be taken
+							from the cloned node.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
