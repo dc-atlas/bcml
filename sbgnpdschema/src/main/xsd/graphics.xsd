@@ -159,6 +159,15 @@
 				</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="refobj" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The refobj attributes names the object being
+					hold as reference for the current object. By
+					default, the containing object is the reference.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 
 	<xs:complexType name="point">

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/dcthera.xsd">
+
+	<Compartment label="extracellular">
+		<Content>
+			<Macromolecule ID="13betaglucan" label="1,3-Beta-Glucan">
+				<Content>
+					<UnitOfInformation label="psac">
+						<prefix>mt</prefix>
+					</UnitOfInformation>
+				</Content>
+				<cardinality>2</cardinality>
+			</Macromolecule>
+			<Macromolecule ID="Dectin-1">
+				<Content>
+					<UnitOfInformation label="psac">
+						<prefix>mt</prefix>
+					</UnitOfInformation>
+				</Content>
+				<cardinality>2</cardinality>
+			</Macromolecule>
+			<Complex ID="13betaglucandecrin1">
+				<Content>
+					<Macromolecule cloneref="13betaglucan" />
+					<Macromolecule cloneref="Dectin-1" />
+				</Content>
+			</Complex>
+			<Association>
+				<Connection refNode="13betaglucan">
+					<Consumption />
+				</Connection>
+				<Connection refNode="Dectin-1">
+					<Consumption />
+				</Connection>
+				<Connection refNode="13betaglucandecrin1">
+					<Consumption />
+				</Connection>
+			</Association>
+			<Macromolecule ID="Dectin-1_" cloneref="Dectin-1">
+				<Content>
+					<StateVariable label=" "></StateVariable>
+				</Content>
+			</Macromolecule>
+
+			<Process>
+				<Connection refNode="13betaglucandecrin1">
+					<Consumption />
+				</Connection>
+				<Connection refNode="Dectin-1_">
+					<Production />
+				</Connection>
+			</Process>
+
+			<Macromolecule ID="Dectin-1_p" cloneref="Dectin-1">
+				<Content>
+					<StateVariable label="p"></StateVariable>
+				</Content>
+			</Macromolecule>
+
+			<Process>
+				<Connection refNode="Dectin-1_">
+					<Consumption />
+				</Connection>
+				<Connection refNode="Dectin-1_p">
+					<Production />
+				</Connection>
+			</Process>
+
+
+			<Complex ID="Dectin-SYK">
+				<graphic> <!-- location: bottom right, 50% outside of the container -->
+					<edgeLocation>BR</edgeLocation>
+					<OutsidePercent>50</OutsidePercent>
+				</graphic>
+				<Content>
+					<Macromolecule cloneref="Dectin-1_p" />
+					<Macromolecule cloneref="SYK">
+						<Content>
+							<StateVariable label=" "></StateVariable>
+						</Content>
+					</Macromolecule>
+				</Content>
+			</Complex>
+
+			<Association>
+				<Connection refNode="Dectin-1_p">
+					<Consumption />
+				</Connection>
+				<Connection refNode="SYK">
+					<Consumption />
+				</Connection>
+				<Connection refNode="Dectin-SYK">
+					<Production />
+				</Connection>
+			</Association>
+		</Content>
+	</Compartment>
+
+	<Compartment label="cytosol">
+		<graphic refobj="extracellular">
+			<edgeLocation>DM</edgeLocation> <!-- place this under extracellular -->
+		</graphic>
+		<Content>
+			<SimpleChemical ID="SYK" label="SYK" />
+			<SimpleChemical ID="SYK_p" cloneref="SYK">
+				<Content>
+					<StateVariable label="p" />
+				</Content>
+			</SimpleChemical>
+			<Process>
+				<Connection refNode="Dectin-SYK">
+					<Consumption />
+				</Connection>
+				<Connection refNode="SYK_p">
+					<Production />
+				</Connection>
+			</Process>
+
+			<Macromolecule label="CARD9_">
+				<Content>
+					<StateVariable label=" " />
+				</Content>
+			</Macromolecule>
+			<Macromolecule label="CARD9p">
+				<Content>
+					<StateVariable label=" " />
+				</Content>
+			</Macromolecule>
+			<Process>
+				<Connection refNode="CARD9_">
+					<Consumption />
+				</Connection>
+				<Connection refNode="CARD9_p">
+					<Production />
+				</Connection>
+				<Connection refNode="SYK_p">
+					<Catalysis />
+				</Connection>
+			</Process>
+
+			<Complex ID="MALT1BRL10">
+				<Content>
+					<Macromolecule label="MALT1" />
+					<Macromolecule label="BCL10" />
+				</Content>
+			</Complex>
+
+			<Complex ID="CARD9_p_MALT1BRL10">
+				<Content>
+					<Macromolecule cloneref="CARD9_p" />
+					<Complex cloneref="MALT1BRL10" />
+				</Content>
+			</Complex>
+
+			<Macromolecule ID="PLCg-2_" label="PLCgamma-2">
+				<Content>
+					<StateVariable label=" " />
+				</Content>
+			</Macromolecule>
+
+			<Association>
+				<Connection refNode="CARD9_p">
+					<Consumption />
+				</Connection>
+				<Connection refNode="MALT1BRL10">
+					<Consumption />
+				</Connection>
+				<Connection refNode="CARD9_p_MALT1BRL10">
+					<Production />
+				</Connection>
+				<Connection refNode="PLCg-2_">
+					<Modulation />
+				</Connection>
+			</Association>
+			<Macromolecule ID="TRAF6" label="TRAF6" />
+			<Complex ID="CARD9_p_MALT1BRL10_TRAF6">
+				<Content>
+					<Macromolecule cloneref="TRAF6" />
+					<Complex cloneref="CARD9_p_MALT1BRL10" />
+				</Content>
+			</Complex>
+
+			<Association>
+				<Connection refNode="TRAF6">
+					<Consumption />
+				</Connection>
+				<Connection refNode="CARD9_p_MALT1BRL10">
+					<Consumption />
+				</Connection>
+				<Connection refNode="CARD9_p_MALT1BRL10_TRAF6">
+					<Production />
+				</Connection>
+			</Association>
+
+		</Content>
+	</Compartment>
+
+	<Compartment label="nucleus">
+		<graphic refobj="cytosol">
+			<edgeLocation>DM</edgeLocation> <!-- place this under the cytosol -->
+		</graphic>
+
+	</Compartment>
+
+
+
+</sbgn:SBGN.PD.L1>

@@ -114,10 +114,10 @@
 							</xs:attribute>
 						</xs:complexType>
 					</xs:element>
-					<!--TODO  list of contained entities comes here  -->
+					<!--list of contained entities comes here  -->
 					<xs:element name="Content" minOccurs="0">
 						<xs:complexType>
-							<xs:sequence>
+							<xs:sequence maxOccurs="unbounded">
 							&allNodes;
 							</xs:sequence>
 						</xs:complexType>
@@ -382,7 +382,7 @@
 		<xs:complexContent>
 			<xs:extension base="AuxiliaryUnitType">
 				<xs:sequence>
-					<xs:element name="variable" type="xs:string"></xs:element>
+					<xs:element name="variable" type="xs:string" minOccurs="0"></xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>

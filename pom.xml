@@ -41,5 +41,6 @@
 	</dependencies>
 	<modules>
 		<module>sbgnpdschema</module>
+		<module>graphics</module>
 	</modules>
 </project>
