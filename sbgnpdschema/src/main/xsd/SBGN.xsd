@@ -83,45 +83,29 @@
 		<xs:complexContent>
 			<xs:extension base="SBGNGlyphType">
 				<xs:sequence>
-					<!--TODO    -->
-					<xs:element name="Connection" maxOccurs="unbounded"
-						minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>
-								List of possible connection arcs. Most of the
-								nodes have connections
-								but this element is optional since a
-								Compartment doesn't usually
-								have arcs assigned. Also, it can be
-								that the arcs are defined
-								within the associated node.
-								The
-								connection requires a node (specified as reference) and
-								an arc, described within the connection
+					<xs:annotation>
+						<xs:documentation>
+							List of possible connection arcs. Most of the
+							nodes have connections
+							but this element is optional since a
+							Compartment doesn't usually
+							have arcs assigned. Also, it can be
+							that the arcs are defined
+							within the associated node.
+							The
+							connection requires a node (specified as reference) and
+							an arc,
+							described within the connection
 							</xs:documentation>
-						</xs:annotation>
-						<xs:complexType>
-							<xs:sequence>
+					</xs:annotation>
+
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
 								&allArcs;
-							</xs:sequence>
-							<xs:attribute name="refNode" type="xs:string">
-								<xs:annotation>
-									<xs:documentation>
-										The ID of the node connected with the current
-										node.
-									</xs:documentation>
-								</xs:annotation>
-							</xs:attribute>
-						</xs:complexType>
-					</xs:element>
+					</xs:sequence>
 					<!--list of contained entities comes here  -->
-					<xs:element name="Content" minOccurs="0">
-						<xs:complexType>
-							<xs:sequence maxOccurs="unbounded">
-							&allNodes;
-							</xs:sequence>
-						</xs:complexType>
-					</xs:element>
+					<xs:sequence maxOccurs="unbounded" minOccurs="0">
+						&allNodes;
+					</xs:sequence>
 				</xs:sequence>
 				<xs:attribute name="label" type="xs:string">
 					<xs:annotation>
@@ -131,18 +115,20 @@
 						</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				
+
 				<xs:attribute name="cloneref" type="xs:string">
 					<xs:annotation>
 						<xs:documentation>
 							This attribute states that the current node is
-							a clone of an existing node. Anything else except of
-							the ID is optional, since the attributes will be taken
+							a
+							clone of an existing node. Anything else except of
+							the ID is
+							optional, since the attributes will be taken
 							from the cloned node.
 						</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				
+
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -405,12 +391,12 @@
 		<xs:annotation>
 			<xs:documentation>
 				Entity pool node. Incorporates multimer
-				functionality as well.
+				functionality as well, in this case cardinality has to be specified.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="SBGNNodeType">
-				<xs:sequence>
+				<xs:attribute name="cardinality" type="xs:integer">
 					<xs:annotation>
 						<xs:documentation>
 							If the cardinality is not null, the entity pool
@@ -418,9 +404,8 @@
 							rendered as a multimer.
 						</xs:documentation>
 					</xs:annotation>
-					<xs:element name="cardinality" type="xs:integer"
-						minOccurs="0"></xs:element>
-				</xs:sequence>
+				</xs:attribute>
+
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -593,6 +578,15 @@
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="SBGNGlyphType">
+				<xs:attribute name="refNode" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>
+							The ID of the node connected with the current
+							node.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
