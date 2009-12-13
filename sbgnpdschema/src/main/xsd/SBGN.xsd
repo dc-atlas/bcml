@@ -352,9 +352,7 @@
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="AuxiliaryUnitType">
-				<xs:sequence>
-					<xs:element name="prefix" type="xs:string"></xs:element>
-				</xs:sequence>
+				<xs:attribute name="prefix" type="xs:string"></xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
