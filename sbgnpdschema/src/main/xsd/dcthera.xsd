@@ -22,10 +22,28 @@
 						<element name="Localization" type="string" minOccurs="0" />
 						<element name="ProvenIn" type="string" minOccurs="0" />
 						<element name="ExperimentDesign" type="string" minOccurs="0" />
+						<element name="PMID" type="number" minOccurs="0" maxOccurs="unbounded" />
 					</sequence>
 				</extension>
 			</complexContent>
 		</complexType>
+
+		<complexType name="SBGNNodeType">
+			<complexContent>
+				<extension base="sbgn:SBGNNodeType">
+					<sequence>
+						<element name="MacroModule" type="string" minOccurs="0" >
+							<annotation>
+								<documentation>Added according to the conversation from December 22rd. Possible values, as per discussion:
+									Receptor sensing, Production, Outcome.
+								</documentation>
+							</annotation>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+
 
 		<complexType name="ProcessType">
 
@@ -38,6 +56,22 @@
 								<documentation>Reaction type belongs only to the process.
 								</documentation>
 							</annotation>
+						</element>
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+		
+		<complexType name="StatefulEntiyPoolNodeType">
+			<complexContent>
+				<extension base="sbgn:StatefulEntiyPoolNodeType">
+					<sequence>
+						<element name="EntrezGeneID" type="numeric" minOccurs="0">
+							<annotation>
+								<documentation>The EntrezGeneID. Complexes should not have a EntrezGeneID, since the 
+								EntrezGeneID is provided at the single gene level.
+								</documentation>
+							</annotation>						
 						</element>
 					</sequence>
 				</extension>

@@ -10,8 +10,22 @@
 			<UnitOfInformation label="psac" prefix="mt"/>
 		</Macromolecule>
 
-		<Macromolecule ID="Dectin-1" cardinality="2">
+		<Macromolecule ID="Dectin-1" cardinality="2">			
+			<Organism>hs</Organism>
+			<OrganismPart>The organism part</OrganismPart>
+			<CellType>The organism part</CellType>
+			<Localization>The localization - is it obsolete because of using compartment? </Localization>
+			<ProvenIn>Proven in field</ProvenIn>
+			<ExperimentDesign>Inferred though computation</ExperimentDesign>
+			<PMID>19915667</PMID>
+			<PMID>19864674</PMID>
+			<PMID>19811837</PMID>
+			<PMID>19614557</PMID>
+			<PMID>19358895</PMID>
+			<PMID>19223162</PMID>
 			<UnitOfInformation label="psac" prefix="mt"/>
+			<MacroModule>Receptor Sensing</MacroModule>
+			<EntrezGeneID>64581</EntrezGeneID>
 		</Macromolecule>
 
 		<Complex ID="13betaglucandecrin1">
@@ -20,6 +34,7 @@
 		</Complex>
 
 		<Association>
+			<PMID>12163569</PMID>
 			<Consumption refNode="13betaglucan" />
 			<Consumption refNode="Dectin-1" />
 			<Production refNode="13betaglucandecrin1" />
@@ -146,7 +161,6 @@
 			<Catalysis refNode="SYK_p" />
 		</Process>
 
-
 		<Complex ID="GRB2SOS_PLCgama2p">
 			<Complex cloneref="GRB2SOS_p" />
 			<Macromolecule cloneref="PLCg-2_p" />
@@ -191,7 +205,6 @@
 		<Macromolecule ID="IkappaBalpha2" label="IkappaBalpha">
 			<CloneMarker />
 		</Macromolecule>
-
 
 		<Dissasociation>
 			<Consumption refNode="IkaBalNFkaB1RELA" />
