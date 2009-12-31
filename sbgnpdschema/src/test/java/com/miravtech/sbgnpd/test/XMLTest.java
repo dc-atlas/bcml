@@ -3,6 +3,10 @@ package com.miravtech.sbgnpd.test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -15,7 +19,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-import com.miravtech.sbgn.SBGNPDL1;
+import com.miravtech.sbgn.ArcType;
+import com.miravtech.sbgn.SBGNGlyphType;
+import com.miravtech.sbgn.SBGNNodeType;
+import com.miravtech.sbgn.SBGNPDl1;
+import com.miravtech.sbgn.StimulationArcType;
 
 public class XMLTest {
 
@@ -28,62 +36,66 @@ public class XMLTest {
 	public void TestXMLCreate() {
 
 	}
-	
+
 	private static Logger log = Logger.getLogger(XMLTest.class);
 
+	class NodeIDCheck {
+		int autoID = 0;
+		Set<String> names = new HashSet<String>();
+		public void check(SBGNGlyphType g) throws Exception {
+			if (g.getID() == null) {
+				g.setID("AutomaticID##" + autoID++);
+			}
+			if (names.contains(g.getID())) {
+				throw new Exception("Error: " + g.getID()
+						+ " is duplicated in the XML file");
+			}
+			names.add(g.getID());
+		
+			if (g instanceof SBGNNodeType) {
+				SBGNNodeType n = (SBGNNodeType)g;
+				for (SBGNNodeType in : n.getInnerNodes()) check(in);
+				for (ArcType a : n.getArcs()) check(a);
+			}
 
+		}
+	}
+	
+	
+	
 	@Test
-	public void TestXMLLoad() throws ParserConfigurationException, SAXException, IOException, JAXBException {
+	public void TestXMLLoad() throws ParserConfigurationException,
+			SAXException, IOException, JAXBException, Exception {
 
-		/*
-			
-		
-		NamespacePrefixMapper m = new NamespacePrefixMapper () {
-			@Override
-			public String getPreferredPrefix(String arg0, String arg1,
-					boolean arg2) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String[] getPreDeclaredNamespaceUris() {
-				// TODO Auto-generated method stub
-				return super.getPreDeclaredNamespaceUris();
-			}
-		};
-		
-		
-		log.debug("starting test");
-		
-		JAXBContext jaxbContext;
-		Unmarshaller unmarshaller;
-		InputStream f = XMLTest.class.getResourceAsStream("/sampleSBGN.xml");
-
-		DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		db.setEntityResolver(new MyEntityResolver());
-		Document d = db.parse(f);
-			
-		jaxbContext = JAXBContext.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
-		unmarshaller = jaxbContext.createUnmarshaller();
-//		NamespacePrefixMapper m1 = (NamespacePrefixMapper)unmarshaller.getProperty("com.sun.xml.bind.namespacePrefixMapper");
-//		unmarshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", m);
-
-		f.close();
-		SBGNPDL1 root = (SBGNPDL1)unmarshaller.unmarshal(d);
-		root.getProcessOrOmittedProcessOrUncertainProcess().size();
-		*/
-
-		JAXBContext jaxbContext = JAXBContext.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
+		JAXBContext jaxbContext = JAXBContext
+				.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-		InputStream f = XMLTest.class.getResourceAsStream("/sampleSBGN.xml");		
-		SBGNPDL1 root = (SBGNPDL1)unmarshaller.unmarshal(f);
-		log.debug(" " +  root.getProcessOrOmittedProcessOrUncertainProcess().size());
+		InputStream f = XMLTest.class.getResourceAsStream("/dectin1.xml");
+		// InputStream f = XMLTest.class.getResourceAsStream("/sampleSBGN.xml");
+		SBGNPDl1 root = (SBGNPDl1) unmarshaller.unmarshal(f);
+		log.debug("Elements in the root: " + root.getGlyphs().size());
+
+		// checking uniqueness of the ids
+		NodeIDCheck n = new NodeIDCheck();
+		for (SBGNGlyphType g : root.getGlyphs()) {
+			n.check(g);
+		}
+
+		// solving clones
+		Map<String, SBGNGlyphType> ids = new HashMap<String, SBGNGlyphType>();
+		Set<SBGNGlyphType> clones = new HashSet<SBGNGlyphType>();
+		for (SBGNGlyphType c : root.getGlyphs()) {
+			if (c instanceof SBGNNodeType) {
+				SBGNNodeType node = (SBGNNodeType) c;
+				if (node.getCloneref() == null) {
+
+				}
+			}
+		}
 
 		Marshaller marshaller = jaxbContext.createMarshaller();
 		marshaller.marshal(root, new File("target/test.xml"));
 
-		
 	}
 
 }

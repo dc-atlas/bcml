@@ -4,7 +4,9 @@
 
 <xs:schema attributeFormDefault="unqualified"
 	elementFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:sg="http://www.miravtech.com/SBGN-GRAPHICS" xmlns:schemaLocation="http://www.miravtech.com/SBGN-GRAPHICS graphics.xsd"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="1.0"
+	xmlns:sg="http://www.miravtech.com/SBGN-GRAPHICS"
+	xmlns:schemaLocation="http://www.miravtech.com/SBGN-GRAPHICS graphics.xsd http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
 	targetNamespace="http://www.miravtech.com/SBGN" xmlns="http://www.miravtech.com/SBGN">
 
 	<xs:import namespace="http://www.miravtech.com/SBGN-GRAPHICS"
@@ -27,12 +29,25 @@
 				SBGN PD Level 1 diagram. It is a set of SBGNGlyphs
 				as described in the specification.
 			</xs:documentation>
+			<xs:appinfo>
+				<jxb:class name="SBGNPDl1">
+					<jxb:javadoc>
+					</jxb:javadoc>
+				</jxb:class>
+			</xs:appinfo>
 		</xs:annotation>
 
 		<xs:complexType>
 
-
 			<xs:sequence maxOccurs="unbounded" id="nodes">
+				<xs:annotation>
+					<xs:appinfo>
+						<jxb:property name="glyphs" />
+					</xs:appinfo>
+					<xs:documentation>
+						The list of glyphs contained in the diagram.
+  			</xs:documentation>
+				</xs:annotation>
 			&allNodes;
 			</xs:sequence>
 		</xs:complexType>
@@ -68,8 +83,6 @@
 		</xs:attribute>
 	</xs:complexType>
 
-
-
 	<xs:complexType name="SBGNNodeType" abstract="true">
 		<xs:annotation>
 			<xs:documentation>
@@ -83,27 +96,37 @@
 		<xs:complexContent>
 			<xs:extension base="SBGNGlyphType">
 				<xs:sequence>
-					<xs:annotation>
-						<xs:documentation>
-							List of possible connection arcs. Most of the
-							nodes have connections
-							but this element is optional since a
-							Compartment doesn't usually
-							have arcs assigned. Also, it can be
-							that the arcs are defined
-							within the associated node.
-							The
-							connection requires a node (specified as reference) and
-							an arc,
-							described within the connection
-							</xs:documentation>
-					</xs:annotation>
-
 					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>
+								List of possible connection arcs. Most of the
+								nodes have connections
+								but this element is optional since a
+								Compartment doesn't usually
+								have arcs assigned. Also, it can be
+								that the arcs are defined
+								within the associated node.
+								The
+								connection requires a node (specified as reference) and
+								an arc,
+								described within the connection
+							</xs:documentation>
+							<xs:appinfo>
+								<jxb:property name="arcs" />
+							</xs:appinfo>
+						</xs:annotation>					
 								&allArcs;
 					</xs:sequence>
 					<!--list of contained entities comes here  -->
 					<xs:sequence maxOccurs="unbounded" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>
+								Here is the list of contained nodes.
+							</xs:documentation>
+							<xs:appinfo>
+								<jxb:property name="innerNodes" />
+							</xs:appinfo>
+						</xs:annotation>					
 						&allNodes;
 					</xs:sequence>
 				</xs:sequence>

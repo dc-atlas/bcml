@@ -22,7 +22,7 @@
 						<element name="Localization" type="string" minOccurs="0" />
 						<element name="ProvenIn" type="string" minOccurs="0" />
 						<element name="ExperimentDesign" type="string" minOccurs="0" />
-						<element name="PMID" type="number" minOccurs="0" maxOccurs="unbounded" />
+						<element name="PMID" type="integer" minOccurs="0" maxOccurs="unbounded" />
 					</sequence>
 				</extension>
 			</complexContent>
@@ -66,7 +66,7 @@
 			<complexContent>
 				<extension base="sbgn:StatefulEntiyPoolNodeType">
 					<sequence>
-						<element name="EntrezGeneID" type="numeric" minOccurs="0">
+						<element name="EntrezGeneID" type="integer" minOccurs="0">
 							<annotation>
 								<documentation>The EntrezGeneID. Complexes should not have a EntrezGeneID, since the 
 								EntrezGeneID is provided at the single gene level.

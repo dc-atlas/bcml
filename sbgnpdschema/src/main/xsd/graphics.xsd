@@ -2,6 +2,13 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sg="http://www.miravtech.com/SBGN-GRAPHICS"
 	elementFormDefault="unqualified">
 	<xs:complexType name="graphic">
+		<xs:annotation>
+			<xs:documentation>
+				The graphic object provides the hints about the
+				coloring and positioning of a given object.
+			</xs:documentation>
+		</xs:annotation>
+
 		<xs:sequence>
 			<xs:element name="path" minOccurs="0" type="xs:string">
 				<xs:annotation>
@@ -63,8 +70,7 @@
 				</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="Direction" type="xs:string"
-			minOccurs="0">
+		<xs:attribute name="Direction" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>
 					Provides a way to describe the directionality of the current object.
@@ -77,12 +83,6 @@
 					</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:annotation>
-			<xs:documentation>
-				The graphic object provides the hints about the
-				coloring and positioning of a given object.
-			</xs:documentation>
-		</xs:annotation>
 
 		<xs:attribute name="visible" type="xs:boolean">
 			<xs:annotation>
@@ -92,7 +92,7 @@
 					</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="color" minOccurs="0" type="xs:string">
+		<xs:attribute name="color" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>
 					Foreground color, can be either a hexadecimal
@@ -101,7 +101,7 @@
 					</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="borderColor" minOccurs="0" type="xs:string">
+		<xs:attribute name="borderColor" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>
 					Border color, can be either a hexadecimal
@@ -110,7 +110,7 @@
 					</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="bgColor" minOccurs="0" type="xs:string">
+		<xs:attribute name="bgColor" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>
 					Background color, can be either a hexadecimal
@@ -119,7 +119,7 @@
 					</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="edgeLocation" minOccurs="0" type="xs:string">
+		<xs:attribute name="edgeLocation"  type="xs:string">
 			<xs:annotation>
 				<xs:documentation>
 					The edge location describes the positioning of
@@ -146,8 +146,7 @@
 			</xs:annotation>
 		</xs:attribute>
 
-		<xs:attribute name="OutsidePercent" type="xs:integer"
-			minOccurs="0">
+		<xs:attribute name="OutsidePercent" type="xs:integer">
 			<xs:annotation>
 				<xs:documentation>
 					This optional parameter describes by which degree
