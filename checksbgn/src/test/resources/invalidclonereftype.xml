@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Compartment ID="C1" cloneref="13betaglucan" />   <!-- invalid cloneref type -->
+	<Compartment ID="c3" cloneref="c4" />  <!-- valid cloneref -->
+	<Compartment label="c1" ID="c4" />
+	
+	<Macromolecule ID="13betaglucan" label="1,3-Beta-Glucan"
+		cardinality="2">
+		<UnitOfInformation label="psac" prefix="mt"/>
+	</Macromolecule>
+
+</sbgn:SBGN.PD.L1>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE doc [ <!ENTITY allNodes SYSTEM "../xml/NodeType.xml"> <!ENTITY
-	allArcs SYSTEM "../xml/ArcType.xml"> ]>
+<!DOCTYPE doc [ <!ENTITY allNodes SYSTEM "NodeType.xml"> <!ENTITY
+	allArcs SYSTEM "ArcType.xml"> ]>
 
 <xs:schema attributeFormDefault="unqualified"
 	elementFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -46,7 +46,7 @@
 					</xs:appinfo>
 					<xs:documentation>
 						The list of glyphs contained in the diagram.
-  			</xs:documentation>
+					</xs:documentation>
 				</xs:annotation>
 			&allNodes;
 			</xs:sequence>
@@ -166,6 +166,14 @@
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="SBGNNodeType">
+				<xs:attribute name="reversible">
+					<xs:annotation>
+						<xs:documentation>
+							Is the process reversible?
+							(3.5.2.5ReversibleProcesses - page 47)
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -599,11 +607,12 @@
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="SBGNGlyphType">
-				<xs:attribute name="refNode" type="xs:string">
+				<xs:attribute name="refNode" type="xs:string" use="required">
 					<xs:annotation>
 						<xs:documentation>
 							The ID of the node connected with the current
-							node.
+							node. This attribute is required, since no arc can exist without
+							a target.
 						</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>

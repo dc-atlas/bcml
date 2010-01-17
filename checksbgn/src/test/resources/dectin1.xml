@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Compartment label="extracellular">
+
+		<Macromolecule ID="13betaglucan" label="1,3-Beta-Glucan"
+			cardinality="2">
+			<UnitOfInformation label="psac" prefix="mt"/>
+		</Macromolecule>
+
+		<Macromolecule ID="Dectin-1" cardinality="2">			
+			<Organism>hs</Organism>
+			<OrganismPart>The organism part</OrganismPart>
+			<CellType>The organism part</CellType>
+			<Localization>The localization - is it obsolete because of using compartment? </Localization>
+			<ProvenIn>Proven in field</ProvenIn>
+			<ExperimentDesign>Inferred though computation</ExperimentDesign>
+			<PMID>19915667</PMID>
+			<PMID>19864674</PMID>
+			<PMID>19811837</PMID>
+			<PMID>19614557</PMID>
+			<PMID>19358895</PMID>
+			<PMID>19223162</PMID>
+			<UnitOfInformation label="psac" prefix="mt"/>
+			<MacroModule>Receptor Sensing</MacroModule>
+			<EntrezGeneID>64581</EntrezGeneID>
+		</Macromolecule>
+
+		<Complex ID="13betaglucandecrin1">
+			<Macromolecule cloneref="13betaglucan" />
+			<Macromolecule cloneref="Dectin-1" />
+		</Complex>
+
+		<Association>
+			<PMID>12163569</PMID>
+			<Consumption refNode="13betaglucan" />
+			<Consumption refNode="Dectin-1" />
+			<Production refNode="13betaglucandecrin1" />
+		</Association>
+
+		<Macromolecule ID="Dectin-1_" cloneref="Dectin-1">
+			<StateVariable label=" "></StateVariable>
+		</Macromolecule>
+
+		<Process>
+			<Consumption refNode="13betaglucandecrin1" />
+			<Production refNode="Dectin-1_" />
+		</Process>
+
+		<Macromolecule ID="Dectin-1_p" cloneref="Dectin-1">
+			<StateVariable label="p"></StateVariable>
+		</Macromolecule>
+
+		<Process>
+			<Consumption refNode="Dectin-1_" />
+			<Production refNode="Dectin-1_p" />
+		</Process>
+
+
+		<Complex ID="Dectin-SYK">
+			<graphic edgeLocation="BR" OutsidePercent="50" /> <!-- location: bottom right, 50% outside of the container -->
+			<Macromolecule cloneref="Dectin-1_p" />
+			<Macromolecule cloneref="SYK">
+				<StateVariable label=" "></StateVariable>
+			</Macromolecule>
+		</Complex>
+
+		<Association>
+			<Consumption refNode="Dectin-1_p" />
+			<Consumption refNode="SYK" />
+			<Production refNode="Dectin-SYK" />
+		</Association>
+
+	</Compartment>
+
+	<Compartment label="cytosol">
+		<graphic refobj="extracellular" edgeLocation="DM" /> <!-- place this under extracellular -->
+		<Macromolecule ID="SYK" label="SYK" />
+		<Macromolecule ID="SYK_p" cloneref="SYK">
+			<StateVariable label="p" />
+		</Macromolecule>
+
+		<Process>
+			<Consumption refNode="Dectin-SYK" />
+			<Production refNode="SYK_p" />
+		</Process>
+
+		<Macromolecule label="CARD9_" ID="CARD9_">
+			<StateVariable label=" " />
+		</Macromolecule>
+
+		<Macromolecule label="CARD9p" ID="CARD9p">
+			<StateVariable label="p" />
+		</Macromolecule>
+
+		<Process>
+			<Consumption refNode="CARD9_" />
+			<Production refNode="CARD9p" />
+			<Catalysis refNode="SYK_p" />
+		</Process>
+
+		<Complex ID="MALT1BRL10">
+			<Macromolecule label="MALT1" />
+			<Macromolecule label="BCL10" />
+		</Complex>
+
+		<Complex ID="CARD9_p_MALT1BRL10">
+			<Macromolecule cloneref="CARD9p" />
+			<Complex cloneref="MALT1BRL10" />
+		</Complex>
+
+		<Macromolecule ID="PLCg-2_" label="PLCgamma-2">
+			<StateVariable label=" " />
+		</Macromolecule>
+
+		<Association>
+			<Consumption refNode="CARD9p" />
+			<Consumption refNode="MALT1BRL10" />
+			<Production refNode="CARD9_p_MALT1BRL10" />
+			<Modulation refNode="PLCg-2_" />
+		</Association>
+
+		<Macromolecule ID="TRAF6" label="TRAF6" />
+
+		<Complex ID="CARD9_p_MALT1BRL10_TRAF6">
+			<Macromolecule cloneref="TRAF6" />
+			<Complex cloneref="CARD9_p_MALT1BRL10" />
+		</Complex>
+
+		<Association>
+			<Consumption refNode="TRAF6" />
+			<Consumption refNode="CARD9_p_MALT1BRL10" />
+			<Production refNode="CARD9_p_MALT1BRL10_TRAF6" />
+		</Association>
+
+		<Macromolecule cloneref="PLCg-2_" ID="PLCg-2_p">
+			<StateVariable label="p" />
+		</Macromolecule>
+
+		<Process>
+			<Consumption refNode="PLCg-2_" />
+			<Production refNode="PLCg-2_p" />
+			<Catalysis refNode="SYK_p" />
+		</Process>
+
+		<Complex ID="GRB2SOS_">
+			<Macromolecule ID="GRB2" label="GRB2" />
+			<Macromolecule ID="SOS" label="SOS" />
+			<StateVariable label=" " />
+		</Complex>
+
+		<Complex cloneref="GRB2SOS_" ID="GRB2SOS_p">
+			<StateVariable label="p" />
+		</Complex>
+
+		<Process>
+			<Consumption refNode="GRB2SOS_" />
+			<Production refNode="GRB2SOS_p" />
+			<Catalysis refNode="SYK_p" />
+		</Process>
+
+		<Complex ID="GRB2SOS_PLCgama2p">
+			<Complex cloneref="GRB2SOS_p" />
+			<Macromolecule cloneref="PLCg-2_p" />
+		</Complex>
+
+		<Process>
+			<Consumption refNode="GRB2SOS_p" />
+			<Consumption refNode="PLCg-2_p" />
+			<Production refNode="GRB2SOS_PLCgama2p" />
+		</Process>
+
+		<Macromolecule label="ERK" ID="ERK_">
+			<StateVariable label=" " />
+		</Macromolecule>
+
+		<Macromolecule cloneref="ERK_" ID="ERK_p">
+			<StateVariable label="p" />
+		</Macromolecule>
+
+		<Process>
+			<Consumption refNode="ERK_" />
+			<Production refNode="ERK_p" />
+			<Catalysis refNode="GRB2SOS_PLCgama2p" />
+		</Process>
+
+		<Complex ID="IkaBalNFkaB1RELA">
+			<Macromolecule label="IkappaBalpha" />
+			<Macromolecule label="NFkappaB1" />
+			<Macromolecule label="RELA" />
+		</Complex>
+
+		<Complex ID="IkaBalNFkaB1RELB">
+			<Macromolecule label="IkappaBalpha" />
+			<Macromolecule label="NFkappaB1" />
+			<Macromolecule label="RELB" />
+		</Complex>
+
+		<Macromolecule ID="IkappaBalpha1" label="IkappaBalpha">
+			<CloneMarker />
+		</Macromolecule>
+
+		<Macromolecule ID="IkappaBalpha2" label="IkappaBalpha">
+			<CloneMarker />
+		</Macromolecule>
+
+		<Dissasociation>
+			<Consumption refNode="IkaBalNFkaB1RELA" />
+			<Production refNode="IkappaBalpha1" />
+			<Production refNode="NFkaB1RELA" />
+			<Modulation refNode="CARD9_p_MALT1BRL10_TRAF6" />
+		</Dissasociation>
+
+		<Dissasociation>
+			<Consumption refNode="IkaBalNFkaB1RELB" />
+			<Production refNode="IkappaBalpha2" />
+			<Production refNode="NFkaB1RELB" />
+			<Modulation refNode="CARD9_p_MALT1BRL10_TRAF6" />
+		</Dissasociation>
+
+		<Macromolecule ID="AP1">
+		</Macromolecule>
+
+		<Association>
+			<Consumption refNode="ERK_p" />
+			<Consumption refNode="AP1" />
+			<Production refNode="ERK_pAP1" />
+		</Association>
+
+	</Compartment>
+
+	<Compartment label="nucleus">
+		<graphic refobj="cytosol" edgeLocation="DM" /> <!-- place this under the cytosol -->
+		<Complex ID="NFkaB1RELA">
+			<Macromolecule label="NFkappaB1" />
+			<Macromolecule label="RELA" />
+		</Complex>
+		<Complex ID="NFkaB1RELB">
+			<Macromolecule label="NFkappaB1" />
+			<Macromolecule label="RELB" />
+		</Complex>
+		<Complex ID="ERK_pAP1">
+			<Macromolecule cloneref="ERK_p" />
+			<Macromolecule cloneref="AP1" />
+		</Complex>
+
+		<NucleicAcidFeature ID="TNFalpha_gene">
+			<UnitOfInformation label="gene" prefix="ct"/>
+		</NucleicAcidFeature>
+
+		<NucleicAcidFeature ID="TNFalpha_RNA">
+			<UnitOfInformation label="mRNA" prefix="ct"/>
+		</NucleicAcidFeature>
+
+		<NucleicAcidFeature ID="IL6_gene_1">
+			<UnitOfInformation label="gene" prefix="ct"/>
+		</NucleicAcidFeature>
+
+		<NucleicAcidFeature ID="IL6_RNA_1">
+			<UnitOfInformation label="mRNA" prefix="ct"/>
+			<CloneMarker/>
+		</NucleicAcidFeature>
+
+		<NucleicAcidFeature ID="IL10_gene_1">
+			<UnitOfInformation label="gene" prefix="ct"/>
+			<CloneMarker/>
+		</NucleicAcidFeature>
+
+		<NucleicAcidFeature ID="IL10_RNA_1">
+			<UnitOfInformation label="mRNA" prefix="ct"/>
+			<CloneMarker/>
+		</NucleicAcidFeature>
+
+		<AndNode ID="TNFalpha_transcript">
+			<Logic refNode="NFkaB1RELA"/>
+			<Logic refNode="TNFalpha_gene"/>
+		</AndNode>
+
+		<AndNode ID="IL6_transcript1">
+			<Logic refNode="NFkaB1RELA"/>
+			<Logic refNode="IL6_gene_1"/>
+		</AndNode>
+
+		<AndNode ID="IL10_transcript1">
+			<Logic refNode="NFkaB1RELA"/>
+			<Logic refNode="IL10_gene_1"/>
+		</AndNode>
+		
+		<Source ID="S1"/>
+		<Source ID="S2"/>
+		<Source ID="S3"/>
+		
+		<Process>
+			<Consumption refNode="S1"/>
+			<Production refNode="TNFalpha_RNA"/>
+			<NecessaryStimulation refNode="TNFalpha_transcript"/>
+		</Process>
+
+		<Process>
+			<Consumption refNode="S2"/>
+			<Production refNode="IL6_RNA_1"/>
+			<NecessaryStimulation refNode="IL6_transcript1"/>
+		</Process>
+
+		<Process>
+			<Consumption refNode="S3"/>
+			<Production refNode="IL10_RNA_1"/>
+			<NecessaryStimulation refNode="IL10_transcript1"/>
+		</Process>
+
+		<NucleicAcidFeature ID="IL10_gene_2" cloneref="IL10_gene_1"/>
+		<NucleicAcidFeature ID="IL10_RNA_2" cloneref="IL10_RNA_1"/>
+
+		<AndNode ID="IL10_transcript2">
+			<Logic refNode="ERK_pAP1"/>
+			<Logic refNode="IL10_gene_2"/>
+		</AndNode>
+		
+		<Source ID="S4"/>
+		<Process>
+			<Consumption refNode="S4"/>
+			<Production refNode="IL10_RNA_2"/>
+			<NecessaryStimulation refNode="IL10_transcript2"/>
+		</Process>
+
+		<NucleicAcidFeature ID="IL1b_gene">
+			<UnitOfInformation label="gene" prefix="ct"/>
+			<CloneMarker/>
+		</NucleicAcidFeature>
+
+		<NucleicAcidFeature ID="IL1b_RNA">
+			<UnitOfInformation label="mRNA" prefix="ct"/>
+			<CloneMarker/>
+		</NucleicAcidFeature>
+
+		<NucleicAcidFeature ID="IL6_gene_2" cloneref="IL6_gene_1"/>
+		<NucleicAcidFeature ID="IL6_RNA_2" cloneref="IL6_RNA_1"/>
+
+		<NucleicAcidFeature ID="IL10_gene_3" cloneref="IL10_gene_1"/>
+		<NucleicAcidFeature ID="IL10_RNA_3" cloneref="IL10_RNA_1"/>
+		
+		<AndNode ID="IL1b_transcript">
+			<Logic refNode="NFkaB1RELB"/>
+			<Logic refNode="IL1b_gene"/>
+		</AndNode>
+
+		<AndNode ID="IL6_transcript2">
+			<Logic refNode="NFkaB1RELB"/>
+			<Logic refNode="IL6_gene_2"/>
+		</AndNode>
+		
+		<AndNode ID="IL10_transcript3">
+			<Logic refNode="NFkaB1RELB"/>
+			<Logic refNode="IL10_gene_3"/>
+		</AndNode>		
+
+		<Source ID="S5"/>
+		<Source ID="S6"/>
+		<Source ID="S7"/>
+
+		<Process>
+			<Consumption refNode="S5"/>
+			<Production refNode="IL1b_RNA"/>
+			<Inhibition refNode="IL1b_transcript"/>
+		</Process>
+		
+		<Process>
+			<Consumption refNode="S6"/>
+			<Production refNode="IL6_RNA_2"/>
+			<Inhibition refNode="IL6_transcript2"/>
+		</Process>
+		<Process>
+			<Consumption refNode="S7"/>
+			<Production refNode="IL10_RNA_3"/>
+			<Inhibition refNode="IL10_transcript3"/>
+		</Process>
+	</Compartment>
+</sbgn:SBGN.PD.L1>

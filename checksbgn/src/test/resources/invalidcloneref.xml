@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Compartment ID="C1" cloneref="c2" />   <!-- invalid cloneref -->
+	<Compartment ID="c3" cloneref="c4" />  <!-- valid cloneref -->
+	<Compartment label="c1" ID="c4" />
+
+</sbgn:SBGN.PD.L1>

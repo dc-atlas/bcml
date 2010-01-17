@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="gpmlschema">
+  <test verbose="2" name="com.miravtech.sbgnpd.test.XMLTest" annotations="JDK">
+    <classes>
+      <class name="com.miravtech.sbgnpd.test.XMLTest"/>
+    </classes>
+  </test>
+</suite>

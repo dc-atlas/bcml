@@ -41,6 +41,10 @@
 	</dependencies>
 	<modules>
 		<module>sbgnpdschema</module>
+		<module>gpmlschema</module>
 		<module>graphics</module>
+		<module>convertgpml</module>
+		<module>checksbgn</module>
+
 	</modules>
 </project>

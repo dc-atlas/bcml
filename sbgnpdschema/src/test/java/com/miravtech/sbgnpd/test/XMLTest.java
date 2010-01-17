@@ -1,6 +1,7 @@
 package com.miravtech.sbgnpd.test;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -13,17 +14,50 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.sax.SAXSource;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
 import com.miravtech.sbgn.SBGNPDl1;
-import com.miravtech.sbgn.StimulationArcType;
+
+abstract class RecursiveSBGNIterator {
+
+	public void run(SBGNGlyphType g) {
+		if (g instanceof SBGNNodeType) {
+			SBGNNodeType n = (SBGNNodeType) g;
+			for (SBGNNodeType in : n.getInnerNodes()) {
+				interateNode(in);
+				interateGlyph(in);
+				run(in);
+			}
+			for (ArcType a : n.getArcs()) {
+				interateArc(a);
+				interateGlyph(a);
+				run(a);
+			}
+		}
+	}
+
+	public void interateGlyph(SBGNGlyphType n) {
+	}
+
+	public void interateNode(SBGNNodeType n) {
+	}
+
+	public void interateArc(ArcType n) {
+	}
+
+}
 
 public class XMLTest {
 
@@ -42,6 +76,7 @@ public class XMLTest {
 	class NodeIDCheck {
 		int autoID = 0;
 		Set<String> names = new HashSet<String>();
+
 		public void check(SBGNGlyphType g) throws Exception {
 			if (g.getID() == null) {
 				g.setID("AutomaticID##" + autoID++);
@@ -51,29 +86,42 @@ public class XMLTest {
 						+ " is duplicated in the XML file");
 			}
 			names.add(g.getID());
-		
+
 			if (g instanceof SBGNNodeType) {
-				SBGNNodeType n = (SBGNNodeType)g;
-				for (SBGNNodeType in : n.getInnerNodes()) check(in);
-				for (ArcType a : n.getArcs()) check(a);
+				SBGNNodeType n = (SBGNNodeType) g;
+				for (SBGNNodeType in : n.getInnerNodes())
+					check(in);
+				for (ArcType a : n.getArcs())
+					check(a);
 			}
 
 		}
 	}
-	
-	
-	
+
 	@Test
 	public void TestXMLLoad() throws ParserConfigurationException,
 			SAXException, IOException, JAXBException, Exception {
 
 		JAXBContext jaxbContext = JAXBContext
-				.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
+				.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");   //
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		spf.setNamespaceAware(true);
+		spf.setValidating(true);
+		SAXParser saxParser = spf.newSAXParser();
+		XMLReader xmlReader = saxParser.getXMLReader();
 		InputStream f = XMLTest.class.getResourceAsStream("/dectin1.xml");
+		SAXSource source = new SAXSource(xmlReader, new InputSource(f));
+
 		// InputStream f = XMLTest.class.getResourceAsStream("/sampleSBGN.xml");
-		SBGNPDl1 root = (SBGNPDl1) unmarshaller.unmarshal(f);
+		SBGNPDl1 root = (SBGNPDl1) unmarshaller.unmarshal(source);
 		log.debug("Elements in the root: " + root.getGlyphs().size());
+		SBGNNodeType n1 = root.getGlyphs().get(0);
+
+		//		log.debug("Location of the second glyph: line: "
+//				+ n1.sourceLocation().getLineNumber() + " column "
+//				+ n1.sourceLocation().getColumnNumber());
 
 		// checking uniqueness of the ids
 		NodeIDCheck n = new NodeIDCheck();
@@ -94,7 +142,8 @@ public class XMLTest {
 		}
 
 		Marshaller marshaller = jaxbContext.createMarshaller();
-		marshaller.marshal(root, new File("target/test.xml"));
+		marshaller.marshal(root, new FileOutputStream(new File(
+				"target/test.xml")));
 
 	}
 

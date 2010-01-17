@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<Compartment label="c1" ID="c1"/>
+<Compartment label="c2" ID="c2"/>
+<Compartment label="c1" ID="c1"/>
+
+</sbgn:SBGN.PD.L1>
