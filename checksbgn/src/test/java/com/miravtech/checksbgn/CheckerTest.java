@@ -46,8 +46,8 @@ public class CheckerTest {
 		Checker c = new Checker();
 		List<CheckReport> ret = c.check(CheckerTest.class
 				.getResource("/dectin1.xml"));
-		// for (CheckReport r: ret)
-		// System.out.println(r.toString());
+		for (CheckReport r : ret)
+			System.out.println(r.toString());
 
 		if (ret.size() != 0)
 			throw new RuntimeException("No error was expected!");
@@ -93,10 +93,22 @@ public class CheckerTest {
 			throw new RuntimeException("Two errors was expected!");
 	}
 
-	// TODO test ERROR_INVALID_CLONE_REF
+	// TODO
+	@Test
+	public void InvalidEquivalenceNode() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/InvalidEquivalenceArc.xml"));
+		if (ret.size() != 2)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.ERROR_EQUIVALENCE_ARC_MUST_LINK_A_TAG)
+			throw new RuntimeException(
+					"ERROR_EQUIVALENCE_ARC_MUST_LINK_A_TAG error expected!");
+		if (ret.get(1).code != ERRORCODES.ERROR_EQUIVALENCE_ARC_MUST_LINK_A_TAG)
+			throw new RuntimeException(
+					"ERROR_EQUIVALENCE_ARC_MUST_LINK_A_TAG error expected!");
 
-	// TODO ERROR_EQUIVALENCE_NODE_MUST_LINK_A_TAG
-
+	}
 	// TODO SUBMAP_CAN_ONLY_CONTAIN_LABELS
 
 	// TODO NODE_CANNOT_CONTAIN_OTHER_GLYPHS
@@ -104,5 +116,18 @@ public class CheckerTest {
 	// TODO COMPARTMENTS_CANNOT_BE_CONTAINED
 
 	// TODO PROCESSES_CANNOT_CONTAIN_OTHER_NODES
+
+	// TODO INVALID_NODE_CONTAINED_IN_EPN
+
+	// TODO NON_COMPLEX_EPN_CANNOT_CONTAIN_EPN
+
+	// TODO ERRORCODES.ERROR_SINK_HAS_ONLY_PRODUCTION
+	// TODO ERRORCODES.ERROR_SOURCE_HAS_ONLY_CONSUMPTION
+	// TODO ERRORCODES.ERROR_NUCLEIC_ACID_CANNOT_BE_CATALYST
+	// TODO ERRORCODES.ERROR_PROCESS_CANNOT_HAVE_LOGIC_OR_EQUIVALENCE_ARCS
+	// TODO ERRORCODES.ERROR_NOT_NODES_SHOULDHAVE2ARCS_AND_ONE_LOGIC
+	// TODO ERRORCODES.INVALID_LOGICAL_OPERATOR_NODE_CONNECTIONS
+	// TODO ERRORCODES.INVALID_CONNECTIONS_ON_TAG_NODE
+	// TODO THIS_PROCESS_MUST_HAVE_AT_LEAST_ONE_CONSUMPTION_AND_ONE_PRODUCTION
 
 }

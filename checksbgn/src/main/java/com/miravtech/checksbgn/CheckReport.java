@@ -32,7 +32,25 @@ class CheckReport {
 		COMPARTMENTS_CANNOT_BE_CONTAINED(
 				"Compartiments cannot be contained. Node %s contains %s which is a container. (Figure2.20 page 23)"), //
 		PROCESSES_CANNOT_CONTAIN_OTHER_NODES(
-				"Process %s contains the node %s but can only contain clone marker. (2.8 Process nodes page 25)") //
+				"Process %s contains the node %s but can only contain clone marker. (2.8 Process nodes page 25)"), //
+		INVALID_NODE_CONTAINED_IN_EPN(
+				"EPN %s illegaly contains the node %s. (3.4.2 Containment definition)"), //
+		NON_COMPLEX_EPN_CANNOT_CONTAIN_EPN(
+				"non-complex EPN %s illegaly contains the EPN %s. (3.4.2 Containment definition)"), ERROR_SINK_HAS_ONLY_PRODUCTION(
+				"The sink %s must only contain production arcs."), //
+		ERROR_SOURCE_HAS_ONLY_CONSUMPTION(
+				"The source %s must only contain consumption arcs."), //
+		ERROR_NUCLEIC_ACID_CANNOT_BE_CATALYST(
+				"The nucleic acid feature %s cannot have a catalist arch."), //
+		ERROR_PROCESS_CANNOT_HAVE_LOGIC_OR_EQUIVALENCE_ARCS(
+				"Process %s cannot be connected by logic or equivalence arcs"), //
+		ERROR_NOT_NODES_SHOULDHAVE2ARCS_AND_ONE_LOGIC(
+				"\"NOT\" Node %s must be connected by two arcs, one of them logic"), //
+		INVALID_LOGICAL_OPERATOR_NODE_CONNECTIONS(
+				"Logical node %s must be connected to at least three arcs, two of them logical."), //
+		INVALID_CONNECTIONS_ON_TAG_NODE(
+				"Tag node %s may only have one equivalence arc."), //
+		THIS_PROCESS_MUST_HAVE_AT_LEAST_ONE_CONSUMPTION_AND_ONE_PRODUCTION(""), //
 
 		;
 
