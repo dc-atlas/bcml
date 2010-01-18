@@ -19,8 +19,8 @@
 						<element name="Organism" type="string" minOccurs="0" />
 						<element name="OrganismPart" type="string" minOccurs="0" />
 						<element name="CellType" type="string" minOccurs="0" />
-						<element name="Localization" type="string" minOccurs="0" />
-						<element name="ProvenIn" type="string" minOccurs="0" />
+<!-- 						<element name="Localization" type="string" minOccurs="0" />    -->
+						<element name="ProvenIn" type="string" minOccurs="0" />  
 						<element name="ExperimentDesign" type="string" minOccurs="0" />
 						<element name="PMID" type="integer" minOccurs="0" maxOccurs="unbounded" />
 					</sequence>
@@ -99,6 +99,149 @@
 			<enumeration value="Non enzimatic reaction"></enumeration>
 		</restriction>
 	</simpleType>
+
+	<simpleType name="OrganismEnum">
+		<annotation>
+			<documentation>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="Homo sapiens"></enumeration>
+			<enumeration value="Mus Musculus"></enumeration>
+			<enumeration value="Fungi"></enumeration>
+			<enumeration value="Other"></enumeration>
+		</restriction>
+	</simpleType>
+
+
+
+	
+	<!-- 
+	
+	
+		<simpleType name="OrganismpartEnum">
+		<annotation>
+			<documentation>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="Pheripheral Blood"></enumeration>
+			<enumeration value="Spleen"></enumeration>
+			<enumeration value="Peripheral Lymph Node"></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+			<enumeration value=""></enumeration>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="">
+		<annotation>
+			<documentation>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value=""></enumeration>
+		</restriction>
+	</simpleType>
+	
+
+
+<CustomProperty name="Organism part" tag="Organismpart" tab="DC-Thera Annotations">
+	<AppliesTo>*</AppliesTo>
+	<Value></Value>
+	<Value></Value>
+	<Value></Value>
+	<Value></Value>
+	<Value>Bone Marrow</Value>
+	<Value>Peyer's Patches</Value>
+	<Value>Colon</Value>
+	<Value>Tumor Biopsy</Value>
+	<Value>Thymus</Value>
+	<Value>Intestinal mucosa</Value>
+</CustomProperty>
+
+
+<CustomProperty name="Cell type" tag="Celltype" tab="DC-Thera Annotations">
+	<AppliesTo>*</AppliesTo>
+	<Value>Macrophage</Value>
+	<Value>Monocyte</Value>
+	<Value>T cell</Value>
+	<Value>Dendritic cells (DC)
+	<Value>       Myeloid</Value>
+	<Value>       Plasmacytoid</Value>
+	<Value>       Interferon producing killer</Value>
+	<Value>       Follicular</Value>
+	<Value>       Spleen derived</Value>
+	<Value>       Monocyte derived</Value>
+	</Value>
+	<Value>Langerhans cell (LC)</Value>
+	<Value>Natural killer cell (NK)</Value>
+	<Value>Intestinal epithelial cell (IEC)</Value>
+</CustomProperty>
+
+	
+	
+<CustomProperty name="Localization" tag="Localization" tab="DC-Thera Annotations">
+	<AppliesTo>*</AppliesTo>
+	<Value>Cell
+	<Value>      Cytoplasm
+	<Value>            Golgi apparatus</Value>
+	<Value>            Cytoskeleton</Value>
+	<Value>            Cytosol</Value>
+	<Value>            Endoplasmic reticulum</Value>
+	<Value>            Endocytic compartment</Value>
+	<Value>            Mitochondria</Value>
+	<Value>            Peroxisome</Value>
+	</Value>
+	<Value>      Nucleus</Value>
+	<Value>      Plasma membrane
+	<Value>            lipid raft</Value>
+	<Value>            external side of plasma membrane</Value>
+	<Value>            internal side of plasma membrane</Value>
+	</Value>
+	</Value>
+	<Value>Extracellular</Value>
+</CustomProperty>
+	
+
+<CustomProperty name="Proven in" tag="Evidence" tab="DC-Thera Annotations">
+	<AppliesTo>*</AppliesTo>
+	<Value>Proven in
+	<Value>Macrophage</Value>
+	<Value>Monocyte</Value>
+	<Value>T cell</Value>
+	<Value>Dendritic cells (DC)</Value>
+	<Value>Langerhans cell (LC)</Value>
+	<Value>Natural killer cell (NK)</Value>
+	<Value>Intestinal epithelial cell (IEC)</Value>
+	<Value>Fibroblasts</Value>
+	<Value>Other</Value>
+	</Value>
+	<Value>Not proven <Value> Bioinformatic inference</Value></Value>
+	<Value>Controversial</Value>
+</CustomProperty>
+
+
+<CustomProperty name="Experiment Design" tag="ExpDesign" tab="DC-Thera Annotations">
+	<AppliesTo>*</AppliesTo>
+	<Value>Ex-vivo</Value>
+	<Value>In-vivo</Value>
+	<Value>In-vitro</Value>
+	<Value>RNAi</Value>
+	<Value>Disease state</Value>
+	<Value>Genetic Modification</Value>
+	<Value>Microarray</Value>
+</CustomProperty>	
+	
+	 -->
+	
 
 </schema>
     

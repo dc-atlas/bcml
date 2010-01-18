@@ -14,7 +14,6 @@
 			<Organism>hs</Organism>
 			<OrganismPart>The organism part</OrganismPart>
 			<CellType>The organism part</CellType>
-			<Localization>The localization - is it obsolete because of using compartment? </Localization>
 			<ProvenIn>Proven in field</ProvenIn>
 			<ExperimentDesign>Inferred though computation</ExperimentDesign>
 			<PMID>19915667</PMID>
@@ -77,27 +76,27 @@
 
 	<Compartment label="cytosol">
 		<graphic refobj="extracellular" edgeLocation="DM" /> <!-- place this under extracellular -->
-		<SimpleChemical ID="SYK" label="SYK" />
-		<SimpleChemical ID="SYK_p" cloneref="SYK">
+		<Macromolecule ID="SYK" label="SYK" />
+		<Macromolecule ID="SYK_p" cloneref="SYK">
 			<StateVariable label="p" />
-		</SimpleChemical>
+		</Macromolecule>
 
 		<Process>
 			<Consumption refNode="Dectin-SYK" />
 			<Production refNode="SYK_p" />
 		</Process>
 
-		<Macromolecule label="CARD9_">
+		<Macromolecule label="CARD9_" ID="CARD9_">
 			<StateVariable label=" " />
 		</Macromolecule>
 
-		<Macromolecule label="CARD9p">
-			<StateVariable label=" " />
+		<Macromolecule label="CARD9p" ID="CARD9p">
+			<StateVariable label="p" />
 		</Macromolecule>
 
 		<Process>
 			<Consumption refNode="CARD9_" />
-			<Production refNode="CARD9_p" />
+			<Production refNode="CARD9p" />
 			<Catalysis refNode="SYK_p" />
 		</Process>
 
@@ -107,7 +106,7 @@
 		</Complex>
 
 		<Complex ID="CARD9_p_MALT1BRL10">
-			<Macromolecule cloneref="CARD9_p" />
+			<Macromolecule cloneref="CARD9p" />
 			<Complex cloneref="MALT1BRL10" />
 		</Complex>
 
@@ -116,7 +115,7 @@
 		</Macromolecule>
 
 		<Association>
-			<Consumption refNode="CARD9_p" />
+			<Consumption refNode="CARD9p" />
 			<Consumption refNode="MALT1BRL10" />
 			<Production refNode="CARD9_p_MALT1BRL10" />
 			<Modulation refNode="PLCg-2_" />

@@ -13,7 +13,6 @@
 			<Organism>hs</Organism>
 			<OrganismPart>The organism part</OrganismPart>
 			<CellType>The organism part</CellType>
-			<Localization>The localization - is it obsolete because of using compartment? </Localization>
 			<ProvenIn>Proven in field</ProvenIn>
 			<ExperimentDesign>Inferred though computation</ExperimentDesign>
 			<PMID>19915667</PMID>
