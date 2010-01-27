@@ -5,12 +5,11 @@
         <Macromolecule ID="Poly(I:C)" label="Poly(I:C)">
             <UnitOfInformation label="schemc" prefix="ct"/>
         </Macromolecule>
-        <Macromolecule ID="TLR3">
+        <Macromolecule ID="TLR3" label="TLR3">
             <Organism>hs</Organism>
             <OrganismPart/>
             <CellType>DC</CellType>
             <ProvenIn>DC</ProvenIn>
-            <PMID/>
             <MacroModule>ReceptorSensing</MacroModule>
             <EntrezGeneID>7098</EntrezGeneID>
         </Macromolecule>
@@ -19,22 +18,32 @@
             <Macromolecule cloneref="Poly(I:C)"/>
         </Complex>
         <Association>
-            <PMID/>
             <Consumption refNode="Poly(I:C)"/>
             <Consumption refNode="TLR3"/>
             <Production refNode="Poly(I:C):TLR3"/>
         </Association>
-        <Macromolecule ID="c-src_inactive">
-            <StateVariable label=" inactive"/>
-            <EntrezGeneID>6714</EntrezGeneID>
-        </Macromolecule>
-        <Macromolecule EntrezGeneID="6714" ID="c-src_active">
-            <StateVariable label="active"/>
-        </Macromolecule>
-        <Process>
-            <Consumption refNode="c-src_inactive"/>
-            <Production refNode="c-src_active"/>
+        <Complex ID="Poly(I:C):TLR3:c-src_inactive">
+            <Macromolecule cloneref="Poly(I:C)"/>
+            <Macromolecule cloneref="TLR3"/>
+            <Macromolecule ID="c-src_inactive" label="c-src">
+                <UnitOfInformation label="inactive"/>
+            </Macromolecule>
+        </Complex>
+        <Complex ID="Poly(I:C):TLR3:c-src_active">
+            <Macromolecule cloneref="Poly(I:C)"/>
+            <Macromolecule cloneref="TLR3"/>
+            <Macromolecule ID="c-src_active" label="c-src">
+                <UnitOfInformation label="active"/>
+            </Macromolecule>
+        </Complex>
+        <Association>
             <Consumption refNode="Poly(I:C):TLR3"/>
+            <Consumption refNode="c-src_inactive"/>
+            <Production refNode="Poly(I:C):TLR3:c-src_inactive"/>
+        </Association>
+        <Process>
+            <Consumption refNode="Poly(I:C):TLR3:c-src_inactive"/>
+            <Production refNode="Poly(I:C):TLR3:c-src_active"/>
         </Process>
     </Compartment>
     <Compartment label="endosomal membrane" xmlns="">
@@ -47,13 +56,9 @@
         </Complex>
         <Complex ID="Poly(I:C):TLR3:TRIF:TRAF6">
             <Macromolecule cloneref="Poly(I:C)"/>
-            <Macromolecule>
-                <cloneref>TLR3</cloneref>
-            </Macromolecule>
+            <Macromolecule cloneref="TLR3"/>
             <Macromolecule cloneref="TRIF"/>
-            <Macromolecule>
-                <cloneref>TRAF6</cloneref>
-            </Macromolecule>
+            <Macromolecule cloneref="TRAF6"/>
         </Complex>
         <Association>
             <Consumption refNode="Poly(I:C):TLR3"/>
@@ -67,13 +72,13 @@
         </Association>
     </Compartment>
     <Compartment label="cytosol" xmlns="">
-        <Macromolecule ID="TRIF">
+        <Macromolecule ID="TRIF" label="TRIF">
             <EntrezGeneID>148022</EntrezGeneID>
         </Macromolecule>
-        <Macromolecule ID="TRAF6">
+        <Macromolecule ID="TRAF6" label="TRAF6">
             <EntrezGeneID>7189</EntrezGeneID>
         </Macromolecule>
-        <Macromolecule ID="PI3K_inactive">
+        <Macromolecule ID="PI3K_inactive" label="PI3K">
             <EntrezGeneID>5286</EntrezGeneID>
             <EntrezGeneID>5287</EntrezGeneID>
             <EntrezGeneID>5288</EntrezGeneID>
@@ -91,7 +96,8 @@
             <EntrezGeneID>404543</EntrezGeneID>
             <StateVariable label="inactive"/>
         </Macromolecule>
-        <Macromolecule ID="PI3K_active">
+        <Macromolecule ID="PI3K_active" label="PI3K">
+            <StateVariable label="active"/>
             <EntrezGeneID>5286</EntrezGeneID>
             <EntrezGeneID>5287</EntrezGeneID>
             <EntrezGeneID>5288</EntrezGeneID>
@@ -107,18 +113,17 @@
             <EntrezGeneID>30849</EntrezGeneID>
             <EntrezGeneID>146850</EntrezGeneID>
             <EntrezGeneID>404543</EntrezGeneID>
-            <StateVariable label="active"/>
         </Macromolecule>
         <Process>
             <Consumption refNode="PI3K_inactive"/>
             <Production refNode="PI3K_active"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <Macromolecule ID="PKCa_">
+        <Macromolecule ID="PKCa_" label="PKCa">
             <StateVariable label=""/>
             <EntrezGeneID>5578</EntrezGeneID>
         </Macromolecule>
-        <Macromolecule ID="PKCa_p">
+        <Macromolecule ID="PKCa_p" label="PKCa">
             <StateVariable label="p"/>
             <EntrezGeneID>5578</EntrezGeneID>
         </Macromolecule>
@@ -127,36 +132,34 @@
             <Production refNode="PKCa_p"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <Macromolecule ID="akt_">
+        <Macromolecule ID="akt_" label="akt">
             <StateVariable label=""/>
             <EntrezGeneID>207</EntrezGeneID>
         </Macromolecule>
-        <Macromolecule ID="akt_p">
+        <Macromolecule ID="akt_p" label="akt">
             <StateVariable label="p"/>
             <EntrezGeneID>207</EntrezGeneID>
         </Macromolecule>
         <Process>
             <Production refNode="akt_p"/>
             <Consumption refNode="akt_"/>
-            <necessaryStimulation refNode="c-src_active"/>
-            <necessaryStimulation refNode="PI3K_active"/>
+            <NecessaryStimulation refNode="PI3K_active"/>
+            <NecessaryStimulation refNode="c-src_active"/>
         </Process>
-        <Macromolecule ID="IRF3">
+        <Macromolecule ID="IRF3" label="IRF3">
             <EntrezGeneID>3661</EntrezGeneID>
         </Macromolecule>
         <Macromolecule ID="IRF3-2" cloneref="IRF3"/>
-        <Macromolecule ID="IRF3x2_" cloneref="IRF3">
-            <UnitOfInformation>N:2</UnitOfInformation>
+        <Macromolecule ID="IRF3x2_" cardinality="2" cloneref="IRF3">
             <StateVariable label=""/>
         </Macromolecule>
-        <Process>
+        <Association>
             <Consumption refNode="IRF3"/>
             <Production refNode="IRF3x2_"/>
             <Consumption refNode="IRF3-2"/>
             <Stimulation refNode="Poly(I:C):TLR3:TRIF"/>
-        </Process>
-        <Macromolecule ID="IRF3x2_p" cloneref="IRF3">
-            <UnitOfInformation>N:2</UnitOfInformation>
+        </Association>
+        <Macromolecule ID="IRF3x2_p" cardinality="2" cloneref="IRF3">
             <StateVariable label="p"/>
         </Macromolecule>
         <Process>
@@ -165,15 +168,15 @@
             <Stimulation refNode="Poly(I:C):TLR3:TRIF"/>
         </Process>
         <Complex ID="IKKa_:IKKb_:IKKg">
-            <Macromolecule ID="IKKa_">
+            <Macromolecule ID="IKKa_" label="IKKa">
+                <StateVariable label=" "/>
                 <EntrezGeneID>1147</EntrezGeneID>
-                <StateVariable label=""/>
             </Macromolecule>
-            <Macromolecule ID="IKKb_">
+            <Macromolecule ID="IKKb_" label="IKKb">
+                <StateVariable label=""/>
                 <EntrezGeneID>3551</EntrezGeneID>
-                <StateVariable label=""/>
             </Macromolecule>
-            <Macromolecule ID="IKKg">
+            <Macromolecule ID="IKKg" label="IKKg">
                 <EntrezGeneID>8517</EntrezGeneID>
             </Macromolecule>
         </Complex>
@@ -191,34 +194,34 @@
             <Production refNode="IKKa_p:IKKb_p:IKKg"/>
             <Stimulation refNode="Poly(I:C):TLR3:TRIF:TRAF6"/>
         </Process>
-        <Complex ID="IkBa_:NF-kBp50:REL">
-            <Macromolecule ID="IkBa_">
+        <Complex ID="IkBa_:NF-kBp50:c-REL">
+            <Macromolecule ID="IkBa_" label="IkBa">
                 <StateVariable label=""/>
                 <EntrezGeneID>4792</EntrezGeneID>
             </Macromolecule>
-            <Macromolecule ID="NF-kBp50">
+            <Macromolecule ID="NF-kBp50" label="NF-kBp50">
                 <EntrezGeneID>4790</EntrezGeneID>
             </Macromolecule>
-            <Macromolecule ID="REL">
+            <Macromolecule ID="c-REL" label="c-REL">
                 <EntrezGeneID>5966</EntrezGeneID>
             </Macromolecule>
         </Complex>
-        <Complex ID="IkBa_p:NF-kBp50:REL">
-            <Macromolecule ID="IkBa_p" cloneref="IkBa_">
+        <Complex ID="IkBa_p:NF-kBp50:c-REL">
+            <Macromolecule cloneref="IkBa_">
                 <StateVariable label="p"/>
             </Macromolecule>
             <Macromolecule cloneref="NF-kBp50"/>
-            <Macromolecule cloneref="REL"/>
+            <Macromolecule cloneref="c-REL"/>
         </Complex>
         <Process>
-            <Consumption refNode="IkBa_:NF-kBp50:REL"/>
-            <Production refNode="IkBa_p:NF-kBp50:REL"/>
+            <Consumption refNode="IkBa_:NF-kBp50:c-REL"/>
+            <Production refNode="IkBa_p:NF-kBp50:c-REL"/>
             <Catalysis refNode="IKKa_p:IKKb_p:IKKg"/>
         </Process>
         <Complex ID="IkBa_:NF-kBp50:NF-kBp65">
             <Macromolecule cloneref="IkBa_"/>
             <Macromolecule cloneref="NF-kBp50"/>
-            <Macromolecule ID="NF-kBp65">
+            <Macromolecule ID="NF-kBp65" label="NF-kBp65">
                 <EntrezGeneID>5970</EntrezGeneID>
             </Macromolecule>
         </Complex>
@@ -234,17 +237,17 @@
             <Production refNode="IkBa_p:NF-kBp50:NF-kBp65"/>
             <Catalysis refNode="IKKa_p:IKKb_p:IKKg"/>
         </Process>
-        <Complex ID="NF-kBp50:REL">
+        <Complex ID="NF-kBp50:c-REL">
             <Macromolecule cloneref="NF-kBp5"/>
-            <Macromolecule cloneref="REL"/>
+            <Macromolecule cloneref="c-REL"/>
         </Complex>
         <Macromolecule ID="IkBa_p" cloneref="IkBa_p"/>
         <Dissociation>
-            <Consumption refNode="IkBa_p:NF-kBp50:REL"/>
-            <Production refNode="NF-kBp50:REL"/>
+            <Consumption refNode="IkBa_p:NF-kBp50:c-REL"/>
+            <Production refNode="NF-kBp50:c-REL"/>
             <Production refNode="IkBa_p"/>
         </Dissociation>
-        <Macromolecule ID="IkBa_p_ub" cloneref="IkBa_p">
+        <Macromolecule ID="IkBa_p_ub" cloneref="IkBa_p" label="IKBa">
             <StateVariable label="ub"/>
         </Macromolecule>
         <Process>
@@ -277,13 +280,13 @@
             <Consumption refNode="IkBa_p_ub-2"/>
         </Process>
         <Complex ID="ERK-2_:ERK-1_">
-            <Macromolecule ID="ERK-2_">
+            <Macromolecule ID="ERK-2_" label="ERK-2">
+                <StateVariable label=""/>
                 <EntrezGeneID>5594</EntrezGeneID>
-                <StateVariable label=""/>
             </Macromolecule>
-            <Macromolecule ID="ERK-1_">
-                <EntrezGeneID>5595</EntrezGeneID>
+            <Macromolecule ID="ERK-1_" label="ERK-1">
                 <StateVariable label=""/>
+                <EntrezGeneID>5595</EntrezGeneID>
             </Macromolecule>
         </Complex>
         <Complex ID="ERK-2_p:ERK-1_p">
@@ -299,9 +302,9 @@
             <Production refNode="ERK-2_p:ERK-1_p"/>
             <Stimulation refNode="Poly(I:C):TLR3:TRIF:TRAF6"/>
         </Process>
-        <Macromolecule ID="AP-1_">
-            <EntrezGeneID>2353</EntrezGeneID>
+        <Macromolecule ID="AP-1_" label="AP-1">
             <StateVariable label=""/>
+            <EntrezGeneID>2353</EntrezGeneID>
         </Macromolecule>
         <Macromolecule ID="AP-1_p" cloneref="AP-1_">
             <StateVariable label="p"/>
@@ -334,7 +337,7 @@
             <Production refNode="AP-1_p-2"/>
             <Consumption refNode="AP-1_p"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-beta" xmlns="">
+        <NucleicAcidFeature ID="geneIFN-beta" label="IFN-beta" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3456</EntrezGeneID>
         </NucleicAcidFeature>
@@ -342,7 +345,7 @@
             <Logic refNode="AP-1_p-2"/>
             <Logic refNode="geneIFN-beta"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIFN-beta" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-beta" label="IFN-beta" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3456</EntrezGeneID>
         </NucleicAcidFeature>
@@ -352,20 +355,22 @@
             <Production refNode="mRNAIFN-beta"/>
             <NecessaryStimulation refNode="AND3"/>
         </Process>
-        <Complex ID="NF-kBp50:REL-2" cloneref="NF-kBp50:REL" xmlns=""/>
+        <Complex ID="NF-kBp50:c-REL-2" cloneref="NF-kBp50:c-REL" xmlns=""/>
         <Process>
-            <Production refNode="NF-kBp50:REL-2"/>
-            <Consumtion refNode="NF-kBp50:REL"/>
+            <Production refNode="NF-kBp50:c-REL-2"/>
             <Inhibition refNode="PI3K_active"/>
+            <Consumption refNode="NF-kBp50:c-REL"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-beta-2" cloneref="geneIFN-beta" xmlns="">
-            <UnitOfInformation label="geneIFN-beta-2" prefix="ct"/>
+        <NucleicAcidFeature ID="geneIFN-beta-2" cloneref="geneIFN-beta"
+            label="IFN-beta" xmlns="">
+            <UnitOfInformation label="gene" prefix="ct"/>
         </NucleicAcidFeature>
         <AndNode ID="AND4" xmlns="">
-            <Logic refNode="NF-kBp50:REL-2"/>
+            <Logic refNode="NF-kBp50:c-REL-2"/>
             <Logic refNode="geneIFN-beta-2"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIFN-beta-2" cloneref="mRNAIFN-beta" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-beta-2" cloneref="mRNAIFN-beta"
+            label="IFN-beta" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
         </NucleicAcidFeature>
         <Source ID="S4" xmlns=""/>
@@ -377,10 +382,10 @@
         <Complex ID="NF-kBp50:NF-kBp65-2" cloneref="NF-kBp50:NF-kBp65" xmlns=""/>
         <Process>
             <Production refNode="NF-kBp50:NF-kBp65-2"/>
-            <Consumtion refNode="NF-kBp50:NF-kBp65"/>
             <Inhibition refNode="PI3K_active"/>
+            <Consumption refNode="NF-kBp50:NF-kBp65"/>
         </Process>
-        <NucleicAcidFeature ID="geneCD54" xmlns="">
+        <NucleicAcidFeature ID="geneCD54" label="CD54" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3383</EntrezGeneID>
         </NucleicAcidFeature>
@@ -388,7 +393,7 @@
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
             <Logic refNode="geneCD54"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNACD54" xmlns="">
+        <NucleicAcidFeature ID="mRNACD54" label="CD54" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3383</EntrezGeneID>
         </NucleicAcidFeature>
@@ -398,7 +403,7 @@
             <Production refNode="mRNACD54"/>
             <NecessaryStimulation refNode="AND5"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL-6" xmlns="">
+        <NucleicAcidFeature ID="geneIL-6" label="IL-6" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3569</EntrezGeneID>
         </NucleicAcidFeature>
@@ -406,7 +411,7 @@
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
             <Logic refNode="geneIL-6"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIL-6" xmlns="">
+        <NucleicAcidFeature ID="mRNAIL-6" label="IL-6" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3569</EntrezGeneID>
         </NucleicAcidFeature>
@@ -416,7 +421,7 @@
             <Production refNode="mRNAIL-6"/>
             <NecessaryStimulation refNode="AND6"/>
         </Process>
-        <NucleicAcidFeature ID="geneSTAT4" xmlns="">
+        <NucleicAcidFeature ID="geneSTAT4" label="STAT4" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>6775</EntrezGeneID>
         </NucleicAcidFeature>
@@ -424,7 +429,7 @@
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
             <Logic refNode="geneSTAT4"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNASTAT4" xmlns="">
+        <NucleicAcidFeature ID="mRNASTAT4" label="STAT4" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>6775</EntrezGeneID>
         </NucleicAcidFeature>
@@ -434,7 +439,7 @@
             <Production refNode="mRNASTAT4"/>
             <NecessaryStimulation refNode="AND7"/>
         </Process>
-        <NucleicAcidFeature ID="geneIP-10" xmlns="">
+        <NucleicAcidFeature ID="geneIP-10" label="IP-10" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3627</EntrezGeneID>
         </NucleicAcidFeature>
@@ -442,7 +447,7 @@
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
             <Logic refNode="geneIP-10"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIP-10" xmlns="">
+        <NucleicAcidFeature ID="mRNAIP-10" label="IP-10" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3627</EntrezGeneID>
         </NucleicAcidFeature>
@@ -452,14 +457,16 @@
             <Production refNode="mRNAIP-10"/>
             <NecessaryStimulation refNode="AND8"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-beta-3" cloneref="geneIFN-beta" xmlns="">
+        <NucleicAcidFeature ID="geneIFN-beta-3" cloneref="geneIFN-beta"
+            label="IFN-beta" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
         </NucleicAcidFeature>
         <AndNode ID="AND9" xmlns="">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
             <Logic refNode="geneIFN-beta-3"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIFN-beta-3" cloneref="mRNAIFN-beta" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-beta-3" cloneref="mRNAIFN-beta"
+            label="IFN-beta" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
         </NucleicAcidFeature>
         <Source ID="S9" xmlns=""/>
@@ -468,12 +475,12 @@
             <Production refNode="mRNAIFN-beta-3"/>
             <NecessaryStimulation refNode="AND9"/>
         </Process>
-        <Macromolecule ID="IRF3x2_p-2" cloneref="IRF3x2_p"/>
+        <Macromolecule ID="IRF3x2_p-2" cloneref="IRF3x2_p" label="IRF3"/>
         <Process>
             <Consumption refNode="IRF3x2_p"/>
             <Production refNode="IRF3x2_p-2"/>
         </Process>
-        <Macromolecule ID="CBP">
+        <Macromolecule ID="CBP" label="CBP">
             <EntrezGeneID>1387</EntrezGeneID>
         </Macromolecule>
         <Complex ID="CBP:IRF3x2_p-2">
@@ -486,7 +493,7 @@
             <Production refNode="CBP:IRF3x2_p-2"/>
             <NecessaryStimulation refNode="PKCa_p"/>
         </Association>
-        <NucleicAcidFeature ID="geneIL-12p35" xmlns="">
+        <NucleicAcidFeature ID="geneIL-12p35" label="IL-12p35" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3592</EntrezGeneID>
         </NucleicAcidFeature>
@@ -494,7 +501,7 @@
             <Logic refNode="CBP:IRF3x2_p-2"/>
             <Logic refNode="geneIL-12p35"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIL-12p35" xmlns="">
+        <NucleicAcidFeature ID="mRNAIL-12p35" label="IL-12p35" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3592</EntrezGeneID>
         </NucleicAcidFeature>
@@ -504,14 +511,16 @@
             <Production refNode="mRNAIL-12p35"/>
             <NecessaryStimulation refNode="AND10"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL-6-2" cloneref="geneIL-6" xmlns="">
+        <NucleicAcidFeature ID="geneIL-6-2" cloneref="geneIL-6"
+            label="IL-6" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
         </NucleicAcidFeature>
         <AndNode ID="AND11" xmlns="">
             <Logic refNode="CBP:IRF3x2_p-2"/>
             <Logic refNode="geneIL-6-2"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIL-6-2" cloneref="mRNAIL-6" xmlns="">
+        <NucleicAcidFeature ID="mRNAIL-6-2" cloneref="mRNAIL-6"
+            label="IL-6" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
         </NucleicAcidFeature>
         <Source ID="S11" xmlns=""/>
@@ -520,7 +529,7 @@
             <Production refNode="mRNAIL-6-2"/>
             <NecessaryStimulation refNode="AND11"/>
         </Process>
-        <NucleicAcidFeature ID="geneCCL3" xmlns="">
+        <NucleicAcidFeature ID="geneCCL3" label="CCL3" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>6348</EntrezGeneID>
         </NucleicAcidFeature>
@@ -528,7 +537,7 @@
             <Logic refNode="CBP:IRF3x2_p-2"/>
             <Logic refNode="geneCCL3"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNACCL3" xmlns="">
+        <NucleicAcidFeature ID="mRNACCL3" label="CCL3" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>6348</EntrezGeneID>
         </NucleicAcidFeature>
@@ -538,14 +547,16 @@
             <Production refNode="mRNACCL3"/>
             <NecessaryStimulation refNode="AND12"/>
         </Process>
-        <NucleicAcidFeature ID="geneIP-10-2" cloneref="geneIP-10" xmlns="">
+        <NucleicAcidFeature ID="geneIP-10-2" cloneref="geneIP-10"
+            label="IP-10" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
         </NucleicAcidFeature>
         <AndNode ID="AND13" xmlns="">
             <Logic refNode="CBP:IRF3x2_p-2"/>
             <Logic refNode="geneIP-10-2"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIP-10-2" cloneref="mRNAIP-10" xmlns="">
+        <NucleicAcidFeature ID="mRNAIP-10-2" cloneref="mRNAIP-10"
+            label="IP-10" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
         </NucleicAcidFeature>
         <Source ID="S13" xmlns=""/>
@@ -554,14 +565,16 @@
             <Production refNode="mRNAIP-10-2"/>
             <NecessaryStimulation refNode="AND13"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-beta-4" cloneref="geneIFN-beta" xmlns="">
+        <NucleicAcidFeature ID="geneIFN-beta-4" cloneref="geneIFN-beta"
+            label="IFN-beta" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
         </NucleicAcidFeature>
         <AndNode ID="AND14" xmlns="">
             <Logic refNode="CBP:IRF3x2_p-2"/>
             <Logic refNode="geneIFN-beta-4"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIFN-beta-4" cloneref="mRNAIFN-beta" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-beta-4" cloneref="mRNAIFN-beta"
+            label="IFN-beta" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
         </NucleicAcidFeature>
         <Source ID="S14" xmlns=""/>
@@ -570,11 +583,11 @@
             <Production refNode="mRNAIFN-beta-4"/>
             <NecessaryStimulation refNode="AND14"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL-12p40" xmlns="">
+        <NucleicAcidFeature ID="geneIL-12p40" label="IL-12p40" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3593</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAIL-12p40" xmlns="">
+        <NucleicAcidFeature ID="mRNAIL-12p40" label="IL-12p40" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3593</EntrezGeneID>
         </NucleicAcidFeature>
@@ -585,11 +598,11 @@
             <NecessaryStimulation refNode="geneIL-12p40"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneCCR7" xmlns="">
+        <NucleicAcidFeature ID="geneCCR7" label="CCR7" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>1236</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNACCR7" xmlns="">
+        <NucleicAcidFeature ID="mRNACCR7" label="CCR7" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>1236</EntrezGeneID>
         </NucleicAcidFeature>
@@ -600,11 +613,11 @@
             <NecessaryStimulation refNode="geneCCR7"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL-10" xmlns="">
+        <NucleicAcidFeature ID="geneIL-10" label="IL-10" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3586</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAIL-10" xmlns="">
+        <NucleicAcidFeature ID="mRNAIL-10" label="IL-10" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3586</EntrezGeneID>
         </NucleicAcidFeature>
@@ -615,11 +628,11 @@
             <NecessaryStimulation refNode="geneIL-10"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneTNF-alpha" xmlns="">
+        <NucleicAcidFeature ID="geneTNF-alpha" label="TNF-alpha" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>7124</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNATNF-alpha" xmlns="">
+        <NucleicAcidFeature ID="mRNATNF-alpha" label="TNF-alpha" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>7124</EntrezGeneID>
         </NucleicAcidFeature>
@@ -630,11 +643,11 @@
             <NecessaryStimulation refNode="geneTNF-alpha"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-alpha" xmlns="">
+        <NucleicAcidFeature ID="geneIFN-alpha" label="IFN-alpha" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3439</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAIFN-alpha" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-alpha" label="IFN-alpha" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3439</EntrezGeneID>
         </NucleicAcidFeature>
@@ -645,11 +658,11 @@
             <NecessaryStimulation refNode="geneIFN-alpha"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-lambda1" xmlns="">
+        <NucleicAcidFeature ID="geneIFN-lambda1" label="IFN-lambda1" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>282618</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAIFN-lambda1" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-lambda1" label="IFN-lambda1" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>282618</EntrezGeneID>
         </NucleicAcidFeature>
@@ -660,11 +673,11 @@
             <NecessaryStimulation refNode="geneIFN-lambda1"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-lambda2" xmlns="">
+        <NucleicAcidFeature ID="geneIFN-lambda2" label="IFN-lambda2" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>282616</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAIFN-lambda2" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-lambda2" label="IFN-lambda2" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>282616</EntrezGeneID>
         </NucleicAcidFeature>
@@ -675,11 +688,11 @@
             <NecessaryStimulation refNode="geneIFN-lambda2"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFN-lambda3" xmlns="">
+        <NucleicAcidFeature ID="geneIFN-lambda3" label="IFN-lambda3" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>282617</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAIFN-lambda3" xmlns="">
+        <NucleicAcidFeature ID="mRNAIFN-lambda3" label="IFN-lambda3" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>282617</EntrezGeneID>
         </NucleicAcidFeature>
@@ -690,11 +703,11 @@
             <NecessaryStimulation refNode="geneIFN-lambda3"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL-1alpha" xmlns="">
+        <NucleicAcidFeature ID="geneIL-1alpha" label="IL-1alpha" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3552</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAIL-1alpha" xmlns="">
+        <NucleicAcidFeature ID="mRNAIL-1alpha" label="IL-1alpha" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3552</EntrezGeneID>
         </NucleicAcidFeature>
@@ -705,7 +718,7 @@
             <NecessaryStimulation refNode="geneIL-1alpha"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneHLA-DR" xmlns="">
+        <NucleicAcidFeature ID="geneHLA-DR" label="HLA-DR" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3127</EntrezGeneID>
             <EntrezGeneID>3126</EntrezGeneID>
@@ -713,7 +726,7 @@
             <EntrezGeneID>3123</EntrezGeneID>
             <EntrezGeneID>3122</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAHLA-DR" xmlns="">
+        <NucleicAcidFeature ID="mRNAHLA-DR" label="HLA-DR" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3127</EntrezGeneID>
             <EntrezGeneID>3126</EntrezGeneID>
@@ -728,11 +741,11 @@
             <NecessaryStimulation refNode="geneHLA-DR"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneCD40" xmlns="">
+        <NucleicAcidFeature ID="geneCD40" label="CD40" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>958</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNACD40" xmlns="">
+        <NucleicAcidFeature ID="mRNACD40" label="CD40" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>958</EntrezGeneID>
         </NucleicAcidFeature>
@@ -743,11 +756,11 @@
             <NecessaryStimulation refNode="geneCD40"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneCD86" xmlns="">
+        <NucleicAcidFeature ID="geneCD86" label="CD86" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>942</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNACD86" xmlns="">
+        <NucleicAcidFeature ID="mRNACD86" label="CD86" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>942</EntrezGeneID>
         </NucleicAcidFeature>
@@ -762,7 +775,7 @@
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>941</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNACD80" xmlns="">
+        <NucleicAcidFeature ID="mRNACD80" label="CD80" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>941</EntrezGeneID>
         </NucleicAcidFeature>
@@ -773,11 +786,11 @@
             <NecessaryStimulation refNode="geneCD80"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneB7-H1" xmlns="">
+        <NucleicAcidFeature ID="geneB7-H1" label="B7-H1" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>29126</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAB7-H1" xmlns="">
+        <NucleicAcidFeature ID="mRNAB7-H1" label="B7-H1" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>29126</EntrezGeneID>
         </NucleicAcidFeature>
@@ -788,11 +801,11 @@
             <NecessaryStimulation refNode="geneB7-H1"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneSOCS1" xmlns="">
+        <NucleicAcidFeature ID="geneSOCS1" label="SOCS1" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>8651</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNASOCS1" xmlns="">
+        <NucleicAcidFeature ID="mRNASOCS1" label="SOCS1" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>8651</EntrezGeneID>
         </NucleicAcidFeature>
@@ -803,11 +816,11 @@
             <NecessaryStimulation refNode="geneSOCS1"/>
             <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
-        <NucleicAcidFeature ID="geneINDO" xmlns="">
+        <NucleicAcidFeature ID="geneINDO" label="INDO" xmlns="">
             <UnitOfInformation label="gene" prefix="ct"/>
             <EntrezGeneID>3620</EntrezGeneID>
         </NucleicAcidFeature>
-        <NucleicAcidFeature ID="mRNAINDO" xmlns="">
+        <NucleicAcidFeature ID="mRNAINDO" label="INDO" xmlns="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <EntrezGeneID>3620</EntrezGeneID>
         </NucleicAcidFeature>
