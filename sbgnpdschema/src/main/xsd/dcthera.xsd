@@ -66,7 +66,7 @@
 			<complexContent>
 				<extension base="sbgn:StatefulEntiyPoolNodeType">
 					<sequence>
-						<element name="EntrezGeneID" type="integer" minOccurs="0">
+						<element name="EntrezGeneID" type="integer" minOccurs="0" maxOccurs="unbounded">
 							<annotation>
 								<documentation>The EntrezGeneID. Complexes should not have a EntrezGeneID, since the 
 								EntrezGeneID is provided at the single gene level.
