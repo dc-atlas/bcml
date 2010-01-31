@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Complex ID="c1">
+		<Macromolecule ID="m1" />  <!-- Valid -->
+		<Macromolecule ID="m2" />
+		<Process ID="p1"><!-- Invalid placement, cannot be here in the complex -->
+			<Consumption refNode="m1" />
+			<Production refNode="m2" />
+		</Process>
+
+	</Complex>
+
+</sbgn:SBGN.PD.L1>

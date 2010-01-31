@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Submap ID="TestSubmap1" label="Submap1">
+		<Tag ID="t1" label="test1"></Tag>
+		<fileLocation>f1.xml</fileLocation>	
+	</Submap>
+	
+		<Macromolecule ID="Dectin-1_p1" >
+			<Equivalence refNode="t1"></Equivalence>   <!-- Required equivalence -->
+		</Macromolecule>
+		
+		<Macromolecule ID="Dectin-1_p2">
+		</Macromolecule>
+
+	<Submap ID="TestSubmap2" label="Submap1">
+	
+		<Tag ID="t21" label="test2.1">
+				<Equivalence refNode="Dectin-1_p2"></Equivalence> <!-- Required equivalence -->
+		</Tag>
+
+		<Macromolecule label="CARD9_" ID="CARD9_"> <!-- Invalid, cannot be contained in a submap -->
+			<StateVariable label=" " />
+		</Macromolecule>
+		<fileLocation>f2.xml</fileLocation>	
+	</Submap>
+
+</sbgn:SBGN.PD.L1>

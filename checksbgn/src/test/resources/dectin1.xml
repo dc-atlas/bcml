@@ -10,11 +10,11 @@
 		</Macromolecule>
 
 		<Macromolecule ID="Dectin-1" cardinality="2">			
-			<Organism>hs</Organism>
-			<OrganismPart>The organism part</OrganismPart>
-			<CellType>The organism part</CellType>
-			<ProvenIn>Proven in field</ProvenIn>
-			<ExperimentDesign>Inferred though computation</ExperimentDesign>
+			<Organism>Homo sapiens</Organism>
+			<OrganismPart>Thymus</OrganismPart>
+			<CellType>Monocyte</CellType>
+			<ProvenIn>Macrophage</ProvenIn>
+			<ExperimentDesign>Disease state</ExperimentDesign>
 			<PMID>19915667</PMID>
 			<PMID>19864674</PMID>
 			<PMID>19811837</PMID>
@@ -204,19 +204,19 @@
 			<CloneMarker />
 		</Macromolecule>
 
-		<Dissasociation>
+		<Dissociation>
 			<Consumption refNode="IkaBalNFkaB1RELA" />
 			<Production refNode="IkappaBalpha1" />
 			<Production refNode="NFkaB1RELA" />
 			<Modulation refNode="CARD9_p_MALT1BRL10_TRAF6" />
-		</Dissasociation>
+		</Dissociation>
 
-		<Dissasociation>
+		<Dissociation>
 			<Consumption refNode="IkaBalNFkaB1RELB" />
 			<Production refNode="IkappaBalpha2" />
 			<Production refNode="NFkaB1RELB" />
 			<Modulation refNode="CARD9_p_MALT1BRL10_TRAF6" />
-		</Dissasociation>
+		</Dissociation>
 
 		<Macromolecule ID="AP1">
 		</Macromolecule>

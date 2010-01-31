@@ -13,7 +13,7 @@ xmlns="http://www.miravtech.com/SBGN">
 	<xs:element name="OmittedProcess" type="OmittedProcessType"></xs:element>
 	<xs:element name="UncertainProcess" type="UncertainProcessType"></xs:element>
 	<xs:element name="Association" type="AssociationType"></xs:element>
-	<xs:element name="Dissasociation" type="DissasociationType"></xs:element>
+	<xs:element name="Dissociation" type="DissociationType"></xs:element>
 	<xs:element name="Phenotype" type="PhenotypeType"></xs:element>
 
 	<xs:element name="Compartment" type="CompartmentType"></xs:element>

@@ -29,6 +29,7 @@
 				</executions>
 				<configuration>
 					<outputdirectory>${basedir}/target/generated-source</outputdirectory>
+					<extension>true</extension>
 				</configuration>
 			</plugin>
 		</plugins>

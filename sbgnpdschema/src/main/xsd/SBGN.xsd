@@ -11,9 +11,6 @@
 
 	<xs:import namespace="http://www.miravtech.com/SBGN-GRAPHICS"
 		schemaLocation="graphics.xsd" />
-
-
-
 	<xs:annotation>
 		<xs:documentation>
 			This schema describes the SBGN PD Level 1 elements
@@ -217,10 +214,10 @@
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:complexType name="DissasociationType">
+	<xs:complexType name="DissociationType">
 		<xs:annotation>
 			<xs:documentation>
-				A process of type disassociation.
+				A process of type disociation.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>

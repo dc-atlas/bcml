@@ -16,12 +16,12 @@
 			<complexContent>
 				<extension base="sbgn:SBGNGlyphType">
 					<sequence>
-						<element name="Organism" type="string" minOccurs="0" />
-						<element name="OrganismPart" type="string" minOccurs="0" />
-						<element name="CellType" type="string" minOccurs="0" />
+						<element name="Organism" type="sbgn:OrganismEnum" minOccurs="0" />
+						<element name="OrganismPart" type="sbgn:OrganismpartEnum" minOccurs="0" />
+						<element name="CellType" type="sbgn:CelltypeEnum" minOccurs="0" />
 <!-- 						<element name="Localization" type="string" minOccurs="0" />    -->
-						<element name="ProvenIn" type="string" minOccurs="0" />  
-						<element name="ExperimentDesign" type="string" minOccurs="0" />
+						<element name="ProvenIn" type="sbgn:ProvenInType" minOccurs="0" />  
+						<element name="ExperimentDesign" type="sbgn:ExperimentDesignType" minOccurs="0" />
 						<element name="PMID" type="integer" minOccurs="0" maxOccurs="unbounded" />
 					</sequence>
 				</extension>
@@ -116,7 +116,6 @@
 
 
 	
-	<!-- 
 	
 	
 		<simpleType name="OrganismpartEnum">
@@ -128,120 +127,80 @@
 			<enumeration value="Pheripheral Blood"></enumeration>
 			<enumeration value="Spleen"></enumeration>
 			<enumeration value="Peripheral Lymph Node"></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
-			<enumeration value=""></enumeration>
+			<enumeration value="Mesenteric Lymph Node"></enumeration>
+			<enumeration value="Bone Marrow"></enumeration>
+			<enumeration value="Peyer's Patches"></enumeration>
+			<enumeration value="Colon"></enumeration>
+			<enumeration value="Tumor Biopsy"></enumeration>
+			<enumeration value="Thymus"></enumeration>
+			<enumeration value="Intestinal mucosa"></enumeration>
 		</restriction>
 	</simpleType>
-	
-	<simpleType name="">
+
+
+	<simpleType name="CelltypeEnum">
 		<annotation>
 			<documentation>
 			</documentation>
 		</annotation>
 		<restriction base="string">
-			<enumeration value=""></enumeration>
+			<enumeration value="Macrophage"></enumeration>
+			<enumeration value="Monocyte"></enumeration>
+			<enumeration value="T cell"></enumeration>
+			<enumeration value="Dendritic cells (DC)"></enumeration>
+			<enumeration value="Myeloid"></enumeration>
+			<enumeration value="Plasmacytoid"></enumeration>
+			<enumeration value="Interferon producing killer"></enumeration>
+			<enumeration value="Follicular"></enumeration>
+			<enumeration value="Spleen derived"></enumeration>
+			<enumeration value="Monocyte derived"></enumeration>
+			<enumeration value="Langerhans cell (LC)"></enumeration>
+			<enumeration value="Natural killer cell (NK)"></enumeration>
+			<enumeration value="Intestinal epithelial cell (IEC)"></enumeration>
 		</restriction>
 	</simpleType>
 	
 
 
-<CustomProperty name="Organism part" tag="Organismpart" tab="DC-Thera Annotations">
-	<AppliesTo>*</AppliesTo>
-	<Value></Value>
-	<Value></Value>
-	<Value></Value>
-	<Value></Value>
-	<Value>Bone Marrow</Value>
-	<Value>Peyer's Patches</Value>
-	<Value>Colon</Value>
-	<Value>Tumor Biopsy</Value>
-	<Value>Thymus</Value>
-	<Value>Intestinal mucosa</Value>
-</CustomProperty>
-
-
-<CustomProperty name="Cell type" tag="Celltype" tab="DC-Thera Annotations">
-	<AppliesTo>*</AppliesTo>
-	<Value>Macrophage</Value>
-	<Value>Monocyte</Value>
-	<Value>T cell</Value>
-	<Value>Dendritic cells (DC)
-	<Value>       Myeloid</Value>
-	<Value>       Plasmacytoid</Value>
-	<Value>       Interferon producing killer</Value>
-	<Value>       Follicular</Value>
-	<Value>       Spleen derived</Value>
-	<Value>       Monocyte derived</Value>
-	</Value>
-	<Value>Langerhans cell (LC)</Value>
-	<Value>Natural killer cell (NK)</Value>
-	<Value>Intestinal epithelial cell (IEC)</Value>
-</CustomProperty>
-
-	
-	
-<CustomProperty name="Localization" tag="Localization" tab="DC-Thera Annotations">
-	<AppliesTo>*</AppliesTo>
-	<Value>Cell
-	<Value>      Cytoplasm
-	<Value>            Golgi apparatus</Value>
-	<Value>            Cytoskeleton</Value>
-	<Value>            Cytosol</Value>
-	<Value>            Endoplasmic reticulum</Value>
-	<Value>            Endocytic compartment</Value>
-	<Value>            Mitochondria</Value>
-	<Value>            Peroxisome</Value>
-	</Value>
-	<Value>      Nucleus</Value>
-	<Value>      Plasma membrane
-	<Value>            lipid raft</Value>
-	<Value>            external side of plasma membrane</Value>
-	<Value>            internal side of plasma membrane</Value>
-	</Value>
-	</Value>
-	<Value>Extracellular</Value>
-</CustomProperty>
+	<simpleType name="ProvenInType">
+		<annotation>
+			<documentation>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="Macrophage"></enumeration>
+			<enumeration value="Monocyte"></enumeration>
+			<enumeration value="T cell"></enumeration>
+			<enumeration value="Dendritic cells (DC)"></enumeration>
+			<enumeration value="Langerhans cell (LC)"></enumeration>
+			<enumeration value="Natural killer cell (NK)"></enumeration>
+			<enumeration value="Intestinal epithelial cell (IEC)"></enumeration>
+			<enumeration value="Fibroblasts"></enumeration>
+			<enumeration value="Other"></enumeration>
+			<enumeration value="Not proven"></enumeration>
+			<enumeration value="Bioinformatic inference"></enumeration>
+			<enumeration value="Controversial"></enumeration>
+		</restriction>
+	</simpleType>
 	
 
-<CustomProperty name="Proven in" tag="Evidence" tab="DC-Thera Annotations">
-	<AppliesTo>*</AppliesTo>
-	<Value>Proven in
-	<Value>Macrophage</Value>
-	<Value>Monocyte</Value>
-	<Value>T cell</Value>
-	<Value>Dendritic cells (DC)</Value>
-	<Value>Langerhans cell (LC)</Value>
-	<Value>Natural killer cell (NK)</Value>
-	<Value>Intestinal epithelial cell (IEC)</Value>
-	<Value>Fibroblasts</Value>
-	<Value>Other</Value>
-	</Value>
-	<Value>Not proven <Value> Bioinformatic inference</Value></Value>
-	<Value>Controversial</Value>
-</CustomProperty>
 
+	<simpleType name="ExperimentDesignType">
+		<annotation>
+			<documentation>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="Ex-vivo"></enumeration>
+			<enumeration value="In-vivo"></enumeration>
+			<enumeration value="In-vitro"></enumeration>
+			<enumeration value="RNAi"></enumeration>
+			<enumeration value="Disease state"></enumeration>
+			<enumeration value="Genetic Modification"></enumeration>
+			<enumeration value="Microarray"></enumeration>
+		</restriction>
+	</simpleType>
 
-<CustomProperty name="Experiment Design" tag="ExpDesign" tab="DC-Thera Annotations">
-	<AppliesTo>*</AppliesTo>
-	<Value>Ex-vivo</Value>
-	<Value>In-vivo</Value>
-	<Value>In-vitro</Value>
-	<Value>RNAi</Value>
-	<Value>Disease state</Value>
-	<Value>Genetic Modification</Value>
-	<Value>Microarray</Value>
-</CustomProperty>	
-	
-	 -->
-	
 
 </schema>
     

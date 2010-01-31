@@ -41,7 +41,7 @@ class CheckReport {
 		ERROR_SOURCE_HAS_ONLY_CONSUMPTION(
 				"The source %s must only contain consumption arcs."), //
 		ERROR_NUCLEIC_ACID_CANNOT_BE_CATALYST(
-				"The nucleic acid feature %s cannot have a catalist arch."), //
+				"The nucleic acid feature %s cannot be a catalist."), //
 		ERROR_PROCESS_CANNOT_HAVE_LOGIC_OR_EQUIVALENCE_ARCS(
 				"Process %s cannot be connected by logic or equivalence arcs"), //
 		ERROR_NOT_NODES_SHOULDHAVE2ARCS_AND_ONE_LOGIC(
@@ -50,7 +50,9 @@ class CheckReport {
 				"Logical node %s must be connected to at least three arcs, two of them logical."), //
 		INVALID_CONNECTIONS_ON_TAG_NODE(
 				"Tag node %s may only have one equivalence arc."), //
-		THIS_PROCESS_MUST_HAVE_AT_LEAST_ONE_CONSUMPTION_AND_ONE_PRODUCTION(""), //
+		THIS_PROCESS_MUST_HAVE_AT_LEAST_ONE_CONSUMPTION_AND_ONE_PRODUCTION(
+				"The process %s must have at least one consumption and at least one production"), //
+		ERROR_THIS_EPN_CANNOT_BE_MULTIMER("The node %s cannot be a multimer!")
 
 		;
 

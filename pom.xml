@@ -42,6 +42,8 @@
 	<modules>
 		<module>sbgnpdschema</module>
 		<module>gpmlschema</module>
+		<module>graphmlschema</module>
+		<module>graphmlconvert</module>
 		<module>graphics</module>
 		<module>convertgpml</module>
 		<module>checksbgn</module>

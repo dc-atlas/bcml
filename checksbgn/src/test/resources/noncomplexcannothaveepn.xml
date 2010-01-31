@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Complex ID="c1">
+		<Macromolecule ID="m1" />  <!-- Valid -->
+		<Macromolecule ID="m2" >
+			<Macromolecule ID="m3" />  <!-- invalid, this must be in a complex -->
+		</Macromolecule>
+
+	</Complex>
+
+</sbgn:SBGN.PD.L1>

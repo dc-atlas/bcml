@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+		<Macromolecule ID="Dectin-1_p">
+			<StateVariable label="p">  
+			     <UnitOfInformation ID="test"/>   <!-- Invalid placement, cannot be in a state variable -->
+			</StateVariable>
+		</Macromolecule>
+
+</sbgn:SBGN.PD.L1>

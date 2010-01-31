@@ -10,6 +10,8 @@
     attributeFormDefault="unqualified"
     >
 
+
+ 
   <xs:annotation>
     <xs:documentation
         source="http://graphml.graphdrawing.org/"
@@ -18,6 +20,7 @@
     </xs:documentation>
   </xs:annotation>
   <xs:redefine schemaLocation="graphml-structure.xsd">
+
     <xs:attributeGroup name="key.extra.attrib">
       <xs:annotation>
       <xs:documentation

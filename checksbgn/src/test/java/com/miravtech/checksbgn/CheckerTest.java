@@ -93,7 +93,6 @@ public class CheckerTest {
 			throw new RuntimeException("Two errors was expected!");
 	}
 
-	// TODO
 	@Test
 	public void InvalidEquivalenceNode() throws JAXBException, SAXException {
 		Checker c = new Checker();
@@ -109,19 +108,124 @@ public class CheckerTest {
 					"ERROR_EQUIVALENCE_ARC_MUST_LINK_A_TAG error expected!");
 
 	}
-	// TODO SUBMAP_CAN_ONLY_CONTAIN_LABELS
-	// TODO NODE_CANNOT_CONTAIN_OTHER_GLYPHS
-	// TODO COMPARTMENTS_CANNOT_BE_CONTAINED
-	// TODO PROCESSES_CANNOT_CONTAIN_OTHER_NODES
-	// TODO INVALID_NODE_CONTAINED_IN_EPN
-	// TODO NON_COMPLEX_EPN_CANNOT_CONTAIN_EPN
-	// TODO ERRORCODES.ERROR_SINK_HAS_ONLY_PRODUCTION
-	// TODO ERRORCODES.ERROR_SOURCE_HAS_ONLY_CONSUMPTION
-	// TODO ERRORCODES.ERROR_NUCLEIC_ACID_CANNOT_BE_CATALYST
+
+	@Test
+	public void TestInvalidSubmap() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/invalid_submap_test.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.SUBMAP_CAN_ONLY_CONTAIN_LABELS)
+			throw new RuntimeException(
+					"SUBMAP_CAN_ONLY_CONTAIN_LABELS error expected!");
+	}
+
+	@Test
+	public void TestInvalidNodeContainment() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/AuxiliaryNodeInvalidContent.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.NODE_CANNOT_CONTAIN_OTHER_GLYPHS)
+			throw new RuntimeException(
+					"NODE_CANNOT_CONTAIN_OTHER_GLYPHS error expected!");
+	}
+
+	@Test
+	public void TestInvalidProcessContainment() throws JAXBException,
+			SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/Auxiliary_ProcessInvalidContent.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.PROCESSES_CANNOT_CONTAIN_OTHER_NODES)
+			throw new RuntimeException(
+					"PROCESSES_CANNOT_CONTAIN_OTHER_NODES error expected!");
+	}
+
+	@Test
+	public void TestInvalidNodeInEPN() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/invalidnodecontainedinepn.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.INVALID_NODE_CONTAINED_IN_EPN)
+			throw new RuntimeException(
+					"INVALID_NODE_CONTAINED_IN_EPN error expected!");
+	}
+
+	@Test
+	public void TestEPNInEPN() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/noncomplexcannothaveepn.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.NON_COMPLEX_EPN_CANNOT_CONTAIN_EPN)
+			throw new RuntimeException(
+					"NON_COMPLEX_EPN_CANNOT_CONTAIN_EPN error expected!");
+	}
+
+	@Test
+	public void TestBadMultimer() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/badmultimer.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.ERROR_THIS_EPN_CANNOT_BE_MULTIMER)
+			throw new RuntimeException(
+					"ERROR_THIS_EPN_CANNOT_BE_MULTIMER error expected!");
+	}
+
+	@Test
+	public void TestBadSink() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/badsink.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.ERROR_SINK_HAS_ONLY_PRODUCTION)
+			throw new RuntimeException(
+					"ERRORCODES.ERROR_SINK_HAS_ONLY_PRODUCTION error expected!");
+	}
+
+	@Test
+	public void TestBadSource() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/badsource.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.ERROR_SOURCE_HAS_ONLY_CONSUMPTION)
+			throw new RuntimeException(
+					"ERRORCODES.ERROR_SOURCE_HAS_ONLY_CONSUMPTION error expected!");
+	}
+
+	@Test
+	public void TestNucleicAcidCannotBecatalyst() throws JAXBException,
+			SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/RNA_catalyst.xml"));
+		if (ret.size() != 1)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.ERROR_NUCLEIC_ACID_CANNOT_BE_CATALYST)
+			throw new RuntimeException(
+					"ERRORCODES.ERROR_NUCLEIC_ACID_CANNOT_BE_CATALYST error expected!");
+	}
+
 	// TODO ERRORCODES.ERROR_PROCESS_CANNOT_HAVE_LOGIC_OR_EQUIVALENCE_ARCS
 	// TODO ERRORCODES.ERROR_NOT_NODES_SHOULDHAVE2ARCS_AND_ONE_LOGIC
 	// TODO ERRORCODES.INVALID_LOGICAL_OPERATOR_NODE_CONNECTIONS
+
 	// TODO ERRORCODES.INVALID_CONNECTIONS_ON_TAG_NODE
 	// TODO THIS_PROCESS_MUST_HAVE_AT_LEAST_ONE_CONSUMPTION_AND_ONE_PRODUCTION
+
+	// TODO COMPARTMENTS_CANNOT_BE_CONTAINED
 
 }

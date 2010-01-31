@@ -34,7 +34,7 @@ import com.miravtech.sbgn.CloneMarkerType;
 import com.miravtech.sbgn.CompartmentType;
 import com.miravtech.sbgn.ComplexType;
 import com.miravtech.sbgn.ConsumptionArcType;
-import com.miravtech.sbgn.DissasociationType;
+import com.miravtech.sbgn.DissociationType;
 import com.miravtech.sbgn.EntityPoolNodeType;
 import com.miravtech.sbgn.EquivalenceArcType;
 import com.miravtech.sbgn.LogicArcType;
@@ -48,8 +48,10 @@ import com.miravtech.sbgn.ReferenceNodeType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
 import com.miravtech.sbgn.SBGNPDl1;
+import com.miravtech.sbgn.SimpleChemicalType;
 import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
+import com.miravtech.sbgn.StatefulEntiyPoolNodeType;
 import com.miravtech.sbgn.SubmapType;
 import com.miravtech.sbgn.TagType;
 
@@ -108,6 +110,9 @@ public class Checker {
 
 		// conceptual model
 		r.addAll(checkItemContent());
+
+		// test to check the Cardinality assigned to wrong entities
+		r.addAll(checkCardinality());
 
 		return r; // no errors
 	}
@@ -358,7 +363,7 @@ public class Checker {
 
 		// only production arcs for sink
 		if (n instanceof SinkType) {
-			if (arcs.size() != counts.get(ProductionArcType.class))
+			if (arcs.size() != getCount(counts, ProductionArcType.class))
 				return new CheckReport(
 						ERRORCODES.ERROR_SINK_HAS_ONLY_PRODUCTION, n.getID());
 		}
@@ -417,7 +422,7 @@ public class Checker {
 
 		// dissociation & association - at least one consumption, at least one
 		// production
-		if (n instanceof AssociationType || n instanceof DissasociationType) {
+		if (n instanceof AssociationType || n instanceof DissociationType) {
 			if (counts.get(ConsumptionArcType.class) == null
 					|| counts.get(ProductionArcType.class) == null)
 				return new CheckReport(
@@ -543,6 +548,28 @@ public class Checker {
 
 		// if we are still here, no error was found
 		return null;
+	}
+
+	// Source, Sink, perturbing agent or unspecified entity cannot be multimers
+	private List<CheckReport> checkCardinality() {
+		final List<CheckReport> ret = new LinkedList<CheckReport>();
+		new SBGNIterator() {
+			public void iterateNode(SBGNNodeType n) {
+				if (n instanceof EntityPoolNodeType) {
+					EntityPoolNodeType epn = (EntityPoolNodeType) n;
+					if (epn.getCardinality() != null) {
+						if (!(epn instanceof SimpleChemicalType || epn instanceof StatefulEntiyPoolNodeType)) {
+							ret
+									.add(new CheckReport(
+											ERRORCODES.ERROR_THIS_EPN_CANNOT_BE_MULTIMER,
+											n.getID()));
+						}
+					}
+				}
+			};
+		}.run(sbgnpath);
+		return ret;
+
 	}
 }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Macromolecule ID="m1">
+	</Macromolecule>
+
+	<Source ID="s1"  />
+
+	<Process>
+		<Consumption refNode="s1" />
+		<Production refNode="m1" />  <!-- Must be consumption  -->
+	</Process>
+	
+
+	<Process>   <!-- Right  -->
+		<Consumption refNode="m1" />
+		<Production refNode="s1" />  
+	</Process>
+
+
+</sbgn:SBGN.PD.L1>

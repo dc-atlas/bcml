@@ -3,11 +3,8 @@
 
 	<!--
 
-	To build the self contained JAR application:
-		mvn clean install assembly:assembly
-
-		Call:
-		 L:\unifi\trunk\sbgn\checksbgn\target>java -jar
+		To build the self contained JAR application: mvn clean install
+		assembly:assembly Call: L:\unifi\trunk\sbgn\checksbgn\target>java -jar
 		checksbgn-1.0-SNAPSHOT-jar-with-dependencies.jar
 		l:\unifi\trunk\sbgn\sbgnpdschema\src\test\resources\
 	-->
@@ -28,6 +25,19 @@
 			<artifactId>sbgnpdschema</artifactId>
 			<groupId>com.miravtech.sbgn</groupId>
 			<version>${version}</version>
+		</dependency>
+
+		<dependency> <!-- converts to graphml -->
+			<artifactId>graphmlschema</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
+
+
+		<dependency> 	<!--  bean cloning -->
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.6</version>
 		</dependency>
 	</dependencies>
 

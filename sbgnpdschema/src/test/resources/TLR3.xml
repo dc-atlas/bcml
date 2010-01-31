@@ -79,6 +79,7 @@
             <EntrezGeneID>7189</EntrezGeneID>
         </Macromolecule>
         <Macromolecule ID="PI3K_inactive" label="PI3K">
+            <StateVariable label="inactive"/>
             <EntrezGeneID>5286</EntrezGeneID>
             <EntrezGeneID>5287</EntrezGeneID>
             <EntrezGeneID>5288</EntrezGeneID>
@@ -94,7 +95,6 @@
             <EntrezGeneID>30849</EntrezGeneID>
             <EntrezGeneID>146850</EntrezGeneID>
             <EntrezGeneID>404543</EntrezGeneID>
-            <StateVariable label="inactive"/>
         </Macromolecule>
         <Macromolecule ID="PI3K_active" label="PI3K">
             <StateVariable label="active"/>
