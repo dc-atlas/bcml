@@ -29,15 +29,19 @@ public class XMLTest {
 	public void TestXMLLoad() throws ParserConfigurationException,
 			SAXException, IOException, JAXBException, Exception {
 
+	/*	
 		JAXBContext jaxbContext = JAXBContext
 				.newInstance("com.yworks.xml.graphml:org.graphdrawing.graphml.xmlns.graphml");   //
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 		InputStream f = XMLTest.class.getResourceAsStream("/DECTIN-1.gpml");
+	*/
 //		Pathway root = (Pathway) unmarshaller.unmarshal(f);
 
 //		System.out.println("Data nodes: " + root.getDataNode().size());
 
-		Marshaller marshaller = jaxbContext.createMarshaller();
+//		Marshaller marshaller = jaxbContext.createMarshaller();
+		
+		
 	//	marshaller.marshal(root, new FileOutputStream(new File(
 	//			"target/test.xml")));
 

@@ -65,7 +65,14 @@ public class GraphMLTest {
 		// "http://www.yworks.com/xml/graphml"), GraphmlType.class, out),
 		// new File("out.graphml"));
 
-		marshaller.marshal(out, new File("out.graphml"));
+		marshaller.marshal(out, new File("dectin1.graphml"));
+
+		f = GraphMLTest.class.getResourceAsStream("/TLR3.xml");
+		root = (SBGNPDl1) unmarshaller.unmarshal(f);
+
+		SBGNUtils.setIDs(root);
+		out = SBGNUtils.asGraphML(root);
+		marshaller.marshal(out, new File("TLR3.graphml"));
 
 	}
 }

@@ -1,8 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="checksbgn">
-  <test verbose="2" name="com.miravtech.checksbgn.CheckerTest" annotations="JDK">
-    <classes>
-      <class name="com.miravtech.checksbgn.CheckerTest"/>
-    </classes>
-  </test>
-</suite>

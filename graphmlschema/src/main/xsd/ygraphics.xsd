@@ -1268,6 +1268,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <!-- Proxy Shape Node 1 -->
+  <xs:complexType name="ProxyShapeNode1.type">
+  <xs:complexContent>
+  <xs:extension base="ProxyShapeNode.type"></xs:extension>
+  </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ProxyShapeNode2.type">
+  <xs:complexContent>
+  <xs:extension base="ProxyShapeNode.type"></xs:extension>
+  </xs:complexContent>
+  </xs:complexType>
+
   <!-- Generic Node -->
   <xs:complexType name="GenericNode.type">
     <xs:annotation>
@@ -1342,14 +1355,16 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="ProxyShapeNode" type="ProxyShapeNode.type">
+  <xs:element name="ProxyShapeNode" type="ProxyShapeNode1.type">
     <xs:annotation>
       <xs:documentation>
         ProxyShapeNodeRealizer element definition.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="ProxyAutoBoundsNode" type="ProxyShapeNode.type">
+
+
+  <xs:element name="ProxyAutoBoundsNode" type="ProxyShapeNode2.type">
     <xs:annotation>
       <xs:documentation>
         ProxyAutoBoundsNodeRealizer element definition.

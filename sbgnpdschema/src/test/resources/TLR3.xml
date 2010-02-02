@@ -6,10 +6,9 @@
             <UnitOfInformation label="schemc" prefix="ct"/>
         </Macromolecule>
         <Macromolecule ID="TLR3" label="TLR3">
-            <Organism>hs</Organism>
-            <OrganismPart/>
-            <CellType>DC</CellType>
-            <ProvenIn>DC</ProvenIn>
+            <Organism>Homo sapiens</Organism>
+            <CellType>Dendritic cells (DC)</CellType>
+            <ProvenIn>Dendritic cells (DC)</ProvenIn>
             <MacroModule>ReceptorSensing</MacroModule>
             <EntrezGeneID>7098</EntrezGeneID>
         </Macromolecule>

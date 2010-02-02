@@ -54,10 +54,11 @@ import com.yworks.xml.graphml.ArrowTypeType;
 import com.yworks.xml.graphml.GroupNode;
 import com.yworks.xml.graphml.NodeLabelType;
 import com.yworks.xml.graphml.PolyLineEdge;
-import com.yworks.xml.graphml.ProxyShapeNodeType;
+import com.yworks.xml.graphml.ProxyShapeNode;
 import com.yworks.xml.graphml.ShapeNode;
 import com.yworks.xml.graphml.ShapeTypeType;
 import com.yworks.xml.graphml.EdgeType.Arrows;
+import com.yworks.xml.graphml.GroupNode.State;
 import com.yworks.xml.graphml.ProxyShapeNodeType.Realizers;
 import com.yworks.xml.graphml.ShapeNode.Shape;
 
@@ -213,13 +214,26 @@ public class SBGNUtils {
 				nlt.setValue(label);
 
 				if (n instanceof ComplexType || n instanceof CompartmentType) {
-					ProxyShapeNodeType p = new ProxyShapeNodeType();
+					ProxyShapeNode p = new ProxyShapeNode();
 					p.setRealizers(new Realizers());
 					p.getRealizers().setActive(new BigInteger("0"));
 					GroupNode gnt = new GroupNode();
 					gnt.getNodeLabels().add(nlt);
+					State s = new State();
+					s.setClosed(false);
+					s.setInnerGraphDisplayEnabled(true);
 					p.getRealizers().getShapeNodesAndImageNodesAndGroupNodes()
 							.add(gnt);
+					gnt.setState(s);
+					gnt = new GroupNode();
+					NodeLabelType nlt1 = new NodeLabelType();
+					nlt1.setValue(nlt.getValue());
+					gnt.getNodeLabels().add(nlt1);
+					s = new State();
+					s.setClosed(true);
+					s.setInnerGraphDisplayEnabled(true);
+					gnt.setState(s);
+
 					dt.getContent().add(p);
 					Graph inner = new Graph();
 					inner.setEdgedefault(GraphEdgedefaultType.DIRECTED);
@@ -247,6 +261,12 @@ public class SBGNUtils {
 						if (n instanceof AssociationType)
 							sh.setType(ShapeTypeType.ELLIPSE);
 						if (n instanceof DissociationType)
+							sh.setType(ShapeTypeType.ELLIPSE);
+						if (n instanceof SinkType)
+							sh.setType(ShapeTypeType.ELLIPSE);
+						if (n instanceof SourceType)
+							sh.setType(ShapeTypeType.ELLIPSE);
+						if (n instanceof LogicalOperatorNodeType)
 							sh.setType(ShapeTypeType.ELLIPSE);
 						s.setShape(sh);
 						s.getNodeLabels().add(nlt);
