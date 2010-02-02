@@ -233,6 +233,8 @@ public class SBGNUtils {
 					s.setClosed(true);
 					s.setInnerGraphDisplayEnabled(true);
 					gnt.setState(s);
+					p.getRealizers().getShapeNodesAndImageNodesAndGroupNodes()
+							.add(gnt);
 
 					dt.getContent().add(p);
 					Graph inner = new Graph();

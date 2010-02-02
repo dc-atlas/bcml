@@ -162,7 +162,7 @@
             <StateVariable label="p"/>
         </Macromolecule>
         <Process>
-            <Consumption refNode="IRF3x2"/>
+            <Consumption refNode="IRF3x2_"/>
             <Production refNode="IRF3x2_p"/>
             <Stimulation refNode="Poly(I:C):TLR3:TRIF"/>
         </Process>
@@ -237,14 +237,14 @@
             <Catalysis refNode="IKKa_p:IKKb_p:IKKg"/>
         </Process>
         <Complex ID="NF-kBp50:c-REL">
-            <Macromolecule cloneref="NF-kBp5"/>
+            <Macromolecule cloneref="NF-kBp50"/>
             <Macromolecule cloneref="c-REL"/>
         </Complex>
-        <Macromolecule ID="IkBa_p" cloneref="IkBa_p"/>
+        <Macromolecule ID="IkBa_p__1" cloneref="IkBa_p"/>
         <Dissociation>
             <Consumption refNode="IkBa_p:NF-kBp50:c-REL"/>
             <Production refNode="NF-kBp50:c-REL"/>
-            <Production refNode="IkBa_p"/>
+            <Production refNode="IkBa_p__1"/>
         </Dissociation>
         <Macromolecule ID="IkBa_p_ub" cloneref="IkBa_p" label="IKBa">
             <StateVariable label="ub"/>
@@ -253,7 +253,7 @@
             <Consumption refNode="IkBa_p"/>
             <Production refNode="IkBa_p_ub"/>
         </Process>
-        <Source ID="S1"/>
+        <Sink ID="S1"/>
         <Process>
             <Consumption refNode="IkBa_p_ub"/>
             <Production refNode="S1"/>
@@ -273,7 +273,7 @@
             <Consumption refNode="IkBa_p-2"/>
             <Production refNode="IkBa_p_ub-2"/>
         </Process>
-        <Source ID="S2"/>
+        <Sink ID="S2"/>
         <Process>
             <Production refNode="S2"/>
             <Consumption refNode="IkBa_p_ub-2"/>

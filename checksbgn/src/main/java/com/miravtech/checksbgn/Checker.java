@@ -197,6 +197,7 @@ public class Checker {
 					// error, cyclic definition of the symbol s
 					ret.add(new CheckReport(ERRORCODES.ERROR_CYCLIC_CLONE_DEF,
 							s.getCloneref()));
+					break;
 				}
 				stack.add(crt);
 				if (crt.getCloneref() == null)
@@ -370,7 +371,7 @@ public class Checker {
 
 		// only consumption arcs for source
 		if (n instanceof SourceType) {
-			if (arcs.size() != counts.get(ConsumptionArcType.class))
+			if (arcs.size() != getCount(counts, ConsumptionArcType.class))
 				return new CheckReport(
 						ERRORCODES.ERROR_SOURCE_HAS_ONLY_CONSUMPTION, n.getID());
 		}

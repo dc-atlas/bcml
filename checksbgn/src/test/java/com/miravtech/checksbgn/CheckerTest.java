@@ -219,6 +219,21 @@ public class CheckerTest {
 					"ERRORCODES.ERROR_NUCLEIC_ACID_CANNOT_BE_CATALYST error expected!");
 	}
 
+	@Test
+	public void TestCyclicCloneref() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/cyclic_cloneref.xml"));
+		if (ret.size() != 3)
+			throw new RuntimeException("One error was expected!");
+		if (ret.get(0).code != ERRORCODES.ERROR_CYCLIC_CLONE_DEF)
+			throw new RuntimeException("ERROR_CYCLIC_CLONE_DEF error expected!");
+		if (ret.get(1).code != ERRORCODES.ERROR_CYCLIC_CLONE_DEF)
+			throw new RuntimeException("ERROR_CYCLIC_CLONE_DEF error expected!");
+		if (ret.get(2).code != ERRORCODES.ERROR_CYCLIC_CLONE_DEF)
+			throw new RuntimeException("ERROR_CYCLIC_CLONE_DEF error expected!");
+	}
+
 	// TODO ERRORCODES.ERROR_PROCESS_CANNOT_HAVE_LOGIC_OR_EQUIVALENCE_ARCS
 	// TODO ERRORCODES.ERROR_NOT_NODES_SHOULDHAVE2ARCS_AND_ONE_LOGIC
 	// TODO ERRORCODES.INVALID_LOGICAL_OPERATOR_NODE_CONNECTIONS
