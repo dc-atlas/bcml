@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!--
+
+		To build the self contained JAR application: mvn clean install
+		assembly:assembly Call: L:\unifi\trunk\sbgn\checksbgn\target>java -jar
+		checksbgn-1.0-SNAPSHOT-jar-with-dependencies.jar
+		l:\unifi\trunk\sbgn\sbgnpdschema\src\test\resources\
+	-->
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>sbgnutils</artifactId>
+	<name>sbgnutils</name>
+	<parent>
+		<groupId>com.miravtech.sbgn</groupId>
+		<artifactId>sbgn</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<description>
+		This project  consists in a library of SBGN utilities.
+	</description>
+
+	<dependencies>
+		<dependency>
+			<artifactId>sbgnpdschema</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
+
+		<dependency> <!-- converts to graphml -->
+			<artifactId>graphmlschema</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
+
+
+		<dependency> 	<!--  bean cloning -->
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.6</version>
+		</dependency>
+	</dependencies>
+
+</project>
