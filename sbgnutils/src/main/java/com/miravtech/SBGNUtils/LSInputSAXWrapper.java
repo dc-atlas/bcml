@@ -1,4 +1,4 @@
-package com.miravtech.checksbgn;
+package com.miravtech.SBGNUtils;
 
 
 import java.io.InputStream;

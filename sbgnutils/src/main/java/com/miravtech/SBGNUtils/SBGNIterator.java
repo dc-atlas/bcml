@@ -1,4 +1,4 @@
-package com.miravtech.checksbgn;
+package com.miravtech.SBGNUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +8,7 @@ import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
 import com.miravtech.sbgn.SBGNPDl1;
 
-abstract class SBGNIterator {
+abstract public class SBGNIterator {
 
 	public List<SBGNNodeType> stack = new LinkedList<SBGNNodeType>();
 

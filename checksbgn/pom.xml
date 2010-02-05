@@ -22,23 +22,11 @@
 
 	<dependencies>
 		<dependency>
-			<artifactId>sbgnpdschema</artifactId>
+			<artifactId>sbgnutils</artifactId>
 			<groupId>com.miravtech.sbgn</groupId>
 			<version>${version}</version>
 		</dependency>
 
-		<dependency> <!-- converts to graphml -->
-			<artifactId>graphmlschema</artifactId>
-			<groupId>com.miravtech.sbgn</groupId>
-			<version>${version}</version>
-		</dependency>
-
-
-		<dependency> 	<!--  bean cloning -->
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>1.6</version>
-		</dependency>
 	</dependencies>
 
 	<build>

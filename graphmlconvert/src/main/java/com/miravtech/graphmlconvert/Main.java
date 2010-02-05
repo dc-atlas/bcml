@@ -1,4 +1,4 @@
-package com.miravtech.gmplconvert;
+package com.miravtech.graphmlconvert;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -10,65 +10,97 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.graphdrawing.graphml.xmlns.graphml.Graphml;
+
+import com.miravtech.SBGNUtils.SBGNUtils;
+import com.miravtech.sbgn.SBGNPDl1;
+
 public class Main {
 
-	
-	static JAXBContext jaxbContext;   
-	static Unmarshaller unmarshaller;
-	static Marshaller marshaller;
-	
 	/**
 	 * @param args
-	 * @throws JAXBException 
+	 * @throws JAXBException
 	 */
 	public static void main(String[] args) throws JAXBException {
 
-		
-		
-		String source = "l:\\Documents and Settings\\r\\My Documents\\dcthera\\gpml tutti";
-		String destination = "c:\\temp";
+		String source, destination;
+		// String source =
+		// "l:\\Documents and Settings\\r\\My Documents\\dcthera\\gpml tutti";
+		// String destination = "c:\\temp";
 		if (args.length >= 2) {
 			source = args[0];
 			destination = args[1];
+		} else {
+			throw new IllegalArgumentException(
+					"Must provide source and destination directory");
 		}
 		File srcDir = new File(source);
 		File destDir = new File(destination);
 
-		
-		jaxbContext = JAXBContext.newInstance("org.genmapp.gpml._2008a:com.miravtech.sbgn:com.miravtech.sbgn_graphics");   
-		unmarshaller = jaxbContext.createUnmarshaller();
-		marshaller = jaxbContext.createMarshaller();
-
-		
-		for (File f : srcDir.listFiles( new GPMLFiles())) {
-			File destSBGN = new File(destDir, GPMLFiles.getName(f.getName())+ ".xml" );
-			graphmlconvert(f,destSBGN);
+		if (srcDir.isDirectory()) {
+		for (File f : srcDir.listFiles(new XMLFiles())) {
+			File destGraphML = new File(destDir, XMLFiles.getName(f.getName())
+					+ ".graphml");
+			graphmlconvert(f, destGraphML);
+		}
+		} else {
+			graphmlconvert(srcDir, destDir);
+			
 		}
 	}
 
+	private static JAXBContext jaxbContext;
+	private static JAXBContext jaxbContext2;
+	private static Unmarshaller unmarshaller;
+	private static Marshaller marshaller;
 	/**
 	 * 
 	 * Converts the gpml to SBGN files.
 	 * 
-	 * @param sourceGPML the source file (must exist)
-	 * @param destSBGN the destination file (will be overwritten)
-	 * @throws JAXBException if any issue occurs with IO or with XML parsing
+	 * @param sourceGPML
+	 *            the source file (must exist)
+	 * @param destSBGN
+	 *            the destination file (will be overwritten)
+	 * @throws JAXBException
+	 *             if any issue occurs with IO or with XML parsing
 	 */
-	public static void graphmlconvert(File sourceGraphML, File destSBGN) throws JAXBException {
+	public static void graphmlconvert(File sourceSBGN, File destGraphML)
+			throws JAXBException {
 
-		
+		if (jaxbContext == null) {
+			jaxbContext = JAXBContext
+					.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics"); //
+			unmarshaller = jaxbContext.createUnmarshaller();
+		}
+
+
+		SBGNPDl1 root = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
+
+		SBGNUtils.setIDs(root);
+		Graphml out = SBGNUtils.asGraphML(root);
+
+		if (jaxbContext2 == null) {
+			jaxbContext2 = JAXBContext
+					.newInstance("com.yworks.xml.graphml:org.graphdrawing.graphml.xmlns.graphml"); //
+			marshaller = jaxbContext2.createMarshaller();
+		}
+
+
+		marshaller.marshal(out, destGraphML);
+
 	}
 
 }
 
+class XMLFiles implements FilenameFilter {
+	public final static String XML = "XML";
+	private static Pattern file = Pattern.compile("(.*)\\." + XML);
 
-class GPMLFiles implements FilenameFilter {
-	public final static String GMPL = "gpml";
-	private static Pattern file = Pattern.compile("(.*)\\."+GMPL);
 	@Override
 	public boolean accept(File dir, String name) {
 		return file.matcher(name.toLowerCase()).matches();
 	}
+
 	public static String getName(String name) {
 		Matcher m = file.matcher(name.toLowerCase());
 		if (!m.matches())

@@ -1,4 +1,4 @@
-package com.miravtech.checksbgn;
+package com.miravtech.SBGNUtils;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -134,11 +134,13 @@ public class SBGNUtils {
 
 		}.run(in);
 
+		/*
 		// dump
 		JAXBContext jaxbContext = JAXBContext
 				.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics"); //
 		Marshaller marshaller = jaxbContext.createMarshaller();
 		marshaller.marshal(in, new File("SBGNDEBUG.xml"));
+		*/
 		// solve the clones
 
 		while (true) {

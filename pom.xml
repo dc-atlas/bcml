@@ -47,6 +47,7 @@
 		<module>graphics</module>
 		<module>convertgpml</module>
 		<module>checksbgn</module>
+		<module>sbgnutils</module>
 
 	</modules>
 </project>

@@ -92,6 +92,15 @@
 					</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+
+		<xs:attribute name="enabled" type="xs:boolean" default="true">
+			<xs:annotation>
+				<xs:documentation>
+					Boolean, specifies if the object is enabled or not.
+					</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>		
+		
 		<xs:attribute name="color" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>

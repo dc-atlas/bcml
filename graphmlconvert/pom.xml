@@ -14,15 +14,32 @@
 
 	<dependencies>
 	<dependency>
-		<artifactId>sbgnpdschema</artifactId>
-		<groupId>com.miravtech.sbgn</groupId>
-		<version>${version}</version>
-	</dependency>
-	<dependency>
-		<artifactId>graphmlschema</artifactId>
+		<artifactId>sbgnutils</artifactId>
 		<groupId>com.miravtech.sbgn</groupId>
 		<version>${version}</version>
 	</dependency>
 	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>com.miravtech.graphmlconvert.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly-all-jars.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
 
 </project>

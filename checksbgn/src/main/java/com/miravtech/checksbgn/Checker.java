@@ -25,6 +25,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import com.miravtech.SBGNUtils.LSInputSAXWrapper;
+import com.miravtech.SBGNUtils.SBGNIterator;
 import com.miravtech.checksbgn.CheckReport.ERRORCODES;
 import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.AssociationType;

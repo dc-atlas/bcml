@@ -1,4 +1,4 @@
-package com.miravtech.checksbgn;
+package com.miravtech.SBGNUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -34,10 +34,14 @@ public class GraphMLTest {
 		Graphml out = SBGNUtils.asGraphML(root);
 
 		JAXBContext jaxbContext2 = JAXBContext
-				.newInstance("com.yworks.xml.graphml:org.graphdrawing.graphml.xmlns.graphml"); //
+		.newInstance("com.yworks.xml.graphml:org.graphdrawing.graphml.xmlns.graphml"); //
+
 
 		Marshaller marshaller = jaxbContext2.createMarshaller();
+
+		marshaller.marshal(out, new File("decting1.graphml"));
 		/*
+
 		 * XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newInstance()
 		 * .createXMLStreamWriter(new FileWriter(new File("out.graphml")));
 		 * xmlStreamWriter
@@ -53,8 +57,6 @@ public class GraphMLTest {
 		// xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
 		// http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd
 
-		// TODO add @XmlRootElement(name="graphml") for graphml
-		// TODO add @XmlRootElement(name="graphml") for graphml
 
 		// xmlStreamWriter.writeDefaultNamespace("http://graphml.graphdrawing.org/xmlns/graphml");
 		// xmlStreamWriter.writeNamespace("y",
@@ -65,6 +67,7 @@ public class GraphMLTest {
 		// "http://www.yworks.com/xml/graphml"), GraphmlType.class, out),
 		// new File("out.graphml"));
 
+		/*
 		marshaller.marshal(out, new File("dectin1.graphml"));
 
 		f = GraphMLTest.class.getResourceAsStream("/TLR3.xml");
@@ -73,6 +76,6 @@ public class GraphMLTest {
 		SBGNUtils.setIDs(root);
 		out = SBGNUtils.asGraphML(root);
 		marshaller.marshal(out, new File("TLR3.graphml"));
-
+		 */
 	}
 }
