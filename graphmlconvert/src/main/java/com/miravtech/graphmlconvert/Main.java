@@ -36,17 +36,19 @@ public class Main {
 		}
 		File srcDir = new File(source);
 		File destDir = new File(destination);
-
+		int convert = 0;
 		if (srcDir.isDirectory()) {
 		for (File f : srcDir.listFiles(new XMLFiles())) {
 			File destGraphML = new File(destDir, XMLFiles.getName(f.getName())
 					+ ".graphml");
 			graphmlconvert(f, destGraphML);
+			convert++;
 		}
 		} else {
 			graphmlconvert(srcDir, destDir);
-			
+			convert++;
 		}
+		System.out.println("Converted: " + convert + " files.");
 	}
 
 	private static JAXBContext jaxbContext;
@@ -93,7 +95,7 @@ public class Main {
 }
 
 class XMLFiles implements FilenameFilter {
-	public final static String XML = "XML";
+	public final static String XML = "xml";
 	private static Pattern file = Pattern.compile("(.*)\\." + XML);
 
 	@Override

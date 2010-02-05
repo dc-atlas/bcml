@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="graphmlconvert  %-4r [%t] %-5p %c %x - %m%n" />
+		</layout>
+<!-- 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ALL" />
+		</filter> -->
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="org.apache.commons.beanutils.BeanUtils" />
+			<param name="AcceptOnMatch" value="false" />
+		</filter>
+
+	</appender>
+	<root>
+		<priority value="ALL" />
+		<appender-ref ref="ConsoleAppender" />		
+	</root>
+
+
+	
+</log4j:configuration> 
