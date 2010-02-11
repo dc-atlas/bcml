@@ -1,0 +1,27 @@
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	extensionBindingPrefixes="xjc">
+
+	<!--
+		<bindings schemaLocation="graphml-structure.xsd"
+		node="//xs:element[@name='node']"> <class ref="GDNodeType"/>
+		</bindings>
+	-->
+<!--
+	<bindings scd="x-schema::tns" xmlns:tns="http://www.yworks.com/xml/graphml">
+		<bindings scd="~tns:Node.type">
+			<class name="YNodeType" />
+		</bindings>
+		<bindings scd="~tns:Edge.type">
+			<class name="YEdgeType" />
+		</bindings>
+	</bindings>
+	-->
+
+	<globalBindings>
+		<xjc:simple />
+	</globalBindings>
+
+
+
+</bindings>

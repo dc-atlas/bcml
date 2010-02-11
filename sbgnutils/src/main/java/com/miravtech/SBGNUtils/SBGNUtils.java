@@ -1,15 +1,12 @@
 package com.miravtech.SBGNUtils;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.graphdrawing.graphml.xmlns.graphml.Data;
@@ -43,23 +40,29 @@ import com.miravtech.sbgn.ProcessType;
 import com.miravtech.sbgn.ProductionArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
-import com.miravtech.sbgn.SBGNPDl1;
+import com.miravtech.sbgn.SBGNPDL1Type;
 import com.miravtech.sbgn.SimpleChemicalType;
 import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
 import com.miravtech.sbgn.StateVariableType;
 import com.miravtech.sbgn.UncertainProcessType;
 import com.miravtech.sbgn.UnspecifiedEntityType;
+import com.miravtech.sbgn.graphics.PaintNode;
 import com.yworks.xml.graphml.ArrowTypeType;
 import com.yworks.xml.graphml.GroupNode;
 import com.yworks.xml.graphml.NodeLabelType;
 import com.yworks.xml.graphml.PolyLineEdge;
 import com.yworks.xml.graphml.ProxyShapeNode;
+import com.yworks.xml.graphml.ResourceType;
+import com.yworks.xml.graphml.Resources;
+import com.yworks.xml.graphml.SVGNode;
 import com.yworks.xml.graphml.ShapeNode;
 import com.yworks.xml.graphml.ShapeTypeType;
 import com.yworks.xml.graphml.EdgeType.Arrows;
 import com.yworks.xml.graphml.GroupNode.State;
 import com.yworks.xml.graphml.ProxyShapeNodeType.Realizers;
+import com.yworks.xml.graphml.SVGNode.SVGModel;
+import com.yworks.xml.graphml.SVGNode.SVGModel.SVGContent;
 import com.yworks.xml.graphml.ShapeNode.Shape;
 
 public class SBGNUtils {
@@ -90,7 +93,7 @@ public class SBGNUtils {
 		}
 	}
 
-	public static void setIDs(SBGNPDl1 in) throws JAXBException {
+	public static void setIDs(SBGNPDL1Type in) throws JAXBException {
 
 		// set empty labels, if ID is provided
 		new SBGNIterator() {
@@ -163,7 +166,7 @@ public class SBGNUtils {
 
 	// private static int count = 0;
 
-	public static Graphml asGraphML(SBGNPDl1 in) {
+	public static Graphml asGraphML(SBGNPDL1Type in) {
 		final Graphml graphml = new Graphml();
 		Key k;
 
@@ -178,6 +181,19 @@ public class SBGNUtils {
 		k.setId("d6");
 		k.setYfilesType("edgegraphics");
 		graphml.getKeies().add(k);
+
+		k = new Key();
+		k.setFor(KeyForType.GRAPHML);
+		k.setId("d0");
+		k.setYfilesType("resources");
+		graphml.getKeies().add(k);
+
+		
+		
+		final Resources res = new Resources();
+		Data d0 = new Data();
+		d0.getContent().add(res);
+		d0.setKey("d0");
 
 		final Graph main = new Graph();
 		graphml.getGraphsAndDatas().add(main);
@@ -198,7 +214,25 @@ public class SBGNUtils {
 				Data dt = new Data();
 				dt.setKey("d3");
 				theNode.getDatasAndPorts().add(dt);
-
+				
+				if (n instanceof SinkType || n instanceof SourceType) {
+					int sz = res.getResources().size();
+					String ID = ""+(sz+1);
+					String xml = PaintNode.DrawSyncSource();
+					ResourceType r = new ResourceType();
+					r.setId(ID);
+					r.setType("java.lang.String");
+					r.getContent().add(xml);
+					res.getResources().add(r);
+					
+					SVGNode node = new SVGNode();
+					node.setSVGModel(new SVGModel());
+					node.getSVGModel().setSvgBoundsPolicy("0");
+					node.getSVGModel().setSVGContent(new SVGContent());
+					node.getSVGModel().getSVGContent().setRefid(ID);
+					dt.getContent().add(node);
+				}
+				
 				NodeLabelType nlt = new NodeLabelType();
 				String label = n.getLabel();
 				if (n instanceof OmittedProcessType)
@@ -362,6 +396,8 @@ public class SBGNUtils {
 				main.getDatasAndNodesAndEdges().add(e);
 			};
 		}.run(in);
+
+		graphml.getGraphsAndDatas().add(d0);
 
 		return graphml;
 

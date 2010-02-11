@@ -7,25 +7,29 @@
 
 		<Macromolecule ID="13betaglucan" label="1,3-Beta-Glucan"
 			cardinality="2">
-			<UnitOfInformation label="psac" prefix="mt"/>
+			<UnitOfInformation label="psac" prefix="mt" />
 		</Macromolecule>
 
 
-		<Macromolecule ID="Dectin-1" cardinality="2">			
-			<Organism>Homo sapiens</Organism>
-			<OrganismPart>Thymus</OrganismPart>
-			<CellType>Monocyte</CellType>
-			<ProvenIn>Macrophage</ProvenIn>
-			<ExperimentDesign>Disease state</ExperimentDesign>
-			<PMID>19915667</PMID>
-			<PMID>19864674</PMID>
-			<PMID>19811837</PMID>
-			<PMID>19614557</PMID>
-			<PMID>19358895</PMID>
-			<PMID>19223162</PMID>
-			<UnitOfInformation label="psac" prefix="mt"/>
+		<Macromolecule ID="Dectin-1" cardinality="2">
+			<Finding>
+				<Organism>Homo sapiens</Organism>
+				<OrganismPart>Thymus</OrganismPart>
+				<CellType>Monocyte</CellType>
+				<ProvenIn>Macrophage</ProvenIn>
+				<ExperimentDesign>Disease state</ExperimentDesign>
+				<PMID>19915667</PMID>
+				<PMID>19864674</PMID>
+				<PMID>19811837</PMID>
+				<PMID>19614557</PMID>
+				<PMID>19358895</PMID>
+				<PMID>19223162</PMID>
+			</Finding>
+			<UnitOfInformation label="psac" prefix="mt" />
 			<MacroModule>Receptor Sensing</MacroModule>
-			<EntrezGeneID>64581</EntrezGeneID>
+			<Organism name="HS">
+			<annotation DB="EntrezGeneID" ID="64581"/>
+			</Organism>
 		</Macromolecule>
 
 		<Complex ID="13betaglucandecrin1">
@@ -247,134 +251,134 @@
 		</Complex>
 
 		<NucleicAcidFeature ID="TNFalpha_gene">
-			<UnitOfInformation label="gene" prefix="ct"/>
+			<UnitOfInformation label="gene" prefix="ct" />
 		</NucleicAcidFeature>
 
 		<NucleicAcidFeature ID="TNFalpha_RNA">
-			<UnitOfInformation label="mRNA" prefix="ct"/>
+			<UnitOfInformation label="mRNA" prefix="ct" />
 		</NucleicAcidFeature>
 
 		<NucleicAcidFeature ID="IL6_gene_1">
-			<UnitOfInformation label="gene" prefix="ct"/>
+			<UnitOfInformation label="gene" prefix="ct" />
 		</NucleicAcidFeature>
 
 		<NucleicAcidFeature ID="IL6_RNA_1">
-			<UnitOfInformation label="mRNA" prefix="ct"/>
-			<CloneMarker/>
+			<UnitOfInformation label="mRNA" prefix="ct" />
+			<CloneMarker />
 		</NucleicAcidFeature>
 
 		<NucleicAcidFeature ID="IL10_gene_1">
-			<UnitOfInformation label="gene" prefix="ct"/>
-			<CloneMarker/>
+			<UnitOfInformation label="gene" prefix="ct" />
+			<CloneMarker />
 		</NucleicAcidFeature>
 
 		<NucleicAcidFeature ID="IL10_RNA_1">
-			<UnitOfInformation label="mRNA" prefix="ct"/>
-			<CloneMarker/>
+			<UnitOfInformation label="mRNA" prefix="ct" />
+			<CloneMarker />
 		</NucleicAcidFeature>
 
 		<AndNode ID="TNFalpha_transcript">
-			<Logic refNode="NFkaB1RELA"/>
-			<Logic refNode="TNFalpha_gene"/>
+			<Logic refNode="NFkaB1RELA" />
+			<Logic refNode="TNFalpha_gene" />
 		</AndNode>
 
 		<AndNode ID="IL6_transcript1">
-			<Logic refNode="NFkaB1RELA"/>
-			<Logic refNode="IL6_gene_1"/>
+			<Logic refNode="NFkaB1RELA" />
+			<Logic refNode="IL6_gene_1" />
 		</AndNode>
 
 		<AndNode ID="IL10_transcript1">
-			<Logic refNode="NFkaB1RELA"/>
-			<Logic refNode="IL10_gene_1"/>
+			<Logic refNode="NFkaB1RELA" />
+			<Logic refNode="IL10_gene_1" />
 		</AndNode>
-		
-		<Source ID="S1"/>
-		<Source ID="S2"/>
-		<Source ID="S3"/>
-		
+
+		<Source ID="S1" />
+		<Source ID="S2" />
+		<Source ID="S3" />
+
 		<Process>
-			<Consumption refNode="S1"/>
-			<Production refNode="TNFalpha_RNA"/>
-			<NecessaryStimulation refNode="TNFalpha_transcript"/>
+			<Consumption refNode="S1" />
+			<Production refNode="TNFalpha_RNA" />
+			<NecessaryStimulation refNode="TNFalpha_transcript" />
 		</Process>
 
 		<Process>
-			<Consumption refNode="S2"/>
-			<Production refNode="IL6_RNA_1"/>
-			<NecessaryStimulation refNode="IL6_transcript1"/>
+			<Consumption refNode="S2" />
+			<Production refNode="IL6_RNA_1" />
+			<NecessaryStimulation refNode="IL6_transcript1" />
 		</Process>
 
 		<Process>
-			<Consumption refNode="S3"/>
-			<Production refNode="IL10_RNA_1"/>
-			<NecessaryStimulation refNode="IL10_transcript1"/>
+			<Consumption refNode="S3" />
+			<Production refNode="IL10_RNA_1" />
+			<NecessaryStimulation refNode="IL10_transcript1" />
 		</Process>
 
-		<NucleicAcidFeature ID="IL10_gene_2" cloneref="IL10_gene_1"/>
-		<NucleicAcidFeature ID="IL10_RNA_2" cloneref="IL10_RNA_1"/>
+		<NucleicAcidFeature ID="IL10_gene_2" cloneref="IL10_gene_1" />
+		<NucleicAcidFeature ID="IL10_RNA_2" cloneref="IL10_RNA_1" />
 
 		<AndNode ID="IL10_transcript2">
-			<Logic refNode="ERK_pAP1"/>
-			<Logic refNode="IL10_gene_2"/>
+			<Logic refNode="ERK_pAP1" />
+			<Logic refNode="IL10_gene_2" />
 		</AndNode>
-		
-		<Source ID="S4"/>
+
+		<Source ID="S4" />
 		<Process>
-			<Consumption refNode="S4"/>
-			<Production refNode="IL10_RNA_2"/>
-			<NecessaryStimulation refNode="IL10_transcript2"/>
+			<Consumption refNode="S4" />
+			<Production refNode="IL10_RNA_2" />
+			<NecessaryStimulation refNode="IL10_transcript2" />
 		</Process>
 
 		<NucleicAcidFeature ID="IL1b_gene">
-			<UnitOfInformation label="gene" prefix="ct"/>
-			<CloneMarker/>
+			<UnitOfInformation label="gene" prefix="ct" />
+			<CloneMarker />
 		</NucleicAcidFeature>
 
 		<NucleicAcidFeature ID="IL1b_RNA">
-			<UnitOfInformation label="mRNA" prefix="ct"/>
-			<CloneMarker/>
+			<UnitOfInformation label="mRNA" prefix="ct" />
+			<CloneMarker />
 		</NucleicAcidFeature>
 
-		<NucleicAcidFeature ID="IL6_gene_2" cloneref="IL6_gene_1"/>
-		<NucleicAcidFeature ID="IL6_RNA_2" cloneref="IL6_RNA_1"/>
+		<NucleicAcidFeature ID="IL6_gene_2" cloneref="IL6_gene_1" />
+		<NucleicAcidFeature ID="IL6_RNA_2" cloneref="IL6_RNA_1" />
 
-		<NucleicAcidFeature ID="IL10_gene_3" cloneref="IL10_gene_1"/>
-		<NucleicAcidFeature ID="IL10_RNA_3" cloneref="IL10_RNA_1"/>
-		
+		<NucleicAcidFeature ID="IL10_gene_3" cloneref="IL10_gene_1" />
+		<NucleicAcidFeature ID="IL10_RNA_3" cloneref="IL10_RNA_1" />
+
 		<AndNode ID="IL1b_transcript">
-			<Logic refNode="NFkaB1RELB"/>
-			<Logic refNode="IL1b_gene"/>
+			<Logic refNode="NFkaB1RELB" />
+			<Logic refNode="IL1b_gene" />
 		</AndNode>
 
 		<AndNode ID="IL6_transcript2">
-			<Logic refNode="NFkaB1RELB"/>
-			<Logic refNode="IL6_gene_2"/>
+			<Logic refNode="NFkaB1RELB" />
+			<Logic refNode="IL6_gene_2" />
 		</AndNode>
-		
+
 		<AndNode ID="IL10_transcript3">
-			<Logic refNode="NFkaB1RELB"/>
-			<Logic refNode="IL10_gene_3"/>
-		</AndNode>		
+			<Logic refNode="NFkaB1RELB" />
+			<Logic refNode="IL10_gene_3" />
+		</AndNode>
 
-		<Source ID="S5"/>
-		<Source ID="S6"/>
-		<Source ID="S7"/>
+		<Source ID="S5" />
+		<Source ID="S6" />
+		<Source ID="S7" />
 
 		<Process>
-			<Consumption refNode="S5"/>
-			<Production refNode="IL1b_RNA"/>
-			<Inhibition refNode="IL1b_transcript"/>
+			<Consumption refNode="S5" />
+			<Production refNode="IL1b_RNA" />
+			<Inhibition refNode="IL1b_transcript" />
 		</Process>
-		
+
 		<Process>
-			<Consumption refNode="S6"/>
-			<Production refNode="IL6_RNA_2"/>
-			<Inhibition refNode="IL6_transcript2"/>
+			<Consumption refNode="S6" />
+			<Production refNode="IL6_RNA_2" />
+			<Inhibition refNode="IL6_transcript2" />
 		</Process>
 		<Process>
-			<Consumption refNode="S7"/>
-			<Production refNode="IL10_RNA_3"/>
-			<Inhibition refNode="IL10_transcript3"/>
+			<Consumption refNode="S7" />
+			<Production refNode="IL10_RNA_3" />
+			<Inhibition refNode="IL10_transcript3" />
 		</Process>
 	</Compartment>
 </sbgn:SBGN.PD.L1>

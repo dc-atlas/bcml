@@ -33,6 +33,11 @@
 			<version>${version}</version>
 		</dependency>
 
+		<dependency>
+			<artifactId>graphics</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
 
 		<dependency> 	<!--  bean cloning -->
 			<groupId>commons-beanutils</groupId>

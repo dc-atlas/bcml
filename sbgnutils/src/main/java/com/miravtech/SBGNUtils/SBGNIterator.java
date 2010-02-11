@@ -6,6 +6,7 @@ import java.util.List;
 import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
+import com.miravtech.sbgn.SBGNPDL1Type;
 import com.miravtech.sbgn.SBGNPDl1;
 
 abstract public class SBGNIterator {
@@ -24,7 +25,7 @@ abstract public class SBGNIterator {
 		return stack.get(stack.size() - 1);
 	}
 
-	public void run(SBGNPDl1 n) {
+	public void run(SBGNPDL1Type n) {
 		for (SBGNNodeType nt : n.getGlyphs()) {
 			stack.add(nt);
 			run(nt);

@@ -12,6 +12,19 @@
 		This project handles graphical representation of the pathways
 	</description>
 
-	
 
+	<dependencies>
+		<dependency>
+			<artifactId>sbgnpdschema</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-svggen</artifactId>
+			<version>1.6-1</version>
+		</dependency>
+
+	</dependencies>
 </project>

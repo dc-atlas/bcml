@@ -1,6 +1,7 @@
 <schema targetNamespace="http://www.miravtech.com/SBGN" xmlns="http://www.w3.org/2001/XMLSchema"
 	xmlns:sbgn="http://www.miravtech.com/SBGN" attributeFormDefault="unqualified"
-	elementFormDefault="unqualified" >
+	elementFormDefault="unqualified">
+
 
 	<redefine schemaLocation="SBGN.xsd">
 
@@ -11,18 +12,31 @@
 			</documentation>
 		</annotation>
 
-
 		<complexType name="SBGNGlyphType">
 			<complexContent>
 				<extension base="sbgn:SBGNGlyphType">
 					<sequence>
-						<element name="Organism" type="sbgn:OrganismEnum" minOccurs="0" />
-						<element name="OrganismPart" type="sbgn:OrganismpartEnum" minOccurs="0" />
-						<element name="CellType" type="sbgn:CelltypeEnum" minOccurs="0" />
-<!-- 						<element name="Localization" type="string" minOccurs="0" />    -->
-						<element name="ProvenIn" type="sbgn:ProvenInType" minOccurs="0" />  
-						<element name="ExperimentDesign" type="sbgn:ExperimentDesignType" minOccurs="0" />
-						<element name="PMID" type="integer" minOccurs="0" maxOccurs="unbounded" />
+						<element name="Finding" minOccurs="0" maxOccurs="unbounded"
+							type="sbgn:FindingType" />
+						<element name="PMID" type="integer" minOccurs="0"
+							maxOccurs="unbounded" />
+					</sequence>
+				</extension>
+			</complexContent>
+		</complexType>
+
+		<!--
+			the root element may contain findings, considered default for the
+			rest of the items
+		-->
+		<complexType name="SBGNPDL1Type">
+			<complexContent>
+				<extension base="sbgn:SBGNPDL1Type">
+					<sequence>
+						<element name="Finding" minOccurs="0" maxOccurs="unbounded"
+							type="sbgn:FindingType" />
+						<element name="PMID" type="integer" minOccurs="0"
+							maxOccurs="unbounded" />
 					</sequence>
 				</extension>
 			</complexContent>
@@ -32,10 +46,12 @@
 			<complexContent>
 				<extension base="sbgn:SBGNNodeType">
 					<sequence>
-						<element name="MacroModule" type="string" minOccurs="0" >
+						<element name="MacroModule" type="string" minOccurs="0">
 							<annotation>
-								<documentation>Added according to the conversation from December 22rd. Possible values, as per discussion:
-									Receptor sensing, Production, Outcome.
+								<documentation>Added according to the conversation from December
+									22rd. Possible values, as per discussion:
+									Receptor sensing,
+									Production, Outcome.
 								</documentation>
 							</annotation>
 						</element>
@@ -46,7 +62,6 @@
 
 
 		<complexType name="ProcessType">
-
 			<complexContent>
 				<extension base="sbgn:ProcessType">
 					<sequence>
@@ -61,17 +76,36 @@
 				</extension>
 			</complexContent>
 		</complexType>
-		
+
 		<complexType name="StatefulEntiyPoolNodeType">
 			<complexContent>
 				<extension base="sbgn:StatefulEntiyPoolNodeType">
 					<sequence>
-						<element name="EntrezGeneID" type="integer" minOccurs="0" maxOccurs="unbounded">
+						<element name="Organism" minOccurs="0" maxOccurs="unbounded">
 							<annotation>
-								<documentation>The EntrezGeneID. Complexes should not have a EntrezGeneID, since the 
-								EntrezGeneID is provided at the single gene level.
+								<documentation>The IDs of the gene as described in various
+									databases.
+									Complexes should not have this entry, since the
+									ID is
+									provided at the single gene level.
 								</documentation>
-							</annotation>						
+							</annotation>
+							<complexType>
+								<sequence>
+									<element name="annotation" maxOccurs="unbounded">
+										<annotation>
+											<documentation>A single ID and it's database. Sample:
+												ID="1234" DB="EntrezGeneID"
+								</documentation>
+										</annotation>
+										<complexType>
+											<attribute name="DB" type="string"></attribute>
+											<attribute name="ID" type="string"></attribute>
+										</complexType>
+									</element>
+								</sequence>
+								<attribute name="name" />
+							</complexType>
 						</element>
 					</sequence>
 				</extension>
@@ -115,10 +149,10 @@
 
 
 
-	
-	
-	
-		<simpleType name="OrganismpartEnum">
+
+
+
+	<simpleType name="OrganismpartEnum">
 		<annotation>
 			<documentation>
 			</documentation>
@@ -159,7 +193,7 @@
 			<enumeration value="Intestinal epithelial cell (IEC)"></enumeration>
 		</restriction>
 	</simpleType>
-	
+
 
 
 	<simpleType name="ProvenInType">
@@ -182,7 +216,7 @@
 			<enumeration value="Controversial"></enumeration>
 		</restriction>
 	</simpleType>
-	
+
 
 
 	<simpleType name="ExperimentDesignType">
@@ -200,6 +234,28 @@
 			<enumeration value="Microarray"></enumeration>
 		</restriction>
 	</simpleType>
+
+
+	<complexType name="FindingType">
+		<sequence>
+			<element name="Organism" type="sbgn:OrganismEnum" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="OrganismPart" type="sbgn:OrganismpartEnum"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="CellType" type="sbgn:CelltypeEnum" minOccurs="0"
+				maxOccurs="unbounded" />
+			<!--
+				<element name="Localization" type="string" minOccurs="0" />
+			-->
+			<element name="ProvenIn" type="sbgn:ProvenInType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="ExperimentDesign" type="sbgn:ExperimentDesignType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<element name="PMID" type="integer" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+
 
 
 </schema>

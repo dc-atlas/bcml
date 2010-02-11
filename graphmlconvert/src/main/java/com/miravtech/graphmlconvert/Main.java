@@ -13,6 +13,7 @@ import javax.xml.bind.Unmarshaller;
 import org.graphdrawing.graphml.xmlns.graphml.Graphml;
 
 import com.miravtech.SBGNUtils.SBGNUtils;
+import com.miravtech.sbgn.SBGNPDL1Type;
 import com.miravtech.sbgn.SBGNPDl1;
 
 public class Main {
@@ -76,7 +77,7 @@ public class Main {
 		}
 
 
-		SBGNPDl1 root = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
+		SBGNPDL1Type root = ((SBGNPDl1) unmarshaller.unmarshal(sourceSBGN)).getValue();
 
 		SBGNUtils.setIDs(root);
 		Graphml out = SBGNUtils.asGraphML(root);

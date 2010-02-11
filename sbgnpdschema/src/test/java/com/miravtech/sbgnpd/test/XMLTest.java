@@ -28,6 +28,7 @@ import org.xml.sax.XMLReader;
 import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
+import com.miravtech.sbgn.SBGNPDL1Type;
 import com.miravtech.sbgn.SBGNPDl1;
 
 abstract class RecursiveSBGNIterator {
@@ -115,7 +116,8 @@ public class XMLTest {
 		SAXSource source = new SAXSource(xmlReader, new InputSource(f));
 
 		// InputStream f = XMLTest.class.getResourceAsStream("/sampleSBGN.xml");
-		SBGNPDl1 root = (SBGNPDl1) unmarshaller.unmarshal(source);
+		SBGNPDl1 root1 = (SBGNPDl1) unmarshaller.unmarshal(source);
+		SBGNPDL1Type root = root1.getValue();
 		log.debug("Elements in the root: " + root.getGlyphs().size());
 		SBGNNodeType n1 = root.getGlyphs().get(0);
 
@@ -142,7 +144,7 @@ public class XMLTest {
 		}
 
 		Marshaller marshaller = jaxbContext.createMarshaller();
-		marshaller.marshal(root, new FileOutputStream(new File(
+		marshaller.marshal(root1, new FileOutputStream(new File(
 				"target/test.xml")));
 
 	}

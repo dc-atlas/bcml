@@ -11,6 +11,7 @@ import org.graphdrawing.graphml.xmlns.graphml.Graphml;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.miravtech.sbgn.SBGNPDL1Type;
 import com.miravtech.sbgn.SBGNPDl1;
 
 public class GraphMLTest {
@@ -28,7 +29,7 @@ public class GraphMLTest {
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 		InputStream f = GraphMLTest.class.getResourceAsStream("/dectin1.xml");
-		SBGNPDl1 root = (SBGNPDl1) unmarshaller.unmarshal(f);
+		SBGNPDL1Type root = ((SBGNPDl1) unmarshaller.unmarshal(f)).getValue();
 
 		SBGNUtils.setIDs(root);
 		Graphml out = SBGNUtils.asGraphML(root);

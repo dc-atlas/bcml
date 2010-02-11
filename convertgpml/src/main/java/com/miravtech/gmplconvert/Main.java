@@ -71,7 +71,7 @@ public class Main {
 				NucleicAcidFeatureType nf = new NucleicAcidFeatureType();
 				nf.setLabel(dn.getTextLabel());
 				nf.setID(dn.getGraphId());
-				sbgnpath.getGlyphs().add(nf);
+				sbgnpath.getValue().getGlyphs().add(nf);
 			}
 		}
 		

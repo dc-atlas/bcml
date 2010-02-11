@@ -49,6 +49,7 @@ import com.miravtech.sbgn.ProductionArcType;
 import com.miravtech.sbgn.ReferenceNodeType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
+import com.miravtech.sbgn.SBGNPDL1Type;
 import com.miravtech.sbgn.SBGNPDl1;
 import com.miravtech.sbgn.SimpleChemicalType;
 import com.miravtech.sbgn.SinkType;
@@ -216,7 +217,7 @@ public class Checker {
 	/**
 	 * JAXB view of the file.
 	 */
-	private SBGNPDl1 sbgnpath;
+	private SBGNPDL1Type sbgnpath;
 	// indexes of sbgnpath
 	final Set<String> ids = new HashSet<String>();
 	final Map<String, SBGNNodeType> idsMap = new HashMap<String, SBGNNodeType>();
@@ -244,7 +245,7 @@ public class Checker {
 
 		sbgnpath = null;
 		try {
-			sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(f);
+			sbgnpath = ((SBGNPDl1) unmarshaller.unmarshal(f)).getValue();
 		} catch (UnmarshalException r) {
 			LinkedList<CheckReport> ret = new LinkedList<CheckReport>();
 
