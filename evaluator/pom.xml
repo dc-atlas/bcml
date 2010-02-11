@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>evaluator</artifactId>
+	<name>evaluator</name>
+	<parent>
+		<groupId>com.miravtech.sbgn</groupId>
+		<artifactId>sbgn</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<description>
+		This project handles the evaluation of filtering queries.
+	</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>antlr3-maven-plugin</artifactId>
+				<version>1.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>antlr</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<artifactId>sbgnpdschema</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr-runtime</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+	</dependencies>
+</project>

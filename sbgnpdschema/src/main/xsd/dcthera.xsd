@@ -65,7 +65,7 @@
 			<complexContent>
 				<extension base="sbgn:ProcessType">
 					<sequence>
-						<element name="ReactionType" type="sbgn:ReactionsEnum"
+						<element name="ReactionType" type="sbgn:ReactionTypeEnum"
 							minOccurs="0">
 							<annotation>
 								<documentation>Reaction type belongs only to the process.
@@ -114,7 +114,7 @@
 	</redefine>
 
 
-	<simpleType name="ReactionsEnum">
+	<simpleType name="ReactionTypeEnum">
 		<annotation>
 			<documentation>
 				The list of possible reaction types (sub-type of
@@ -152,7 +152,7 @@
 
 
 
-	<simpleType name="OrganismpartEnum">
+	<simpleType name="OrganismPartEnum">
 		<annotation>
 			<documentation>
 			</documentation>
@@ -172,7 +172,7 @@
 	</simpleType>
 
 
-	<simpleType name="CelltypeEnum">
+	<simpleType name="CellTypeEnum">
 		<annotation>
 			<documentation>
 			</documentation>
@@ -196,7 +196,7 @@
 
 
 
-	<simpleType name="ProvenInType">
+	<simpleType name="ProvenInEnum">
 		<annotation>
 			<documentation>
 			</documentation>
@@ -219,7 +219,7 @@
 
 
 
-	<simpleType name="ExperimentDesignType">
+	<simpleType name="ExperimentDesignEnum">
 		<annotation>
 			<documentation>
 			</documentation>
@@ -240,17 +240,19 @@
 		<sequence>
 			<element name="Organism" type="sbgn:OrganismEnum" minOccurs="0"
 				maxOccurs="unbounded" />
-			<element name="OrganismPart" type="sbgn:OrganismpartEnum"
+			<element name="OrganismPart" type="sbgn:OrganismPartEnum"
 				minOccurs="0" maxOccurs="unbounded" />
-			<element name="CellType" type="sbgn:CelltypeEnum" minOccurs="0"
+			<element name="CellType" type="sbgn:CellTypeEnum" minOccurs="0"
 				maxOccurs="unbounded" />
 			<!--
 				<element name="Localization" type="string" minOccurs="0" />
 			-->
-			<element name="ProvenIn" type="sbgn:ProvenInType" minOccurs="0"
+			<element name="ProvenIn" type="sbgn:ProvenInEnum" minOccurs="0"
 				maxOccurs="unbounded" />
-			<element name="ExperimentDesign" type="sbgn:ExperimentDesignType"
+			<element name="ExperimentDesign" type="sbgn:ExperimentDesignEnum"
 				minOccurs="0" maxOccurs="unbounded" />
+			<element name="ReactionType" type="sbgn:ReactionTypeEnum"
+							minOccurs="0" maxOccurs="unbounded"/>
 			<element name="PMID" type="integer" minOccurs="0" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>

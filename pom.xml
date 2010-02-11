@@ -48,6 +48,7 @@
 		<module>convertgpml</module>
 		<module>checksbgn</module>
 		<module>sbgnutils</module>
+		<module>evaluator</module>
 
 	</modules>
 </project>
