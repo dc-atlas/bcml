@@ -17,12 +17,26 @@ import java.util.List;
 @lexer::header {package com.miravtech.sbgn.filter.evaluator;}
 
 @members {
-public FindingType toEval;
+	public FindingType toEval;
 
+    	@Override
+    	public void recoverFromMismatchedToken(IntStream arg0,
+    			RecognitionException arg1, int arg2, BitSet arg3)
+    			throws RecognitionException {
+    	    throw new MismatchedTokenException(arg2, arg0);
+    	}
+    	
+    	@Override
+    	public void reportError(RecognitionException arg0) {
+    		super.reportError(arg0);
+    		throw new RuntimeException(arg0);
+    	}
+	
 	@SuppressWarnings("unchecked")
-	public static boolean contains(FindingType f,  String  property, String value )  {
+	public static boolean contains(FindingType f,  String  property, String val1 )  {
+	    String value = val1.substring(1,val1.length() - 1);
 		try{
-		    System.out.println("Evaluating: " + property+"="+value);
+		    //System.out.println("Evaluating: " + property+"="+value);
 			String prop = property.substring(0, 1).toUpperCase() + property.substring(1);
 			String method =  "get"+prop;
 			String enumType = "com.miravtech.sbgn."+prop+"Enum";
@@ -45,27 +59,32 @@ public FindingType toEval;
 	}
 }
 
-              
+prog:   expr EOF ;
+
 expr returns [boolean value]
-    :   e=multExpr {$value = $e.value;}
-        ( 'and' e=multExpr {$value = $value && $e.value;}
-        | 'or' e=multExpr {$value=  $value || $e.value;}
+    :   e=atom1 {$value = $e.value;}
+        (   'and' e=atom1 {$value = $value && $e.value;}
+        |   'or'  e=atom1 {$value = $value || $e.value;}
         )*
-              
     ;
 
-multExpr returns [boolean value]
-    :   e=atom {$value = $e.value;}
-    ; 
+atom1 returns [boolean value] :
+a=atom {$value = $a.value;}
+|  'not' a1=atom {$value = !( $a1.value);}
+;
 
+ 
+    
 atom returns [boolean value]
     :   BOOL {$value = Boolean.parseBoolean($BOOL.text);}
-    |   '(' expr ')' {$value = $expr.value;}
-    |   ID'=''"'VAL'"' {$value = contains(toEval, $ID.text, $VAL.text);} 
+    |   e=ID '=' v=VAL {$value = contains(toEval, $e.text, $v.text);}   
+    |   '(' e1=expr ')' {$value = $e1.value;}
     ;
 
-ID:   'organism'|'organismPart' ;
-VAL:   ('a'..'z'|'A'..'Z'|' ')+ ;
-BOOL :   'true'|'false' ;
+
+
+BOOL :   'true'|'false';
+ID  :   ('a'..'z'|'A'..'Z')+ ;
+VAL  :   '\''('a'..'z'|'A'..'Z'|' ')+'\'' ;
 NEWLINE:'\r'? '\n' ;
 WS  :   (' '|'\t')+ {skip();} ;

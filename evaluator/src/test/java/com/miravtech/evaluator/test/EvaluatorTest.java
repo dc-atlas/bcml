@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 
 import com.miravtech.sbgn.FindingType;
 import com.miravtech.sbgn.OrganismEnum;
+import com.miravtech.sbgn.OrganismPartEnum;
 import com.miravtech.sbgn.filter.evaluator.FilteringLexer;
 import com.miravtech.sbgn.filter.evaluator.FilteringParser;
 
@@ -25,42 +26,60 @@ public class EvaluatorTest {
 	}
 
 	
-	@SuppressWarnings("unchecked")
-	public static boolean contains(FindingType f,  String  property, String value ) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
-		f.getExperimentDesign();
-		String prop = property.substring(0, 1).toUpperCase() + property.substring(1);
-		String method =  "get"+prop;
-		String enumType = "com.miravtech.sbgn."+prop+"Enum";
-		Method getter = FindingType.class.getMethod(method);
-		Object o = getter.invoke(f);
-		List l = (List)o;
-		if (l.size() == 0)
-			return true;
-		Class enumClass = Class.forName(enumType);
-		Method getValue = enumClass.getMethod("value");
-		for (Object o1: l) {
-			String val = (String)getValue.invoke(o1);
-			if (val.equalsIgnoreCase(value))
-				return true;
+	private boolean evaluate(String expr, FindingType f) throws Exception {
+		ByteArrayInputStream bais = new ByteArrayInputStream(expr.getBytes());
+		ANTLRInputStream input = new ANTLRInputStream(bais);
+		FilteringLexer lexer = new FilteringLexer(input);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		FilteringParser parser = new FilteringParser(tokens);
+		parser.toEval = f;
+		try {
+			boolean ret = parser.expr();
+			return ret;
+		} catch (RuntimeException e) {
+			throw new Exception("Error parsing the condition: "+e.getMessage());
 		}
-		return false;
+		//System.out.println("Return is: "+ret);
 	}
 	
 	@Test
 	public void evaluateTest() throws Exception {
 		
-		ByteArrayInputStream bais = new ByteArrayInputStream("organism=\"Homo sapienssss\" or organism=\"Homo sapiens\"".getBytes());
-		ANTLRInputStream input = new ANTLRInputStream(bais);
-		FilteringLexer lexer = new FilteringLexer(input);
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		FilteringParser parser = new FilteringParser(tokens);
-		parser.toEval = new FindingType();
-		parser.toEval.getOrganism().add(OrganismEnum.HOMO_SAPIENS);
-		assert(contains(parser.toEval,"organism", "Homo sapiens"));
-		assert(!contains(parser.toEval,"organism", "Homo sapiens1"));
-		assert(contains(parser.toEval,"cellType", "test"));
-		boolean ret = parser.expr();
-		System.out.println("Return is: "+ret);
+		FindingType f = new FindingType();
+		f.getOrganism().add(OrganismEnum.HOMO_SAPIENS);
+		f.getOrganism().add(OrganismEnum.MUS_MUSCULUS);
+		f.getOrganismPart().add(OrganismPartEnum.BONE_MARROW);
+		assert(FilteringParser.contains(f,"organism", "'Homo sapiens'"));
+		assert(!FilteringParser.contains(f,"organism", "'Homo sapiens1'"));
+		assert(FilteringParser.contains(f,"cellType", "'test'"));
+		
+		assert(evaluate("organism='Homo sapiens'",f));
+		assert(evaluate("cellType='Test'",f));
+		assert(!evaluate("organism='Homo sapienss'",f));
+		assert(!evaluate("organism='Homo sapienss' and organism='Homo sapiens'",f));
+		assert(evaluate("organism='Homo sapienss' or organism='Homo sapiens'",f));
+		assert(evaluate("organism='Homo sapiens' and organismPart='Bone Marrow'",f));
+		assert(evaluate("( organism='Homo sapiens' or organism='Homo sapiensss')  and organismPart='Bone Marrow' ",f));
+		assert(!evaluate("( organism='Homo sapiens' or organism='Homo sapiensss')  and not organismPart='Bone Marrow' ",f));
+		try {
+			evaluate("organism='Homo sapiens' and organismPart='Bone Marrow",f);
+			assert false; //Must have been failed the test!
+		} catch (Exception e) {
+			
+		}
+		try {
+			evaluate("organism='Homo sapiens' and ",f);
+			assert false; //Must have been failed the test!
+		} catch (Exception e) {
+			
+		}
+
+		try {
+			evaluate("organism='Homo sapiens' and not ",f);
+			assert false; //Must have been failed the test!
+		} catch (Exception e) {
+			
+		}
 
 	}
 
