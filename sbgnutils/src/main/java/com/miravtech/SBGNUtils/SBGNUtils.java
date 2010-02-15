@@ -29,10 +29,8 @@ import com.miravtech.sbgn.DissociationType;
 import com.miravtech.sbgn.EntityPoolNodeType;
 import com.miravtech.sbgn.InhibitionArcType;
 import com.miravtech.sbgn.LogicalOperatorNodeType;
-import com.miravtech.sbgn.MacromoleculeType;
 import com.miravtech.sbgn.ModulationArcType;
 import com.miravtech.sbgn.NotNodeType;
-import com.miravtech.sbgn.NucleicAcidFeatureType;
 import com.miravtech.sbgn.OmittedProcessType;
 import com.miravtech.sbgn.OrNodeType;
 import com.miravtech.sbgn.PhenotypeType;
@@ -41,14 +39,16 @@ import com.miravtech.sbgn.ProductionArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
 import com.miravtech.sbgn.SBGNPDL1Type;
-import com.miravtech.sbgn.SimpleChemicalType;
 import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
 import com.miravtech.sbgn.StateVariableType;
+import com.miravtech.sbgn.StatefulEntiyPoolNodeType;
 import com.miravtech.sbgn.UncertainProcessType;
-import com.miravtech.sbgn.UnspecifiedEntityType;
+import com.miravtech.sbgn.StatefulEntiyPoolNodeType.Organism;
+import com.miravtech.sbgn.StatefulEntiyPoolNodeType.Organism.Annotation;
 import com.miravtech.sbgn.graphics.PaintNode;
 import com.yworks.xml.graphml.ArrowTypeType;
+import com.yworks.xml.graphml.GeometryType;
 import com.yworks.xml.graphml.GroupNode;
 import com.yworks.xml.graphml.NodeLabelType;
 import com.yworks.xml.graphml.PolyLineEdge;
@@ -138,12 +138,11 @@ public class SBGNUtils {
 		}.run(in);
 
 		/*
-		// dump
-		JAXBContext jaxbContext = JAXBContext
-				.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics"); //
-		Marshaller marshaller = jaxbContext.createMarshaller();
-		marshaller.marshal(in, new File("SBGNDEBUG.xml"));
-		*/
+		 * // dump JAXBContext jaxbContext = JAXBContext
+		 * .newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics"); //
+		 * Marshaller marshaller = jaxbContext.createMarshaller();
+		 * marshaller.marshal(in, new File("SBGNDEBUG.xml"));
+		 */
 		// solve the clones
 
 		while (true) {
@@ -188,8 +187,6 @@ public class SBGNUtils {
 		k.setYfilesType("resources");
 		graphml.getKeies().add(k);
 
-		
-		
 		final Resources res = new Resources();
 		Data d0 = new Data();
 		d0.getContent().add(res);
@@ -214,25 +211,31 @@ public class SBGNUtils {
 				Data dt = new Data();
 				dt.setKey("d3");
 				theNode.getDatasAndPorts().add(dt);
-				
-				if (n instanceof SinkType || n instanceof SourceType) {
+
+				if (n instanceof SinkType
+						|| n instanceof SourceType
+						|| (n instanceof EntityPoolNodeType && !(n instanceof ComplexType))) {
 					int sz = res.getResources().size();
-					String ID = ""+(sz+1);
-					String xml = PaintNode.DrawSyncSource();
+					String ID = "" + (sz + 1);
+					String xml = PaintNode.DrawNode(n);
 					ResourceType r = new ResourceType();
 					r.setId(ID);
 					r.setType("java.lang.String");
 					r.getContent().add(xml);
 					res.getResources().add(r);
-					
+
 					SVGNode node = new SVGNode();
+					GeometryType gmt = new GeometryType();
+					gmt.setWidth(PaintNode.lastPoint.getX());
+					gmt.setHeight(PaintNode.lastPoint.getY());
+					node.setGeometry(gmt);
 					node.setSVGModel(new SVGModel());
 					node.getSVGModel().setSvgBoundsPolicy("0");
 					node.getSVGModel().setSVGContent(new SVGContent());
 					node.getSVGModel().getSVGContent().setRefid(ID);
 					dt.getContent().add(node);
 				}
-				
+
 				NodeLabelType nlt = new NodeLabelType();
 				String label = n.getLabel();
 				if (n instanceof OmittedProcessType)
@@ -286,23 +289,11 @@ public class SBGNUtils {
 						ShapeNode s = new ShapeNode();
 						Shape sh = new Shape();
 						sh.setType(ShapeTypeType.RECTANGLE);
-						if (n instanceof UnspecifiedEntityType)
-							sh.setType(ShapeTypeType.ELLIPSE);
-						if (n instanceof SimpleChemicalType)
-							sh.setType(ShapeTypeType.ELLIPSE);
-						if (n instanceof MacromoleculeType)
-							sh.setType(ShapeTypeType.ROUNDRECTANGLE);
 						if (n instanceof PhenotypeType)
 							sh.setType(ShapeTypeType.DIAMOND);
-						if (n instanceof NucleicAcidFeatureType)
-							sh.setType(ShapeTypeType.ROUNDRECTANGLE);
 						if (n instanceof AssociationType)
 							sh.setType(ShapeTypeType.ELLIPSE);
 						if (n instanceof DissociationType)
-							sh.setType(ShapeTypeType.ELLIPSE);
-						if (n instanceof SinkType)
-							sh.setType(ShapeTypeType.ELLIPSE);
-						if (n instanceof SourceType)
 							sh.setType(ShapeTypeType.ELLIPSE);
 						if (n instanceof LogicalOperatorNodeType)
 							sh.setType(ShapeTypeType.ELLIPSE);
@@ -486,6 +477,34 @@ public class SBGNUtils {
 				ret.put(var.getVariable(), var.getLabel());
 			}
 		}
+		return ret;
+	}
+
+	static Set<String> getSymbols(final String organism, final String db,
+			SBGNPDL1Type root) {
+		final Set<String> ret = new HashSet<String>();
+
+		new SBGNIterator() {
+			@Override
+			public void iterateNode(SBGNNodeType n) {
+				//TODO - filtering
+				if (n instanceof StatefulEntiyPoolNodeType) {
+					StatefulEntiyPoolNodeType sepnt = (StatefulEntiyPoolNodeType) n;
+					ret.addAll(getSymbols(organism, db, sepnt));
+				}
+			}
+		}.run(root);
+		return ret;
+	}
+
+	static Set<String> getSymbols(String organism, String db,
+			StatefulEntiyPoolNodeType node) {
+		Set<String> ret = new HashSet<String>();
+		for (Organism o : node.getOrganism())
+			if (organism.equalsIgnoreCase(o.getName()))
+				for (Annotation a : o.getAnnotation())
+					if (db.equalsIgnoreCase(a.getDB()))
+						ret.add(a.getID());
 		return ret;
 	}
 

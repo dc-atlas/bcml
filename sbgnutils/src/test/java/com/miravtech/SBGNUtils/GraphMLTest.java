@@ -40,43 +40,7 @@ public class GraphMLTest {
 
 		Marshaller marshaller = jaxbContext2.createMarshaller();
 
-		marshaller.marshal(out, new File("decting1.graphml"));
-		/*
-
-		 * XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newInstance()
-		 * .createXMLStreamWriter(new FileWriter(new File("out.graphml")));
-		 * xmlStreamWriter
-		 * .setDefaultNamespace("http://graphml.graphdrawing.org/xmlns/graphml"
-		 * ); xmlStreamWriter.setPrefix("y",
-		 * "http://www.yworks.com/xml/graphml");
-		 */
-		// TODO - failing to add in the XML file:
-
-		// xmlns="http://graphml.graphdrawing.org/xmlns"
-		// xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		// xmlns:y="http://www.yworks.com/xml/graphml"
-		// xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
-		// http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd
-
-
-		// xmlStreamWriter.writeDefaultNamespace("http://graphml.graphdrawing.org/xmlns/graphml");
-		// xmlStreamWriter.writeNamespace("y",
-		// "http://www.yworks.com/xml/graphml");
-
-		// marshaller.marshal(out, xmlStreamWriter);
-		// marshaller.marshal(new JAXBElement<GraphmlType>(new QName(
-		// "http://www.yworks.com/xml/graphml"), GraphmlType.class, out),
-		// new File("out.graphml"));
-
-		/*
 		marshaller.marshal(out, new File("dectin1.graphml"));
 
-		f = GraphMLTest.class.getResourceAsStream("/TLR3.xml");
-		root = (SBGNPDl1) unmarshaller.unmarshal(f);
-
-		SBGNUtils.setIDs(root);
-		out = SBGNUtils.asGraphML(root);
-		marshaller.marshal(out, new File("TLR3.graphml"));
-		 */
 	}
 }
