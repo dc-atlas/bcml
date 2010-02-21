@@ -78,9 +78,9 @@ public class Main {
 
 
 		SBGNPDL1Type root = ((SBGNPDl1) unmarshaller.unmarshal(sourceSBGN)).getValue();
-
-		SBGNUtils.setIDs(root);
-		Graphml out = SBGNUtils.asGraphML(root);
+		SBGNUtils sbgn = new SBGNUtils(root);
+		sbgn.fillRedundantData();
+		Graphml out = sbgn.asGraphML();
 
 		if (jaxbContext2 == null) {
 			jaxbContext2 = JAXBContext

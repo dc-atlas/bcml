@@ -59,8 +59,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="graphic" type="sg:graphic" minOccurs="0"
-				maxOccurs="unbounded">
+			<xs:element name="graphic" type="sg:GraphicType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>
 						Graphic hint(s) for the current element.

@@ -1,7 +1,7 @@
 <xs:schema targetNamespace="http://www.miravtech.com/SBGN-GRAPHICS"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sg="http://www.miravtech.com/SBGN-GRAPHICS"
 	elementFormDefault="unqualified">
-	<xs:complexType name="graphic">
+	<xs:complexType name="GraphicType">
 		<xs:annotation>
 			<xs:documentation>
 				The graphic object provides the hints about the

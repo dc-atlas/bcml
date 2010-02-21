@@ -13,14 +13,25 @@
 		</annotation>
 
 		<complexType name="SBGNGlyphType">
+
 			<complexContent>
 				<extension base="sbgn:SBGNGlyphType">
+
+
 					<sequence>
 						<element name="Finding" minOccurs="0" maxOccurs="unbounded"
 							type="sbgn:FindingType" />
 						<element name="PMID" type="integer" minOccurs="0"
 							maxOccurs="unbounded" />
 					</sequence>
+
+					<attribute name="selected" type="sbgn:SelectType">
+						<annotation>
+							<documentation>
+								The result after running a query, for each entry.
+							</documentation>
+						</annotation>
+					</attribute>
 				</extension>
 			</complexContent>
 		</complexType>
@@ -113,6 +124,43 @@
 		</complexType>
 	</redefine>
 
+
+
+	<simpleType name="SelectType">
+		<restriction base="string">
+			<enumeration value="exclude">
+				<annotation>
+					<documentation>
+						The selected attribute is "exclude" if the
+						finding
+						list of the
+						glyph did not match the query
+								</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="include">
+				<annotation>
+					<documentation>
+						The selected is "include" if the finding list of
+						the
+						glyph matched
+						the query
+								</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="affected">
+				<annotation>
+					<documentation>
+						The selected is "affected" if the finding list of
+						the glyph matched
+						the query but the containing process is
+						affected
+						by a disabled glyph.
+								</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
 
 	<simpleType name="ReactionTypeEnum">
 		<annotation>
@@ -252,7 +300,7 @@
 			<element name="ExperimentDesign" type="sbgn:ExperimentDesignEnum"
 				minOccurs="0" maxOccurs="unbounded" />
 			<element name="ReactionType" type="sbgn:ReactionTypeEnum"
-							minOccurs="0" maxOccurs="unbounded"/>
+				minOccurs="0" maxOccurs="unbounded" />
 			<element name="PMID" type="integer" minOccurs="0" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>

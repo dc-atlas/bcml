@@ -1,8 +1,10 @@
 package com.miravtech.SBGNUtils;
 
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +30,7 @@ import com.miravtech.sbgn.ConsumptionArcType;
 import com.miravtech.sbgn.DissociationType;
 import com.miravtech.sbgn.EntityPoolNodeType;
 import com.miravtech.sbgn.InhibitionArcType;
+import com.miravtech.sbgn.LogicArcType;
 import com.miravtech.sbgn.LogicalOperatorNodeType;
 import com.miravtech.sbgn.ModulationArcType;
 import com.miravtech.sbgn.NotNodeType;
@@ -39,6 +42,7 @@ import com.miravtech.sbgn.ProductionArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
 import com.miravtech.sbgn.SBGNPDL1Type;
+import com.miravtech.sbgn.SelectType;
 import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
 import com.miravtech.sbgn.StateVariableType;
@@ -47,10 +51,15 @@ import com.miravtech.sbgn.UncertainProcessType;
 import com.miravtech.sbgn.StatefulEntiyPoolNodeType.Organism;
 import com.miravtech.sbgn.StatefulEntiyPoolNodeType.Organism.Annotation;
 import com.miravtech.sbgn.graphics.PaintNode;
+import com.miravtech.sbgn_graphics.GraphicType;
 import com.yworks.xml.graphml.ArrowTypeType;
 import com.yworks.xml.graphml.GeometryType;
 import com.yworks.xml.graphml.GroupNode;
+import com.yworks.xml.graphml.LineStyleType;
+import com.yworks.xml.graphml.NodeLabelModelType;
+import com.yworks.xml.graphml.NodeLabelPositionType;
 import com.yworks.xml.graphml.NodeLabelType;
+import com.yworks.xml.graphml.NodeType;
 import com.yworks.xml.graphml.PolyLineEdge;
 import com.yworks.xml.graphml.ProxyShapeNode;
 import com.yworks.xml.graphml.ResourceType;
@@ -60,6 +69,7 @@ import com.yworks.xml.graphml.ShapeNode;
 import com.yworks.xml.graphml.ShapeTypeType;
 import com.yworks.xml.graphml.EdgeType.Arrows;
 import com.yworks.xml.graphml.GroupNode.State;
+import com.yworks.xml.graphml.NodeType.Fill;
 import com.yworks.xml.graphml.ProxyShapeNodeType.Realizers;
 import com.yworks.xml.graphml.SVGNode.SVGModel;
 import com.yworks.xml.graphml.SVGNode.SVGModel.SVGContent;
@@ -67,11 +77,12 @@ import com.yworks.xml.graphml.ShapeNode.Shape;
 
 public class SBGNUtils {
 
-	final static Map<String, SBGNNodeType> nodes = new HashMap<String, SBGNNodeType>();
+	private Map<String, SBGNNodeType> nodes = new HashMap<String, SBGNNodeType>();
 
-	final static Set<String> idSet = new HashSet<String>();
+	private Set<String> idSet = new HashSet<String>();
+	private Set<String> assignedIDs = new HashSet<String>();
 
-	public static String getPossibleID(String begin) {
+	public String getPossibleID(String begin) {
 		String root = begin;
 		// remove xml unfriendly chars
 		root = root.replace('\"', '_');
@@ -93,8 +104,32 @@ public class SBGNUtils {
 		}
 	}
 
-	public static void setIDs(SBGNPDL1Type in) throws JAXBException {
+	SBGNPDL1Type in;
 
+	public SBGNUtils(SBGNPDL1Type in) {
+		this.in = in;
+	}
+
+	public void removeAssignedIDs() {
+
+		new SBGNIterator() {
+			@Override
+			public void iterateGlyph(SBGNGlyphType n) {
+				if (assignedIDs.contains(n.getID())) {
+					n.setID(null);
+				}
+			}
+		}.run(in);
+
+	}
+
+	public void fillRedundantData() throws JAXBException {
+		setEmptyLabels();
+		setEmptyIDs();
+		expandClones();
+	}
+
+	public void setEmptyLabels() {
 		// set empty labels, if ID is provided
 		new SBGNIterator() {
 			@Override
@@ -103,7 +138,9 @@ public class SBGNUtils {
 					n.setLabel(n.getID());
 			}
 		}.run(in);
+	}
 
+	public void setEmptyIDs() throws JAXBException {
 		// save the ids in a map
 		new SBGNIterator() {
 			public void iterateNode(SBGNNodeType n) {
@@ -132,11 +169,15 @@ public class SBGNUtils {
 
 				if (root == null)
 					root = n.getClass().getSimpleName();
-				n.setID(getPossibleID(root));
+				String id = getPossibleID(root);
+				n.setID(id);
+				assignedIDs.add(id);
 			}
-
 		}.run(in);
 
+	}
+
+	public void expandClones() {
 		/*
 		 * // dump JAXBContext jaxbContext = JAXBContext
 		 * .newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics"); //
@@ -165,7 +206,7 @@ public class SBGNUtils {
 
 	// private static int count = 0;
 
-	public static Graphml asGraphML(SBGNPDL1Type in) {
+	public Graphml asGraphML() {
 		final Graphml graphml = new Graphml();
 		Key k;
 
@@ -201,6 +242,12 @@ public class SBGNUtils {
 		mapping.put(null, main);
 		new SBGNIterator() {
 			public void iterateNode(SBGNNodeType n) {
+				GraphicType g = n.getGraphic();
+				
+				String textColor = PaintNode.toColorString(PaintNode.getNodeColor(g));
+				String bgColor = PaintNode.toColorString(PaintNode.getNodeBgColor(g));
+				String borderColor = PaintNode.toColorString(PaintNode.getBorderColor(g));
+				
 				Graph loc;
 				if (stack.size() == 0) // base
 					loc = main;
@@ -250,30 +297,61 @@ public class SBGNUtils {
 					label = "OR";
 				if (n instanceof NotNodeType)
 					label = "NOT";
+				if (n instanceof AssociationType) 
+					label = "";
+				if (n instanceof ComplexType)  // no label for the complexes
+					label = "";
+				
 				nlt.setValue(label);
+				nlt.setTextColor(textColor);
 
 				if (n instanceof ComplexType || n instanceof CompartmentType) {
+					nlt.setModelName(NodeLabelModelType.INTERNAL);
+					nlt.setModelPosition(NodeLabelPositionType.TR);
 					ProxyShapeNode p = new ProxyShapeNode();
 					p.setRealizers(new Realizers());
 					p.getRealizers().setActive(new BigInteger("0"));
+					
+									
+					// -------
 					GroupNode gnt = new GroupNode();
+					gnt.setShape(new GroupNode.Shape());
+					if (n instanceof CompartmentType)
+						gnt.getShape().setType(ShapeTypeType.ROUNDRECTANGLE);
+					else
+						gnt.getShape().setType(ShapeTypeType.RECTANGLE); // complex
+					gnt.setFill(new Fill());
+					gnt.getFill().setHasColor(true);
+					gnt.getFill().setColor(bgColor);
+					
+					LineStyleType lst = new LineStyleType();
+					gnt.setBorderStyle(lst);
+					lst.setHasColor(true);
+					lst.setColor(borderColor);
+					if (n instanceof CompartmentType)
+						lst.setWidth(6.0); // compartiment is shown with ticker ink
+					
+					nlt.setTextColor(textColor);
 					gnt.getNodeLabels().add(nlt);
+					
 					State s = new State();
 					s.setClosed(false);
 					s.setInnerGraphDisplayEnabled(true);
-					p.getRealizers().getShapeNodesAndImageNodesAndGroupNodes()
-							.add(gnt);
 					gnt.setState(s);
-					gnt = new GroupNode();
-					NodeLabelType nlt1 = new NodeLabelType();
-					nlt1.setValue(nlt.getValue());
-					gnt.getNodeLabels().add(nlt1);
-					s = new State();
-					s.setClosed(true);
-					s.setInnerGraphDisplayEnabled(true);
-					gnt.setState(s);
+					
 					p.getRealizers().getShapeNodesAndImageNodesAndGroupNodes()
-							.add(gnt);
+					.add(gnt);
+
+					try {
+						GroupNode n1 = (GroupNode)BeanUtils.cloneBean(gnt);
+						n1.getState().setClosed(true);
+						p.getRealizers().getShapeNodesAndImageNodesAndGroupNodes()
+						.add(n1);
+
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					
 
 					dt.getContent().add(p);
 					Graph inner = new Graph();
@@ -287,12 +365,17 @@ public class SBGNUtils {
 							|| n instanceof LogicalOperatorNodeType) {
 						// simple node
 						ShapeNode s = new ShapeNode();
+						s.setFill(new NodeType.Fill());
+						s.getFill().setHasColor(false);
 						Shape sh = new Shape();
 						sh.setType(ShapeTypeType.RECTANGLE);
 						if (n instanceof PhenotypeType)
 							sh.setType(ShapeTypeType.DIAMOND);
-						if (n instanceof AssociationType)
+						if (n instanceof AssociationType) {
 							sh.setType(ShapeTypeType.ELLIPSE);
+							s.getFill().setHasColor(true);
+							s.getFill().setColor(borderColor);
+						}
 						if (n instanceof DissociationType)
 							sh.setType(ShapeTypeType.ELLIPSE);
 						if (n instanceof LogicalOperatorNodeType)
@@ -310,6 +393,8 @@ public class SBGNUtils {
 
 		new SBGNIterator() {
 			public void iterateArc(ArcType n) {
+				String borderColor = PaintNode.toColorString(PaintNode.getBorderColor(n.getGraphic()));
+
 				SBGNNodeType n1 = nodes.get(n.getRefNode());
 				SBGNNodeType n2 = getCurrentNode();
 
@@ -363,6 +448,7 @@ public class SBGNUtils {
 				}
 
 				Edge e = new Edge();
+
 				e.setSource(n1.getID());
 				e.setTarget(n2.getID());
 				Data dt = new Data();
@@ -383,7 +469,9 @@ public class SBGNUtils {
 				if (n instanceof InhibitionArcType)
 					a.setTarget(ArrowTypeType.T_SHAPE);
 				plet.setArrows(a);
-
+				plet.setLineStyle(new LineStyleType());
+				plet.getLineStyle().setColor(borderColor);
+				
 				main.getDatasAndNodesAndEdges().add(e);
 			};
 		}.run(in);
@@ -394,6 +482,42 @@ public class SBGNUtils {
 
 	}
 
+	
+	//TODO this function does not work for a hierarchical AND/OR construction
+	/**
+	 * Returns the list of inputs for this logic operator node
+	 * 
+	 * @param n the logic operator node
+	 * @return
+	 */
+	public Set<SBGNNodeType> getInNodesOfLogic(LogicalOperatorNodeType n) {
+		Set<SBGNNodeType> ret = new HashSet<SBGNNodeType>();
+		for (ArcType a: n.getArcs()) {
+			if (a instanceof LogicArcType) {
+				ret.add(getOtherNode(a, n));
+			}
+		}
+		return ret;
+	}
+
+	//TODO this function does not work for a hierarchical AND/OR construction
+	
+	/**
+	 * Returns the output for this logic operator node
+	 * 
+	 * @param n the logic operator node
+	 * @return
+	 */
+	public SBGNNodeType getOutNodeOfLogic(LogicalOperatorNodeType n) {
+		for (ArcType a: n.getArcs()) {
+			if (!(a instanceof LogicArcType)) {
+				return getOtherNode(a, n);
+			}
+		}
+		throw new RuntimeException("Hierarchical AND/OR not implemented");
+	}
+
+	
 	/**
 	 * Copies the content of model to n1.
 	 * 
@@ -411,7 +535,7 @@ public class SBGNUtils {
 
 	}
 
-	static public SBGNNodeType cloneNode(SBGNNodeType n1) {
+	private SBGNNodeType cloneNode(SBGNNodeType n1) {
 		try {
 
 			SBGNNodeType ret = (SBGNNodeType) BeanUtils.cloneBean(n1);
@@ -431,69 +555,76 @@ public class SBGNUtils {
 	/**
 	 * Copy all node data from model to n1
 	 * 
-	 * @param n1
+	 * @param target
 	 * @param model
 	 */
-	static void Clone(SBGNNodeType n1, SBGNNodeType model) {
+	void Clone(SBGNNodeType target, SBGNNodeType model) {
 		// variables of n1
-		Map<String, String> vars = getNodeVariables(n1);
+
+		if (target.getID() == null) {
+			target.setID(getPossibleID(model.getID()));
+		}
 
 		// TODO remove when CloneBeans is ready
-		if (n1.getLabel() == null)
-			n1.setLabel(model.getLabel());
+		if (target.getLabel() == null)
+			target.setLabel(model.getLabel());
+
+		target.getFinding().addAll(model.getFinding());
+		
 		// IDs have to be copied and changed to unique ones, since on
 		// copying they become non-unique
 		SBGNNodeType c = cloneNode(model);
-		n1.getInnerNodes().addAll(c.getInnerNodes());
+		Map<String, StateVariableType> clonedvars = getNodeVariables(c); // skip
+		// the
+		// variables
+		c.getInnerNodes().removeAll(clonedvars.values());
+		target.getInnerNodes().addAll(c.getInnerNodes());
+
+		// !! ids of the existing state vars must be kept unchanged !!
+		Map<String, StateVariableType> target_vars = getNodeVariables(target);
+		for (Map.Entry<String, StateVariableType> e : getNodeVariables(model)
+				.entrySet()) {
+			StateVariableType sv = target_vars.get(e.getKey());
+			if (sv == null) {
+				// clone
+				sv = new StateVariableType();
+				Clone(sv, e.getValue());
+				target.getInnerNodes().add(sv);
+			} else {
+				sv.setVariable(e.getValue().getLabel());
+			}
+		}
 
 		// copy the data
-		CloneBeans(n1, model);
+		CloneBeans(target, model);
 
-		// remove all variables of n1
-		Set<SBGNNodeType> toRemove = new HashSet<SBGNNodeType>();
-		for (SBGNNodeType node : n1.getInnerNodes())
-			if (node instanceof StateVariableType)
-				toRemove.add(node);
-		n1.getInnerNodes().removeAll(toRemove);
-		// merge the lists of variable
-		Map<String, String> vars_model = getNodeVariables(model);
-		for (Map.Entry<String, String> e : vars.entrySet())
-			vars_model.put(e.getKey(), e.getValue());
-		// add the merged list
-		for (Map.Entry<String, String> e : vars_model.entrySet()) {
-			StateVariableType st = new StateVariableType();
-			st.setVariable(e.getKey());
-			st.setLabel(e.getValue());
-			n1.getInnerNodes().add(st);
-		}
-		n1.setCloneref(null); // remove the clone attribute.
+		target.setCloneref(null); // remove the clone attribute.
 	}
 
-	static Map<String, String> getNodeVariables(SBGNNodeType n) {
-		Map<String, String> ret = new HashMap<String, String>();
+	static Map<String, StateVariableType> getNodeVariables(SBGNNodeType n) {
+		Map<String, StateVariableType> ret = new HashMap<String, StateVariableType>();
 		for (SBGNNodeType n1 : n.getInnerNodes()) {
 			if (n1 instanceof StateVariableType) {
 				StateVariableType var = (StateVariableType) n1;
-				ret.put(var.getVariable(), var.getLabel());
+				ret.put(var.getVariable(), var);
 			}
 		}
 		return ret;
 	}
 
-	static Set<String> getSymbols(final String organism, final String db,
-			SBGNPDL1Type root) {
+	public Set<String> getSymbols(final String organism, final String db, final boolean filterExcludedSelection) {
 		final Set<String> ret = new HashSet<String>();
 
 		new SBGNIterator() {
 			@Override
 			public void iterateNode(SBGNNodeType n) {
-				//TODO - filtering
 				if (n instanceof StatefulEntiyPoolNodeType) {
 					StatefulEntiyPoolNodeType sepnt = (StatefulEntiyPoolNodeType) n;
-					ret.addAll(getSymbols(organism, db, sepnt));
+					if (!(filterExcludedSelection && n.getSelected() == SelectType.EXCLUDE))
+						ret.addAll(getSymbols(organism, db, sepnt));
 				}
 			}
-		}.run(root);
+		}.run(in);
 		return ret;
 	}
 
@@ -506,6 +637,45 @@ public class SBGNUtils {
 					if (db.equalsIgnoreCase(a.getDB()))
 						ret.add(a.getID());
 		return ret;
+	}
+
+	Map<SBGNNodeType, Collection<ArcType>> connections = null;
+	
+	public SBGNNodeType getOtherNode(ArcType arc, SBGNNodeType node) {
+		getEdges();
+		for (Map.Entry<SBGNNodeType, Collection<ArcType>> e : connections.entrySet())
+			if (e.getValue().contains(arc) && e.getKey() != node)
+				return e.getKey();
+		throw new RuntimeException("Other side of the arc not found!"); // should not happen
+	}
+	
+	public Map<SBGNNodeType, Collection<ArcType>> getEdges() {
+		// build a node-archs map and check the archs
+		if (connections != null)
+			return connections;
+		connections = new HashMap<SBGNNodeType, Collection<ArcType>>();
+		SBGNIterator it2 = new SBGNIterator() {
+
+			@Override
+			public void iterateNode(SBGNNodeType n) {
+				if (!connections.containsKey(n)) {
+					connections.put(n, new HashSet<ArcType>());
+				}
+				for (ArcType a : n.getArcs()) {
+					SBGNGlyphType g = nodes.get(a.getRefNode());
+					if (g instanceof SBGNNodeType) {
+						SBGNNodeType n1 = (SBGNNodeType) g;
+						if (!connections.containsKey(n1)) {
+							connections.put(n1, new HashSet<ArcType>());
+						}
+						connections.get(n).add(a);
+						connections.get(n1).add(a);
+					}
+				}
+			}
+		};
+		it2.run(in);
+		return connections;
 	}
 
 }

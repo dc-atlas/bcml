@@ -1,14 +1,9 @@
 package com.miravtech.evaluator.test;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
 
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -61,6 +56,11 @@ public class EvaluatorTest {
 		assert(evaluate("organism='Homo sapiens' and organismPart='Bone Marrow'",f));
 		assert(evaluate("( organism='Homo sapiens' or organism='Homo sapiensss')  and organismPart='Bone Marrow' ",f));
 		assert(!evaluate("( organism='Homo sapiens' or organism='Homo sapiensss')  and not organismPart='Bone Marrow' ",f));
+
+		assert(!evaluate(" organism='Homo sapiens' == organismPart='Bone MarrowA' ",f));
+		assert(evaluate(" organism='Homo sapiens' == organismPart='Bone Marrow' ",f));
+		assert(evaluate(" organism='Homo sapiensAD' == organismPart='Bone MarrowBB' ",f));
+
 		try {
 			evaluate("organism='Homo sapiens' and organismPart='Bone Marrow",f);
 			assert false; //Must have been failed the test!

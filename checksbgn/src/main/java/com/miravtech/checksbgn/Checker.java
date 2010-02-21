@@ -300,9 +300,7 @@ public class Checker {
 		SBGNIterator it1 = new SBGNIterator() {
 			@Override
 			public void iterateNode(SBGNNodeType n) {
-
 				for (SBGNNodeType n1 : n.getInnerNodes())
-
 					ret.addAll(checkNodeContent(n, n1));
 			}
 

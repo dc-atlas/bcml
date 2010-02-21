@@ -41,6 +41,7 @@ import com.miravtech.sbgn.StateVariableType;
 import com.miravtech.sbgn.TagType;
 import com.miravtech.sbgn.UnitOfInformationType;
 import com.miravtech.sbgn.UnspecifiedEntityType;
+import com.miravtech.sbgn_graphics.GraphicType;
 
 public class PaintNode {
 
@@ -50,6 +51,9 @@ public class PaintNode {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("FrameDemo");
 		frame.add(new Component() {
+
+			private static final long serialVersionUID = -1896912267511312627L;
+
 			@Override
 			public void paint(Graphics g) {
 				super.paint(g);
@@ -59,6 +63,10 @@ public class PaintNode {
 
 				NucleicAcidFeatureType nft = new NucleicAcidFeatureType();
 				nft.setLabel("Test");
+				nft.setGraphic(new GraphicType());
+				nft.getGraphic().setBorderColor("green");
+				nft.getGraphic().setColor("blue");
+				nft.getGraphic().setBgColor("white");
 
 				nft.setCardinality(new BigInteger("5"));
 				// g1.translate(90, -90);
@@ -90,13 +98,12 @@ public class PaintNode {
 	public final static int SYNCSIZE = 40;
 
 	public static Point lastPoint = new Point();
+
 	
-	public static void DrawSyncSource(Graphics2D g2d) {
-		g2d.drawOval(0, 0, SYNCSIZE, SYNCSIZE);
-		g2d.drawLine(SYNCSIZE, 0, 0, SYNCSIZE);
-		lastPoint.x = SYNCSIZE;
-		lastPoint.y = SYNCSIZE;
+	public static String toColorString(Color c) {
+		return String.format("#%02X%02X%02X", c.getRed(), c.getGreen(), c.getBlue());
 	}
+	
 
 	public static final Font labelFont = new Font("Serif", Font.PLAIN, 14);
 	public static final Font decoFont = new Font("Serif", Font.PLAIN, 10);
@@ -127,6 +134,62 @@ public class PaintNode {
 		return node.getLabel();
 	}
 
+	public static Color getNodeColor(GraphicType g) {
+		if (g == null)
+			return getColor(null);
+		return getColor(g.getColor());
+	}
+	
+	public static Color getNodeBgColor(GraphicType g) {
+		if (g == null || g.getBgColor() == null)
+			return Color.WHITE;
+		return getColor(g.getBgColor());
+	}
+	
+
+	public static Color getBorderColor(GraphicType g) {
+		if (g == null)
+			return getColor(null);
+		return getColor(g.getBorderColor());
+	}
+	
+	public static Color getColor(String color) {
+		if (color == null)
+			return Color.BLACK;
+		if (color.compareToIgnoreCase("black") == 0)
+			return Color.BLACK;
+		if (color.compareToIgnoreCase("blue") == 0)
+			return Color.blue;
+		if (color.compareToIgnoreCase("cyan") == 0)
+			return Color.cyan ;
+		if (color.compareToIgnoreCase("darkGray") == 0)
+			return Color.darkGray;
+		if (color.compareToIgnoreCase("gray") == 0)
+			return Color.gray;
+		if (color.compareToIgnoreCase("green") == 0)
+			return Color.green;
+		if (color.compareToIgnoreCase("lightGray") == 0)
+			return Color.lightGray;
+		if (color.compareToIgnoreCase("magenta") == 0)
+			return Color.magenta;
+		if (color.compareToIgnoreCase("orange") == 0)
+			return Color.orange;
+		if (color.compareToIgnoreCase("pink") == 0)
+			return Color.pink;
+		if (color.compareToIgnoreCase("red") == 0)
+			return Color.red;
+		if (color.compareToIgnoreCase("white") == 0)
+			return Color.white;
+		if (color.compareToIgnoreCase("yellow") == 0)
+			return Color.yellow;
+		
+		//color code
+		int r = Integer.parseInt(color.substring(0, 2), 16) ;
+		int g = Integer.parseInt(color.substring(2, 4), 16) ;
+		int b = Integer.parseInt(color.substring(4, 6), 16) ;
+		return new Color(r,g,b);
+	}
+	
 	public static void DrawNode(Graphics2D g2d, SBGNNodeType n) {
 
 		// draw shape
@@ -137,17 +200,19 @@ public class PaintNode {
 		Shape s = getNodeShape(n, shSize);
 		g2d.translate(0, from);
 		String card = getCardinality(n);
+		Color line = getBorderColor(n.getGraphic());
+		Color bg = getNodeBgColor(n.getGraphic());
 		if (card != null) {
 			g2d.translate(MULTIMER_REPEAT_DIST, MULTIMER_REPEAT_DIST);
-			g2d.setColor(Color.WHITE);
+			g2d.setColor(bg);
 			g2d.fill(s);
-			g2d.setColor(Color.BLACK);
+			g2d.setColor(line);
 			g2d.draw(s);
 			g2d.translate(-MULTIMER_REPEAT_DIST, -MULTIMER_REPEAT_DIST);
 		}
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(bg);
 		g2d.fill(s);
-		g2d.setColor(Color.BLACK);
+		g2d.setColor(line);
 		g2d.draw(s);
 		g2d.translate(0, -from);
 
@@ -215,16 +280,14 @@ public class PaintNode {
 			p.moveTo(0, 0);
 			p.lineTo(size.getX(), 0);
 			p.lineTo(size.getX(), size.getY() - ROUNDEDCORNER);
-			p.moveTo(0, 0);
-			p.lineTo(0, size.getY() - ROUNDEDCORNER);
-
-			p.quadTo(ROUNDEDCORNER / 3, size.getY() - ROUNDEDCORNER / 3,
-					ROUNDEDCORNER, size.getY());
-
-			p.lineTo(size.getX() - ROUNDEDCORNER, size.getY());
 			p.quadTo(size.getX() - ROUNDEDCORNER / 3, size.getY()
-					- ROUNDEDCORNER / 3, size.getX(), size.getY()
-					- ROUNDEDCORNER);
+					- ROUNDEDCORNER / 3, 
+					size.getX() - ROUNDEDCORNER , size.getY() );
+			p.lineTo(ROUNDEDCORNER, size.getY() );
+			p.quadTo(ROUNDEDCORNER / 3, size.getY() - ROUNDEDCORNER / 3,
+					0, size.getY() - ROUNDEDCORNER);
+
+			p.lineTo(0,0);
 			return p;
 		}
 		if (node instanceof PerturbingAgentType) {
@@ -351,6 +414,8 @@ public class PaintNode {
 			SBGNNodeType node) {
 		Font f = g2d.getFont();
 		setFont(g2d, node);
+		Color exist = g2d.getColor();
+		g2d.setColor(getNodeColor(node.getGraphic()));
 
 		Rectangle2D r1 = g2d.getFont().getStringBounds(getPaintingLabel(node),
 				g2d.getFontRenderContext());
@@ -361,6 +426,7 @@ public class PaintNode {
 		g2d.drawString(s, x, y);
 
 		g2d.setFont(f);
+		g2d.setColor(exist);
 
 	}
 
@@ -376,13 +442,18 @@ public class PaintNode {
 	}
 
 	public static void DrawSyncSource(Graphics2D g2d, EntityPoolNodeType epn) {
+		Color line = getBorderColor(epn.getGraphic());
+		Color bg = getNodeBgColor(epn.getGraphic());
+		g2d.setBackground(bg);
+		g2d.setColor(line);
 
 		g2d.setFont(labelFont);
-		LineMetrics lmLabel = labelFont.getLineMetrics(epn.getLabel(), g2d
-				.getFontRenderContext());
-
 		g2d.drawOval(0, 0, SYNCSIZE, SYNCSIZE);
 		g2d.drawLine(SYNCSIZE, 0, 0, SYNCSIZE);
+		
+		lastPoint.x = SYNCSIZE; 
+		lastPoint.y = SYNCSIZE; 
+
 	}
 
 	public static String DrawNode(SBGNNodeType n) {
@@ -397,7 +468,7 @@ public class PaintNode {
 
 		// Ask the test to render into the SVG Graphics2D implementation.
 		if (n instanceof SinkType || n instanceof SourceType) {
-			DrawSyncSource(svgGenerator);
+			DrawSyncSource(svgGenerator,  (EntityPoolNodeType)n);
 		} else if (n instanceof EntityPoolNodeType
 				&& !(n instanceof ComplexType)) {
 			DrawNode(svgGenerator,  n);

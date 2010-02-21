@@ -65,6 +65,7 @@ expr returns [boolean value]
     :   e=atom1 {$value = $e.value;}
         (   'and' e=atom1 {$value = $value && $e.value;}
         |   'or'  e=atom1 {$value = $value || $e.value;}
+        |   '=='  e=atom1 {$value = ($value == $e.value);}
         )*
     ;
 

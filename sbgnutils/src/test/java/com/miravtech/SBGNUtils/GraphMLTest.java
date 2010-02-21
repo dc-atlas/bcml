@@ -28,19 +28,26 @@ public class GraphMLTest {
 
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		InputStream f = GraphMLTest.class.getResourceAsStream("/dectin1.xml");
-		SBGNPDL1Type root = ((SBGNPDl1) unmarshaller.unmarshal(f)).getValue();
+		// InputStream f =
+		// GraphMLTest.class.getResourceAsStream("/dectin1.xml");
+		File f = new File("c:\\temp\\filter.xml");
+		SBGNPDl1 r = ((SBGNPDl1) unmarshaller.unmarshal(f));
+		SBGNPDL1Type root = r.getValue();
 
-		SBGNUtils.setIDs(root);
-		Graphml out = SBGNUtils.asGraphML(root);
+		SBGNUtils sbgn = new SBGNUtils(root);
+		sbgn.fillRedundantData();
+
+		Marshaller marshaller1 = jaxbContext.createMarshaller();
+		// marshaller1.marshal(r, new File("c:\\temp\\dectin_exp_1.xml"));
+
+		Graphml out = sbgn.asGraphML();
 
 		JAXBContext jaxbContext2 = JAXBContext
-		.newInstance("com.yworks.xml.graphml:org.graphdrawing.graphml.xmlns.graphml"); //
-
+				.newInstance("com.yworks.xml.graphml:org.graphdrawing.graphml.xmlns.graphml"); //
 
 		Marshaller marshaller = jaxbContext2.createMarshaller();
 
-		marshaller.marshal(out, new File("dectin1.graphml"));
+		marshaller.marshal(out, new File("l:\\temp\\dectin1.graphml"));
 
 	}
 }

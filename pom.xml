@@ -46,9 +46,10 @@
 		<module>graphmlconvert</module>
 		<module>graphics</module>
 		<module>convertgpml</module>
+		<module>exporter</module>
 		<module>checksbgn</module>
 		<module>sbgnutils</module>
 		<module>evaluator</module>
-
+		<module>filter</module>
 	</modules>
 </project>

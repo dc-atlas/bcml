@@ -7,12 +7,13 @@ import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
 import com.miravtech.sbgn.SBGNPDL1Type;
-import com.miravtech.sbgn.SBGNPDl1;
 
 abstract public class SBGNIterator {
 
 	public List<SBGNNodeType> stack = new LinkedList<SBGNNodeType>();
 
+	boolean iterateBefore = true;
+	
 	public SBGNNodeType getLastNode() {
 		if (stack.size() <= 1)
 			return null;
@@ -33,12 +34,19 @@ abstract public class SBGNIterator {
 		}
 	}
 
+	public void runBottomUp(SBGNPDL1Type g) {
+		iterateBefore = false;
+		run(g);
+		iterateBefore = true;
+	}
 	public void run(SBGNGlyphType g) {
 
-		iterateGlyph(g);
+		if (iterateBefore)
+			iterateGlyph(g);
 		if (g instanceof SBGNNodeType) {
 			SBGNNodeType n = (SBGNNodeType) g;
-			iterateNode(n);
+			if (iterateBefore)
+				iterateNode(n);
 			for (SBGNNodeType in : n.getInnerNodes()) {
 				stack.add(in);
 				run(in);
@@ -47,11 +55,15 @@ abstract public class SBGNIterator {
 			for (ArcType a : n.getArcs()) {
 				run(a);
 			}
+			if (!iterateBefore)
+				iterateNode(n);
 		}
 		if (g instanceof ArcType) {
 			ArcType n = (ArcType) g;
 			iterateArc(n);
 		}
+		if (!iterateBefore)
+			iterateGlyph(g);
 	}
 
 	public void iterateGlyph(SBGNGlyphType n) {
