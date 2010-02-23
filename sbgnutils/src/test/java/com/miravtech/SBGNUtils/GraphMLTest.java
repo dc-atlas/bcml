@@ -1,7 +1,6 @@
 package com.miravtech.SBGNUtils;
 
 import java.io.File;
-import java.io.InputStream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -28,17 +27,11 @@ public class GraphMLTest {
 
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		// InputStream f =
-		// GraphMLTest.class.getResourceAsStream("/dectin1.xml");
-		File f = new File("c:\\temp\\filter.xml");
-		SBGNPDl1 r = ((SBGNPDl1) unmarshaller.unmarshal(f));
+		SBGNPDl1 r = ((SBGNPDl1) unmarshaller.unmarshal(GraphMLTest.class.getResource("/filter.xml")));
 		SBGNPDL1Type root = r.getValue();
 
 		SBGNUtils sbgn = new SBGNUtils(root);
 		sbgn.fillRedundantData();
-
-		Marshaller marshaller1 = jaxbContext.createMarshaller();
-		// marshaller1.marshal(r, new File("c:\\temp\\dectin_exp_1.xml"));
 
 		Graphml out = sbgn.asGraphML();
 
@@ -47,7 +40,7 @@ public class GraphMLTest {
 
 		Marshaller marshaller = jaxbContext2.createMarshaller();
 
-		marshaller.marshal(out, new File("l:\\temp\\dectin1.graphml"));
+		marshaller.marshal(out, new File("target/filtered.graphml"));
 
 	}
 }

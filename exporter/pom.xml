@@ -30,7 +30,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>com.miravtech.checksbgn.Main</mainClass>
+							<mainClass>com.miravtech.sbgn.exporter.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptors>

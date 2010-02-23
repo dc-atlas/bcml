@@ -14,13 +14,14 @@ public class Main {
 	 * @throws JAXBException
 	 * @throws SAXException
 	 */
-	public static void main(String[] args) throws JAXBException, SAXException {
+	public static void main(String[] args) throws Exception {
 
-		// String source =
-		// "l:\\Documents and Settings\\r\\My Documents\\dcthera\\gpml tutti";
-		String source = "L:\\unifi\\trunk\\sbgn\\checksbgn\\src\\test\\resources";
+		String source;
 		if (args.length >= 1) {
 			source = args[0];
+		} else {
+			throw new Exception(
+					"Please provide the directory or the file to check!");
 		}
 		File srcDir = new File(source);
 

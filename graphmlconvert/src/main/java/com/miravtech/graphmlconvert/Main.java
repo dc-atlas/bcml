@@ -25,9 +25,6 @@ public class Main {
 	public static void main(String[] args) throws JAXBException {
 
 		String source, destination;
-		// String source =
-		// "l:\\Documents and Settings\\r\\My Documents\\dcthera\\gpml tutti";
-		// String destination = "c:\\temp";
 		if (args.length >= 2) {
 			source = args[0];
 			destination = args[1];

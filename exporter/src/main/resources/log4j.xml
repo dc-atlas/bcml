@@ -5,7 +5,7 @@
 
 	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender" >
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="graphmlconvert  %-4r [%t] %-5p %c %x - %m%n" />
+			<param name="ConversionPattern" value="exporter  %-4r [%t] %-5p %c %x - %m%n" />
 		</layout>
 <!-- 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
 			<param name="LevelMin" value="ALL" />

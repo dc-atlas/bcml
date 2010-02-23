@@ -29,15 +29,20 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		String source = "c:\\temp\\filter.xml";
-		String destination = "c:\\temp\\outputlist.txt";
+		
+		String source;
+		String destination;
 		String organism = "HS";
 		String db = "EntrezGeneID";
-		if (args.length >= 4) {
+		String method = "GeneList";
+		if (args.length >= 5) {
 			source = args[0];
 			destination = args[1];
 			organism = args[2];
 			db = args[3];
+			method = args[4];
+		} else {
+			throw new Exception("Please provide the source file, the source destination, the organism, the database and the method.");
 		}
 		File srcDir = new File(source);
 		File destDir = new File(destination);
@@ -53,8 +58,10 @@ public class Main {
 		unmarshaller = jaxbContext.createUnmarshaller();
 		marshaller = jaxbContext.createMarshaller();
 
-		exportSBGN(srcDir, destDir, organism,db,false);
-		
+		if (method.equalsIgnoreCase("GeneList"))
+			exportSBGN(srcDir, destDir, organism,db,true);
+		else
+			throw new Exception("Method not supported, currently supported: GeneList");
 	}
 
 	public static void exportSBGN(File sourceSBGN, File destFile,
@@ -62,6 +69,8 @@ public class Main {
 
 		SBGNPDl1 sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
 		SBGNUtils utils = new SBGNUtils(sbgnpath.getValue());
+
+		utils.fillRedundantData();
 		
 		Set<String> genes =  utils.getSymbols(organism, db, usefilter);
 		FileOutputStream fos = new FileOutputStream(destFile);
@@ -69,8 +78,6 @@ public class Main {
 		for (String g: genes)
 			pr.println(g);
 		pr.close();
-
-		utils.fillRedundantData();
 
 	}
 }

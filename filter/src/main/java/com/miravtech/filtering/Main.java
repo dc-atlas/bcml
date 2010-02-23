@@ -48,15 +48,17 @@ public class Main {
 	 * @param args
 	 * @throws JAXBException
 	 */
-	public static void main(String[] args) throws JAXBException {
+	public static void main(String[] args) throws Exception {
 
-		String source = "..\\sbgnpdschema\\src\\test\\resources\\TLR3.xml";
-		String destination = "c:\\temp\\filter.xml";
+		String source;
+		String destination;
 		String filterExpression = "organism='Mus Musculus'";
 		if (args.length >= 3) {
 			source = args[0];
 			destination = args[1];
 			filterExpression = args[2];
+		} else {
+			throw new Exception("Please provide source file, destination and the expression");
 		}
 		File srcDir = new File(source);
 		File destDir = new File(destination);
@@ -78,14 +80,20 @@ public class Main {
 	public static void filterSBGN(File sourceSBGN, File destSBGN,
 			final String expression) throws JAXBException {
 
+
+		SBGNPDl1 sbgnpath = filterSBGN(sourceSBGN,expression);
+		marshaller.marshal(sbgnpath, destSBGN);
+	}
+	
+		public static SBGNPDl1 filterSBGN(final File sourceSBGN,
+				final String expression) throws JAXBException {
+
 		SBGNPDl1 sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
 
 		SBGNUtils utils = new SBGNUtils(sbgnpath.getValue());
-
+		
 		utils.setEmptyIDs();
-		marshaller.marshal(sbgnpath, new File("c:\\temp\\temp1.xml"));
 		utils.expandClones();
-		marshaller.marshal(sbgnpath, new File("c:\\temp\\temp.xml"));
 
 		// filter the IDs
 		final Set<String> selected = new HashSet<String>();
@@ -140,9 +148,8 @@ public class Main {
 		}.run(sbgnpath.getValue());
 		utils2.removeAssignedIDs();
 
-		// set the affected
+		// set the affected by propagating to the neighborhood
 		new SBGNIterator() {
-
 			@Override
 			public void iterateArc(ArcType n) {
 				if (n.getSelected().equals(SelectType.EXCLUDE)) {
@@ -203,19 +210,23 @@ public class Main {
 				boolean isOr = (n instanceof OrNodeType);
 				if (!isAnd && !isOr)
 					return; // not our business
-				
+				Collection<SBGNNodeType> inNodes = utils2.getInNodesOfLogic((LogicalOperatorNodeType)n);
 				boolean hasInclude = false;
 				boolean hasNonInclude = false;
-				for ( SBGNNodeType node: utils2.getInNodesOfLogic((LogicalOperatorNodeType)n) ) {
+				for ( SBGNNodeType node: inNodes ) {
 					if (node.getSelected() == SelectType.INCLUDE)
 						hasInclude = true;
 					else
 						hasNonInclude = true;
 				}
-				if (isOr && ! hasInclude)
+				if ( (isOr && ! hasInclude) || (isAnd && hasNonInclude)) {
 					setAffected(utils2.getOutNodeOfLogic((LogicalOperatorNodeType)n));
-				if (isAnd && ! hasNonInclude)
-					setAffected(utils2.getOutNodeOfLogic((LogicalOperatorNodeType)n));
+					setAffected(n);
+					for (ArcType a : n.getArcs()) {
+						if (a.getSelected() != SelectType.INCLUDE)
+							setAffected(a);
+					}
+				}
 			}
 		}.run(sbgnpath.getValue());
 
@@ -230,13 +241,17 @@ public class Main {
 					for (ArcType a : d.getArcs()) {
 						if (a instanceof ConsumptionArcType) {
 							c = (ConsumptionArcType) a;
+							if (c.getSelected() != SelectType.INCLUDE) 
+								setAffected(a);
 						}
 					}
 					if (c.getSelected() != SelectType.INCLUDE) {
-						// set affected all the products
+						// set affected all the products, production arcs and the appropriate consumption arcs
 						for (ArcType a : d.getArcs()) {
 							if (a instanceof ProductionArcType) {
 								SBGNNodeType prod = utils2.getOtherNode(a, n);
+								setAffected(d);
+								setAffected(a);
 								setAffected(prod);
 							}
 						}
@@ -271,7 +286,7 @@ public class Main {
 			}
 		}.run(sbgnpath.getValue());
 
-		marshaller.marshal(sbgnpath, destSBGN);
+		return sbgnpath;
 
 	}
 

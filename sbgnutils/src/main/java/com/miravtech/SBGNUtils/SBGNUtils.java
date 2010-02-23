@@ -367,6 +367,7 @@ public class SBGNUtils {
 						ShapeNode s = new ShapeNode();
 						s.setFill(new NodeType.Fill());
 						s.getFill().setHasColor(false);
+											
 						Shape sh = new Shape();
 						sh.setType(ShapeTypeType.RECTANGLE);
 						if (n instanceof PhenotypeType)
@@ -381,6 +382,10 @@ public class SBGNUtils {
 						if (n instanceof LogicalOperatorNodeType)
 							sh.setType(ShapeTypeType.ELLIPSE);
 						s.setShape(sh);
+						LineStyleType lst = new LineStyleType();
+						lst.setHasColor(true);
+						lst.setColor(borderColor);
+						s.setBorderStyle(lst);
 						s.getNodeLabels().add(nlt);
 						dt.getContent().add(s);
 					} else
@@ -491,8 +496,9 @@ public class SBGNUtils {
 	 * @return
 	 */
 	public Set<SBGNNodeType> getInNodesOfLogic(LogicalOperatorNodeType n) {
+		getEdges();
 		Set<SBGNNodeType> ret = new HashSet<SBGNNodeType>();
-		for (ArcType a: n.getArcs()) {
+		for (ArcType a: connections.get(n)) {
 			if (a instanceof LogicArcType) {
 				ret.add(getOtherNode(a, n));
 			}
@@ -509,7 +515,8 @@ public class SBGNUtils {
 	 * @return
 	 */
 	public SBGNNodeType getOutNodeOfLogic(LogicalOperatorNodeType n) {
-		for (ArcType a: n.getArcs()) {
+		getEdges();
+		for (ArcType a: connections.get(n)) {
 			if (!(a instanceof LogicArcType)) {
 				return getOtherNode(a, n);
 			}

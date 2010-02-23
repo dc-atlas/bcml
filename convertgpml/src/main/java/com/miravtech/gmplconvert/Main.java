@@ -28,15 +28,18 @@ public class Main {
 	 * @param args
 	 * @throws JAXBException 
 	 */
-	public static void main(String[] args) throws JAXBException {
+	public static void main(String[] args) throws Exception {
 
 		
 		
-		String source = "l:\\Documents and Settings\\r\\My Documents\\dcthera\\gpml tutti";
-		String destination = "c:\\temp";
+		String source ;
+		String destination;
 		if (args.length >= 2) {
 			source = args[0];
 			destination = args[1];
+		}
+		else {
+			throw new Exception("please provide source and destination as parameters");
 		}
 		File srcDir = new File(source);
 		File destDir = new File(destination);
