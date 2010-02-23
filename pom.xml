@@ -40,6 +40,7 @@
 		</dependency>
 	</dependencies>
 	<modules>
+		<module>annotator</module>
 		<module>sbgnpdschema</module>
 		<module>gpmlschema</module>
 		<module>graphmlschema</module>

@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>annotator</artifactId>
+	<name>annotator</name>
+	<parent>
+		<groupId>com.miravtech.sbgn</groupId>
+		<artifactId>sbgn</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<description>
+		This project annotates a state variable by receiving a text file.
+	</description>
+
+
+
+	<dependencies>
+		<dependency>
+			<artifactId>sbgnutils</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>com.miravtech.annotator.Main</mainClass>
+						</manifest>
+					</archive>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly-all-jars.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
