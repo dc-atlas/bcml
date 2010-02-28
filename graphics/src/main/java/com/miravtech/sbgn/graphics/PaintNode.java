@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.font.LineMetrics;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
@@ -153,6 +152,9 @@ public class PaintNode {
 		return getColor(g.getBorderColor());
 	}
 	
+
+	
+	
 	public static Color getColor(String color) {
 		if (color == null)
 			return Color.BLACK;
@@ -184,9 +186,9 @@ public class PaintNode {
 			return Color.yellow;
 		
 		//color code
-		int r = Integer.parseInt(color.substring(0, 2), 16) ;
-		int g = Integer.parseInt(color.substring(2, 4), 16) ;
-		int b = Integer.parseInt(color.substring(4, 6), 16) ;
+		int r = Integer.parseInt(color.substring(1, 3), 16) ;
+		int g = Integer.parseInt(color.substring(3, 5), 16) ;
+		int b = Integer.parseInt(color.substring(5, 7), 16) ;
 		return new Color(r,g,b);
 	}
 	
@@ -469,8 +471,8 @@ public class PaintNode {
 		// Ask the test to render into the SVG Graphics2D implementation.
 		if (n instanceof SinkType || n instanceof SourceType) {
 			DrawSyncSource(svgGenerator,  (EntityPoolNodeType)n);
-		} else if (n instanceof EntityPoolNodeType
-				&& !(n instanceof ComplexType)) {
+		} else if ((n instanceof EntityPoolNodeType
+				&& !(n instanceof ComplexType) ) || (n instanceof AuxiliaryUnitType)) {
 			DrawNode(svgGenerator,  n);
 		} else {
 			throw new RuntimeException(

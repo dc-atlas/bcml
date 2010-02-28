@@ -7,16 +7,20 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SymbolList {
+public class SymbolList extends HashMap<String, Double> {
 
-	static private Pattern lineFormat = Pattern.compile("(.*)[ |\\t|,|;]([0-9]*\\.?[0-9]*)");
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8767598956815897691L;
 	
-	private Map<String, Double> conversion = new HashMap<String, Double>();
+	
+	static private Pattern lineFormat = Pattern.compile("(.*)[ |\\t|,|;](-?[0-9]*\\.?[0-9]*)");
+	
 	
 	public SymbolList(InputStream is) throws Exception {
 		Reader isr = new InputStreamReader(is);
@@ -30,26 +34,18 @@ public class SymbolList {
 				throw new Exception("Cannot parse line number: "+lnr.getLineNumber()+" content is:"+line);
 			String symbol = m.group(1);
 			Double value = Double.parseDouble(m.group(2));
-			conversion.put(symbol, value);
+			put(symbol, value);
 		}
 		lnr.close();
 		isr.close();
 		is.close();
 	}
 	
-	public Map<String, Double> getConversion() {
-		return conversion;
-	}
-	
-	public Double convert(String s) {
-		return conversion.get(s);
-	}
-
 	public Collection<Double> getList(Collection<String> s) {
 		Set<Double> ret = new HashSet<Double>();
 		for (String st: s) 
-			if (conversion.containsKey(st))
-				ret.add(conversion.get(st));
+			if (containsKey(st))
+				ret.add(get(st));
 		return ret;
 	}
 }

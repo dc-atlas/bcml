@@ -2,11 +2,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<!--
-
-		To build the self contained JAR application: mvn clean install
-		assembly:assembly Call: L:\unifi\trunk\sbgn\checksbgn\target>java -jar
-		checksbgn-1.0-SNAPSHOT-jar-with-dependencies.jar
-		l:\unifi\trunk\sbgn\sbgnpdschema\src\test\resources\
 	-->
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>sbgnutils</artifactId>

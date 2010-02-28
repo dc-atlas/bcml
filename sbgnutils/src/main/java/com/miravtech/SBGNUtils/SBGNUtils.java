@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,6 +22,7 @@ import org.graphdrawing.graphml.xmlns.graphml.Node;
 import com.miravtech.sbgn.AndNodeType;
 import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.AssociationType;
+import com.miravtech.sbgn.AuxiliaryUnitType;
 import com.miravtech.sbgn.CatalysisArcType;
 import com.miravtech.sbgn.CompartmentType;
 import com.miravtech.sbgn.ComplexType;
@@ -251,15 +251,18 @@ public class SBGNUtils {
 				Graph loc;
 				if (stack.size() == 0) // base
 					loc = main;
-				else
+				else {
 					loc = mapping.get(getLastNode());
+					if ((n instanceof AuxiliaryUnitType ) &&  ! (getLastNode() instanceof ComplexType ))
+						return; // don't render them for non complex
+				}
 
 				Node theNode = new Node();
 				Data dt = new Data();
 				dt.setKey("d3");
 				theNode.getDatasAndPorts().add(dt);
 
-				if (n instanceof SinkType
+				if (n instanceof SinkType || n instanceof AuxiliaryUnitType
 						|| n instanceof SourceType
 						|| (n instanceof EntityPoolNodeType && !(n instanceof ComplexType))) {
 					int sz = res.getResources().size();
@@ -360,7 +363,7 @@ public class SBGNUtils {
 					theNode.setGraph(inner);
 					mapping.put(n, inner);
 				} else {
-					if (n instanceof ProcessType
+					if (n instanceof ProcessType || n instanceof AuxiliaryUnitType
 							|| n instanceof EntityPoolNodeType
 							|| n instanceof LogicalOperatorNodeType) {
 						// simple node
@@ -532,12 +535,31 @@ public class SBGNUtils {
 	 * @param model
 	 */
 	static void CloneBeans(SBGNNodeType n1, SBGNNodeType model) {
+		
 		// TODO iterate all the getters!!
+		if (n1.getLabel() == null)
+			n1.setLabel(model.getLabel());
 
+		n1.getFinding().addAll(model.getFinding());
+		
 		// if lists, append from model to n1
 
 		// if bean objects, not null call recursively
+			try {
+				if (n1.getGraphic() == null)
+					if (model.getGraphic() != null)
+					n1.setGraphic((GraphicType)BeanUtils.cloneBean(model.getGraphic()));
+				
+				if (n1 instanceof StatefulEntiyPoolNodeType) {
+					StatefulEntiyPoolNodeType n1_epn = (StatefulEntiyPoolNodeType) n1;
+					StatefulEntiyPoolNodeType model_epn = (StatefulEntiyPoolNodeType) model;
+					n1_epn.getOrganism().addAll(model_epn.getOrganism());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}		
 
+		
 		// if simple object, clone and copy if the n1 side is null
 
 	}
@@ -571,13 +593,7 @@ public class SBGNUtils {
 		if (target.getID() == null) {
 			target.setID(getPossibleID(model.getID()));
 		}
-
-		// TODO remove when CloneBeans is ready
-		if (target.getLabel() == null)
-			target.setLabel(model.getLabel());
-
-		target.getFinding().addAll(model.getFinding());
-		
+	
 		// IDs have to be copied and changed to unique ones, since on
 		// copying they become non-unique
 		SBGNNodeType c = cloneNode(model);
@@ -598,7 +614,7 @@ public class SBGNUtils {
 				Clone(sv, e.getValue());
 				target.getInnerNodes().add(sv);
 			} else {
-				sv.setVariable(e.getValue().getLabel());
+				sv.setLabel(e.getValue().getLabel());
 			}
 		}
 
@@ -618,6 +634,16 @@ public class SBGNUtils {
 		}
 		return ret;
 	}
+	
+	public static Map<String, SBGNNodeType> getInnerNodesOfType(SBGNNodeType n , Class<?> c) {
+		Map<String, SBGNNodeType> ret = new HashMap<String, SBGNNodeType>();
+		for (SBGNNodeType n1 : n.getInnerNodes()) {
+			if (c.isInstance(c)) {
+				ret.put(n1.getID(), n1);
+			}
+		}
+		return ret;		
+	}
 
 	public Set<String> getSymbols(final String organism, final String db, final boolean filterExcludedSelection) {
 		final Set<String> ret = new HashSet<String>();
@@ -635,7 +661,7 @@ public class SBGNUtils {
 		return ret;
 	}
 
-	static Set<String> getSymbols(String organism, String db,
+	public static Set<String> getSymbols(String organism, String db,
 			StatefulEntiyPoolNodeType node) {
 		Set<String> ret = new HashSet<String>();
 		for (Organism o : node.getOrganism())
