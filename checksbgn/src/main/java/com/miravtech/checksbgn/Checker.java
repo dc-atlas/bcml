@@ -117,6 +117,13 @@ public class Checker {
 		// test to check the Cardinality assigned to wrong entities
 		r.addAll(checkCardinality());
 
+		// TODO check the loops in the logic operators. If AND1 and OR1 are
+		// nodes, this is illegal:
+		// AND1 ---> OR1 ----> AND1
+
+		// TODO check there are no reactions between
+		// items within of a complex
+
 		return r; // no errors
 	}
 

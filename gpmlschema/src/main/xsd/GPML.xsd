@@ -612,7 +612,7 @@
 
 		<xsd:complexType>
 			<xsd:annotation>
-				<xsd:documentation xml:lang="en">FIXME: No comments for
+				<xsd:documentation xml:lang="en"> No comments for
 					now</xsd:documentation>
 			</xsd:annotation>
 

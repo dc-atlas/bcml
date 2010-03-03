@@ -253,8 +253,10 @@ public class SBGNUtils {
 					loc = main;
 				else {
 					loc = mapping.get(getLastNode());
-					if ((n instanceof AuxiliaryUnitType ) &&  ! (getLastNode() instanceof ComplexType ))
-						return; // don't render them for non complex
+					if ((getLastNode() instanceof ComplexType ))
+						return; // don't paint the inside of the complex
+					if ((n instanceof AuxiliaryUnitType ))
+						return; // don't render them
 				}
 
 				Node theNode = new Node();
@@ -264,7 +266,7 @@ public class SBGNUtils {
 
 				if (n instanceof SinkType || n instanceof AuxiliaryUnitType
 						|| n instanceof SourceType
-						|| (n instanceof EntityPoolNodeType && !(n instanceof ComplexType))) {
+						|| (n instanceof EntityPoolNodeType)) {
 					int sz = res.getResources().size();
 					String ID = "" + (sz + 1);
 					String xml = PaintNode.DrawNode(n);
@@ -286,6 +288,8 @@ public class SBGNUtils {
 					dt.getContent().add(node);
 				}
 
+				//TODO process shape must be smaller.
+				
 				NodeLabelType nlt = new NodeLabelType();
 				String label = n.getLabel();
 				if (n instanceof OmittedProcessType)
@@ -308,7 +312,7 @@ public class SBGNUtils {
 				nlt.setValue(label);
 				nlt.setTextColor(textColor);
 
-				if (n instanceof ComplexType || n instanceof CompartmentType) {
+				if ( n instanceof CompartmentType) {
 					nlt.setModelName(NodeLabelModelType.INTERNAL);
 					nlt.setModelPosition(NodeLabelPositionType.TR);
 					ProxyShapeNode p = new ProxyShapeNode();
@@ -331,8 +335,7 @@ public class SBGNUtils {
 					gnt.setBorderStyle(lst);
 					lst.setHasColor(true);
 					lst.setColor(borderColor);
-					if (n instanceof CompartmentType)
-						lst.setWidth(6.0); // compartiment is shown with ticker ink
+					lst.setWidth(6.0); // compartiment is shown with ticker ink
 					
 					nlt.setTextColor(textColor);
 					gnt.getNodeLabels().add(nlt);
@@ -364,7 +367,6 @@ public class SBGNUtils {
 					mapping.put(n, inner);
 				} else {
 					if (n instanceof ProcessType || n instanceof AuxiliaryUnitType
-							|| n instanceof EntityPoolNodeType
 							|| n instanceof LogicalOperatorNodeType) {
 						// simple node
 						ShapeNode s = new ShapeNode();
@@ -391,8 +393,7 @@ public class SBGNUtils {
 						s.setBorderStyle(lst);
 						s.getNodeLabels().add(nlt);
 						dt.getContent().add(s);
-					} else
-						return; // uninteresting node type
+					}
 				}
 				theNode.setId(n.getID());
 				loc.getDatasAndNodesAndEdges().add(theNode);

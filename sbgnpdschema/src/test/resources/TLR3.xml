@@ -27,12 +27,14 @@
 			<Consumption refNode="TLR3" />
 			<Production refNode="Poly(I:C):TLR3" />
 		</Association>
-		<Complex ID="Poly(I:C):TLR3:c-src_inactive">
-			<Macromolecule cloneref="Poly(I:C)" />
-			<Macromolecule cloneref="TLR3" />
 			<Macromolecule ID="c-src_inactive" label="c-src">
 				<UnitOfInformation label="inactive" />
 			</Macromolecule>
+
+		<Complex ID="Poly(I:C):TLR3:c-src_inactive">
+			<Macromolecule cloneref="Poly(I:C)" />
+			<Macromolecule cloneref="TLR3" />
+			<Macromolecule cloneref="c-src_inactive"/>
 		</Complex>
 		<Complex ID="Poly(I:C):TLR3:c-src_active">
 			<Macromolecule cloneref="Poly(I:C)" />
@@ -201,7 +203,7 @@
 			<Production refNode="akt_p" />
 			<Consumption refNode="akt_" />
 			<NecessaryStimulation refNode="PI3K_active" />
-			<NecessaryStimulation refNode="c-src_active" />
+			<NecessaryStimulation refNode="Poly(I:C):TLR3:c-src_active" />
 		</Process>
 		<Macromolecule ID="IRF3" label="IRF3">
 
@@ -332,7 +334,7 @@
 			<StateVariable label="ub" />
 		</Macromolecule>
 		<Process>
-			<Consumption refNode="IkBa_p" />
+			<Consumption refNode="IkBa_p__1" />
 			<Production refNode="IkBa_p_ub" />
 		</Process>
 		<Sink ID="S1" />

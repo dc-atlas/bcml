@@ -60,7 +60,7 @@ public class PaintNode {
 				g1.translate(100, 100);
 				// DrawSyncSource((Graphics2D) g);
 
-				NucleicAcidFeatureType nft = new NucleicAcidFeatureType();
+				ComplexType nft = new ComplexType();
 				nft.setLabel("Test");
 				nft.setGraphic(new GraphicType());
 				nft.getGraphic().setBorderColor("green");
@@ -83,6 +83,24 @@ public class PaintNode {
 				sv.setVariable("variable");
 				nft.getInnerNodes().add(sv);
 
+				
+				MacromoleculeType mac1 = new MacromoleculeType();
+				mac1.setLabel("testLabel1");
+				mac1.setCardinality(new BigInteger("1000000"));
+				mac1.getInnerNodes().add(u1);
+
+				sv = new StateVariableType();
+				sv.setLabel("val");
+				sv.setVariable("variable11111111111111111111");
+				mac1.getInnerNodes().add(sv);
+
+				
+				MacromoleculeType mac2 = new MacromoleculeType();
+				mac2.setLabel("testLabel2");
+				mac2.getInnerNodes().add(u1);
+				
+				nft.getInnerNodes().add(mac1);
+				nft.getInnerNodes().add(mac2);
 				DrawNode(g1, nft);
 
 			}
@@ -117,6 +135,11 @@ public class PaintNode {
 	public static final int MULTIMER_REPEAT_DIST = 4; // distance between the
 	// two multimer edges
 
+
+	public static final int INSET_X_COMPLEX = 5;
+	public static final int START_Y_COMPLEX = 25;
+	public static final int DISTANCE_Y_COMPLEX = 20;
+	
 	public static final int DECOSTART_X = 20; // where to start the decorators
 
 	public static String getPaintingLabel(SBGNNodeType node) {
@@ -218,9 +241,22 @@ public class PaintNode {
 		g2d.draw(s);
 		g2d.translate(0, -from);
 
-		// draw text
-		Rectangle r = new Rectangle(0, from, shSize.x, from + shSize.y);
-		OutText(r, getPaintingLabel(n), g2d, n);
+		if (n instanceof ComplexType) {
+			int y = START_Y_COMPLEX;
+			for (SBGNNodeType nt: n.getInnerNodes()) {
+				if (nt instanceof EntityPoolNodeType) {
+					g2d.translate(INSET_X_COMPLEX, y);
+					DrawNode(g2d, nt);
+					g2d.translate(-INSET_X_COMPLEX, -y);					
+					Point p = getNodeShapeSize(g2d, nt);
+					y+= p.y + DISTANCE_Y_COMPLEX;
+				}
+			}
+		} else {
+			// draw text
+			Rectangle r = new Rectangle(0, from, shSize.x, from + shSize.y);
+			OutText(r, getPaintingLabel(n), g2d, n);
+		}
 
 		// draw units of info
 		int startDeco = DECOSTART_X;
@@ -264,6 +300,7 @@ public class PaintNode {
 	}
 
 	final static int ROUNDEDCORNER = 10;
+	final static int COMPLEXCORNER = 15;
 
 	public static Shape getNodeShape(SBGNNodeType node, Point size) {
 		if (node instanceof StateVariableType
@@ -316,6 +353,21 @@ public class PaintNode {
 
 		}
 
+		// complex?
+		if (node instanceof ComplexType) {
+			Path2D p = new Path2D.Double();
+			p.moveTo(0, COMPLEXCORNER);
+			p.lineTo(0, size.getY() - COMPLEXCORNER);
+			p.lineTo(COMPLEXCORNER, size.getY() );
+			p.lineTo(size.getX()- COMPLEXCORNER, size.getY() );
+			p.lineTo(size.getX(), size.getY() - COMPLEXCORNER );
+			p.lineTo(size.getX(), COMPLEXCORNER );
+			p.lineTo(size.getX() - COMPLEXCORNER, 0 );
+			p.lineTo(COMPLEXCORNER , 0 );
+			p.lineTo(0, COMPLEXCORNER );
+			return p;
+		}
+		
 		// throw new RuntimeException("Not implemented!");
 		// default is ellipse 
 		return new Ellipse2D.Double(0, 0, size.getX(), size.getY());
@@ -391,6 +443,17 @@ public class PaintNode {
 		if (getStateVars(node).size() != 0
 				|| getUnitsOfInformation(node).size() != 0) {
 			pLabel.x += DIST_X_DECO;
+		}
+
+		if (node instanceof ComplexType) {
+			for (SBGNNodeType nt: node.getInnerNodes()) {
+				if (nt instanceof EntityPoolNodeType) {
+					Point p = getNodeShapeSize(g2d, nt);
+					pLabel.y += p.y + DISTANCE_Y_COMPLEX;
+					if (pLabel.x  < p.x + INSET_X_COMPLEX * 2)
+						pLabel.x  = p.x + INSET_X_COMPLEX * 2;
+				}
+			}
 		}
 
 		pLabel.y += INSET_Y_NODE + pAux.getY() / 2;
@@ -471,8 +534,8 @@ public class PaintNode {
 		// Ask the test to render into the SVG Graphics2D implementation.
 		if (n instanceof SinkType || n instanceof SourceType) {
 			DrawSyncSource(svgGenerator,  (EntityPoolNodeType)n);
-		} else if ((n instanceof EntityPoolNodeType
-				&& !(n instanceof ComplexType) ) || (n instanceof AuxiliaryUnitType)) {
+		} else if ((n instanceof EntityPoolNodeType)
+				|| (n instanceof AuxiliaryUnitType) ) {
 			DrawNode(svgGenerator,  n);
 		} else {
 			throw new RuntimeException(

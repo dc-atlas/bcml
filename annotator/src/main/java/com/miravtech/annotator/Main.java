@@ -208,6 +208,7 @@ public class Main {
 	}
 	
 	static void setColor(SBGNNodeType node, String color) {
+		//TODO - set fill color; set text color on black or white, depending on fill color
 		if (node.getGraphic() == null)
 			node.setGraphic(new GraphicType());
 		node.getGraphic().setBorderColor(color);
