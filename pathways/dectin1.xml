@@ -1,0 +1,1422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/dcthera.xsd">
+    <Compartment label="extracellular">
+        <Macromolecule ID="13betaglucan" cardinality="2" label="1,3-Beta-Glucan">
+            <UnitOfInformation label="psac" prefix="mt"/>
+        </Macromolecule>
+    </Compartment>
+    <Compartment label="endoplasmic reticulum">
+        <SimpleChemical ID="Ca2+2" cloneref="Ca2+" label="Ca2+"/>
+        <Macromolecule ID="IP3R_open" label="IP3R">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="open"/>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3708"/>
+            </Organism>
+        </Macromolecule>
+        <Macromolecule ID="IP3R_close" cloneref="IP3R_open" label="IP3R">
+            <UnitOfInformation label="close"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="IP3R_close"/>
+            <Production refNode="IP3R_open"/>
+            <Catalysis refNode="IP3"/>
+        </Process>
+        <Process>
+            <Consumption refNode="Ca2+2"/>
+            <Production refNode="Ca2+1"/>
+            <NecessaryStimulation refNode="IP3R_open"/>
+        </Process>
+        <Complex ID="STIM1:STIM2">
+            <Macromolecule ID="STIM1" label="STIM1">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="6786"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="STIM2" label="STIM2">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="57620"/>
+                </Organism>
+            </Macromolecule>
+        </Complex>
+        <Macromolecule ID="STIM1-1" cloneref="STIM1" label="STIM1"/>
+        <Macromolecule ID="STIM2-1" cloneref="STIM2" label="STIM2"/>
+        <Association>
+            <Consumption refNode="STIM1-1"/>
+            <Consumption refNode="STIM2-1"/>
+            <Production refNode="STIM1:STIM2"/>
+            <Modulation refNode="Ca2+2"/>
+        </Association>
+        <Macromolecule ID="ORAI1_close" label="ORAI1">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="close"/>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="84876"/>
+            </Organism>
+        </Macromolecule>
+        <Macromolecule ID="ORAI1_open" cloneref="ORAI1_close" label="ORAI1">
+            <UnitOfInformation label="open"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="ORAI1_close"/>
+            <Production refNode="ORAI1_open"/>
+            <Catalysis refNode="STIM1:STIM2"/>
+        </Process>
+        <SimpleChemical ID="Ca2+3" label="Ca2+"/>
+        <Process>
+            <Consumption refNode="Ca2+"/>
+            <Production refNode="Ca2+3"/>
+            <NecessaryStimulation refNode="ORAI1_open"/>
+        </Process>
+    </Compartment>
+    <Compartment label="cytosol">
+        <graphic edgeLocation="DM" refobj="extracellular"/>
+        <!-- place this under extracellular -->
+        <Macromolecule ID="Dectin-1" cardinality="2" label="Dectin-1">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="psac" prefix="mt"/>
+            <MacroModule>Receptor-Sensing</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="64581"/>
+            </Organism>
+        </Macromolecule>
+        <Complex ID="13betaglucan:Dectin-1">
+            <Macromolecule cloneref="13betaglucan"/>
+            <Macromolecule cloneref="Dectin-1"/>
+        </Complex>
+        <Association>
+            <Consumption refNode="13betaglucan"/>
+            <Consumption refNode="Dectin-1"/>
+            <Production refNode="13betaglucan:Dectin-1"/>
+        </Association>
+        <Macromolecule ID="Dectin-1_" cloneref="Dectin-1" label="Dectin-1">
+            <StateVariable label=" "/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="13betaglucan:Dectin-1"/>
+            <Production refNode="Dectin-1_"/>
+        </Process>
+        <Macromolecule ID="Dectin-1_p" cloneref="Dectin-1" label="Dectin-1">
+            <StateVariable label="p"/>
+        </Macromolecule>
+        <Macromolecule ID="RAF1" label="RAF1">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <MacroModule>Receptor-Sensing</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="5894"/>
+            </Organism>
+        </Macromolecule>
+        <Complex ID="Dectin-1_p-1:RAF1_">
+            <Macromolecule ID="Dectin-1_p-1" cloneref="Dectin-1_p" label="Dectin-1"/>
+            <Macromolecule ID="RAF1_" cloneref="RAF1" label="RAF1">
+                <StateVariable label=""/>
+            </Macromolecule>
+        </Complex>
+        <Association>
+            <Consumption refNode="Dectin-1_p"/>
+            <Consumption refNode="RAF1"/>
+            <Production refNode="Dectin-1_p-1:RAF1_"/>
+        </Association>
+        <Macromolecule ID="RAF1_p" cloneref="RAF1" label="RAF1">
+            <StateVariable label="p"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="Dectin-1_p-1:RAF1_"/>
+            <Production refNode="RAF1_p"/>
+        </Process>
+        <Process>
+            <Consumption refNode="Dectin-1_"/>
+            <Production refNode="Dectin-1_p"/>
+        </Process>
+        <Macromolecule ID="SYK" label="SYK">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <MacroModule>Receptor-Sensing</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="6850"/>
+            </Organism>
+        </Macromolecule>
+        <Complex ID="Dectin-1_p:SYK">
+            <graphic OutsidePercent="50" edgeLocation="BR"/>
+            <!-- location: bottom right, 50% outside of the container -->
+            <Macromolecule cloneref="Dectin-1_p"/>
+            <Macromolecule cloneref="SYK">
+                <StateVariable label=" "/>
+            </Macromolecule>
+        </Complex>
+        <Association>
+            <Consumption refNode="Dectin-1_p"/>
+            <Consumption refNode="SYK"/>
+            <Production refNode="Dectin-1_p:SYK"/>
+        </Association>
+        <Macromolecule ID="SYK_p" cloneref="SYK" label="SYK">
+            <StateVariable label="p"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="Dectin-1_p:SYK"/>
+            <Production refNode="SYK_p"/>
+        </Process>
+        <Macromolecule ID="CARD9_" label="CARD9">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <StateVariable label=" "/>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="64170"/>
+            </Organism>
+        </Macromolecule>
+        <Macromolecule ID="CARD9_p" cloneref="CARD9_" label="CARD9">
+            <StateVariable label=" p"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="CARD9_"/>
+            <Production refNode="CARD9_p"/>
+            <Catalysis refNode="SYK_p"/>
+        </Process>
+        <Complex ID="MALT1:BCL10">
+            <Macromolecule ID="MALT1" label="MALT1">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="10892"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="BCL10" label="BCL10">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="8915"/>
+                </Organism>
+            </Macromolecule>
+        </Complex>
+        <Complex ID="CARD9_p:MALT1:BCL10">
+            <Macromolecule cloneref="CARD9_p"/>
+            <Complex cloneref="MALT1:BCL10"/>
+        </Complex>
+        <Macromolecule ID="PLCgamma-2_" label="PLCgamma-2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <StateVariable label=" "/>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="5335"/>
+            </Organism>
+        </Macromolecule>
+        <Association>
+            <Consumption refNode="CARD9_p"/>
+            <Consumption refNode="MALT1:BCL10"/>
+            <Production refNode="CARD9_p:MALT1:BCL10"/>
+            <Modulation refNode="PLCgamma-2_"/>
+        </Association>
+        <Macromolecule ID="TRAF6" label="TRAF6">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="7189"/>
+            </Organism>
+        </Macromolecule>
+        <Complex ID="CARD9_p:MALT1:BCL10:TRAF6">
+            <Macromolecule cloneref="TRAF6"/>
+            <Complex cloneref="CARD9_p:MALT1:BCL10"/>
+        </Complex>
+        <Association>
+            <Consumption refNode="TRAF6"/>
+            <Consumption refNode="CARD9_p:MALT1:BCL10"/>
+            <Production refNode="CARD9_p:MALT1:BCL10:TRAF6"/>
+        </Association>
+        <Macromolecule ID="PLCgamma-2_p" cloneref="PLCgamma-2_">
+            <StateVariable label="p"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="PLCgamma-2_"/>
+            <Production refNode="PLCgamma-2_p"/>
+            <Catalysis refNode="SYK_p"/>
+        </Process>
+        <Complex ID="GRB2:SOS_">
+            <Macromolecule ID="GRB2" label="GRB2">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="2885"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="SOS" label="SOS">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="6655"/>
+                </Organism>
+            </Macromolecule>
+            <StateVariable label=" "/>
+        </Complex>
+        <Complex ID="GRB2:SOS_p" cloneref="GRB2:SOS_">
+            <StateVariable label="p"/>
+        </Complex>
+        <Process>
+            <Consumption refNode="GRB2:SOS_"/>
+            <Production refNode="GRB2:SOS_p"/>
+            <Catalysis refNode="SYK_p"/>
+        </Process>
+        <Complex ID="GRB2:SOS_p:PLCgamma-2_p">
+            <Complex cloneref="GRB2:SOS_p"/>
+            <Macromolecule cloneref="PLCgamma-2_p"/>
+        </Complex>
+        <Process>
+            <Consumption refNode="GRB2:SOS_p"/>
+            <Consumption refNode="PLCgamma-2_p"/>
+            <Production refNode="GRB2:SOS_p:PLCgamma-2_p"/>
+        </Process>
+        <Macromolecule ID="ERK-2_" label="ERK-2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <StateVariable label=" "/>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="5594"/>
+            </Organism>
+        </Macromolecule>
+        <Macromolecule ID="ERK-2_p" cloneref="ERK-2_">
+            <StateVariable label="p"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="ERK-2_"/>
+            <Production refNode="ERK-2_p"/>
+            <Catalysis refNode="GRB2:SOS_p:PLCgamma-2_p"/>
+        </Process>
+        <Complex ID="AP-1">
+            <Macromolecule ID="FOS" label="FOS">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="2353"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="JUN" label="JUN">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="3725"/>
+                </Organism>
+            </Macromolecule>
+        </Complex>
+        <Complex ID="ERK-2_p:AP-1">
+            <Macromolecule cloneref="ERK-2_p"/>
+            <Complex cloneref="AP-1"/>
+        </Complex>
+        <Association>
+            <Production refNode="ERK-2_p:AP-1"/>
+            <Consumption refNode="ERK-2_p"/>
+            <Consumption refNode="AP-1"/>
+        </Association>
+        <Complex ID="IKBa:NF-kBp52:RELB">
+            <Macromolecule ID="IKBa" label="IKBa">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="4792"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="NF-kBp52" label="NF-kB p52">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="4791"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="RELB" label="RELB">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="5971"/>
+                </Organism>
+            </Macromolecule>
+        </Complex>
+        <Macromolecule ID="IKBa-1__" cloneref="IKBa" label="IKBa">
+            <StateVariable label=""/>
+            <StateVariable label=""/>
+        </Macromolecule>
+        <Macromolecule ID="IKBa-2_ub_p-2" cloneref="IKBa-2_ub_p" label="IKBa"/>
+        <Process>
+            <Consumption refNode="IKBa-1__"/>
+            <Production refNode="IKBa-2_ub_p-2"/>
+        </Process>
+        <Sink ID="S2"/>
+        <Process>
+            <Consumption refNode="IKBa-2_ub_p-2"/>
+            <Production refNode="S2"/>
+        </Process>
+        <Complex ID="NF-kBp52:RELB">
+            <Macromolecule cloneref="NF-kBp52"/>
+            <Macromolecule cloneref="RELB"/>
+        </Complex>
+        <Dissociation>
+            <Consumption refNode="IKBa:NF-kBp52:RELB"/>
+            <Production refNode="IKBa-1__"/>
+            <Production refNode="NF-kBp52:RELB"/>
+        </Dissociation>
+        <Complex ID="IKBa:NF-kBp50:NF-kBp65">
+            <Macromolecule cloneref="IKBa"/>
+            <Macromolecule ID="NF-kBp50" label="NF-kB p50">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="4790"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="NF-kBp65" label="NF-kB p65">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="5970"/>
+                </Organism>
+            </Macromolecule>
+        </Complex>
+        <Complex ID="NF-kBp50:NF-kBp65_">
+            <Macromolecule cloneref="NF-kBp50"/>
+            <Macromolecule cloneref="NF-kBp65">
+                <StateVariable label=""/>
+            </Macromolecule>
+        </Complex>
+        <Macromolecule ID="IKBa-2" cloneref="IKBa">
+            <StateVariable label=""/>
+            <StateVariable label=""/>
+        </Macromolecule>
+        <Dissociation>
+            <Consumption refNode="IKBa:NF-kBp50:NF-kBp65"/>
+            <Production refNode="NF-kBp50:NF-kBp65_"/>
+            <Production refNode="IKBa-2"/>
+            <Modulation refNode="CARD9_p:MALT1:BCL10:TRAF6"/>
+        </Dissociation>
+        <Macromolecule ID="IKBa-2_ub_p" cloneref="IKBa" label="IKBa">
+            <StateVariable label="p"/>
+            <StateVariable label="ub"/>
+        </Macromolecule>
+        <Sink ID="S1"/>
+        <Process>
+            <Production refNode="S1"/>
+            <Consumption refNode="IKBa-2_ub_p"/>
+        </Process>
+        <SimpleChemical ID="PIP2" label="PIP2"/>
+        <SimpleChemical ID="IP3" label="IP3"/>
+        <Process>
+            <Consumption refNode="PIP2"/>
+            <Production refNode="IP3"/>
+            <Catalysis refNode="PLCgamma-2_p"/>
+        </Process>
+        <Association>
+            <Consumption refNode="ERK-2_p"/>
+            <Consumption refNode="AP-1"/>
+            <Production refNode="ERK-2_p:AP-1"/>
+        </Association>
+        <Macromolecule ID="p38_" label="p38">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <StateVariable label=""/>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="1432"/>
+            </Organism>
+        </Macromolecule>
+        <Macromolecule ID="p38_p" cloneref="p38_" label="p38">
+            <StateVariable label="p"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="p38_"/>
+            <Production refNode="p38_p"/>
+            <Modulation refNode="CARD9_p:MALT1:BCL10"/>
+        </Process>
+        <Macromolecule ID="JNK_" label="JNK">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <StateVariable label=""/>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="5599"/>
+            </Organism>
+        </Macromolecule>
+        <Macromolecule ID="JNK_p" cloneref="JNK_" label="JNK">
+            <StateVariable label="p"/>
+        </Macromolecule>
+        <Process>
+            <Consumption refNode="JNK_"/>
+            <Production refNode="JNK_p"/>
+            <Modulation refNode="CARD9_p:MALT1:BCL10"/>
+        </Process>
+        <Macromolecule ID="Calcineurin" label="Calcineurin">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <MacroModule>Transduction</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3330"/>
+            </Organism>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="5532"/>
+            </Organism>
+        </Macromolecule>
+        <Complex ID="NFATC1_:NFATC2_">
+            <Macromolecule ID="NFATC1_" label="NFATC1">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <StateVariable label=""/>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="4273"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="NFATC2_" label="NFATC2">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <StateVariable label=""/>
+                <MacroModule>Transduction</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="4772"/>
+                </Organism>
+            </Macromolecule>
+        </Complex>
+        <Complex ID="NFATC1_p:NFATC2_p">
+            <Macromolecule ID="NFATC1_p" cloneref="NFATC1_" label="NFATC1">
+                <StateVariable label="p"/>
+            </Macromolecule>
+            <Macromolecule ID="NFATC2_p" cloneref="NFATC2_" label="NFATC2">
+                <StateVariable label="p"/>
+            </Macromolecule>
+        </Complex>
+        <SimpleChemical ID="Ca2+" label="Ca2+"/>
+        <Process>
+            <Consumption refNode="NFATC1_p:NFATC2_p"/>
+            <Production refNode="NFATC1_:NFATC2_"/>
+            <Modulation refNode="Ca2+"/>
+            <Catalysis refNode="Calcineurin"/>
+        </Process>
+        <SimpleChemical ID="Ca2+1" cloneref="Ca2+"/>
+    </Compartment>
+    <Compartment label="nucleus">
+        <Complex ID="NF-kBp50:NF-kBp65_1" cloneref="NF-kBp50:NF-kBp65_"/>
+        <Process>
+            <Consumption refNode="NF-kBp50:NF-kBp65_"/>
+            <Production refNode="NF-kBp50:NF-kBp65_1"/>
+        </Process>
+        <Complex ID="NF-kBp50:NF-kBp65_p_p" cloneref="NF-kBp50:NF-kBp65_1"/>
+        <Process>
+            <Consumption refNode="NF-kBp50:NF-kBp65_1"/>
+            <Production refNode="NF-kBp50:NF-kBp65_p_p"/>
+            <NecessaryStimulation refNode="RAF1_p"/>
+        </Process>
+        <Complex ID="CBP:p300">
+            <Macromolecule ID="CBP" label="CBP">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Outcome</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="1387"/>
+                </Organism>
+            </Macromolecule>
+            <Macromolecule ID="p300" label="p300">
+                <Finding>
+                    <Organism>Mus Musculus</Organism>
+                    <OrganismPart>Bone Marrow</OrganismPart>
+                    <CellType>Dendritic cells (DC)</CellType>
+                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                </Finding>
+                <MacroModule>Outcome</MacroModule>
+                <Organism name="HS">
+                    <annotation DB="EntrezGeneID" ID="2033"/>
+                </Organism>
+            </Macromolecule>
+        </Complex>
+        <Complex ID="NF-kBp50:NF-kBp65_p_p_:CBP:p300">
+            <Complex cloneref="CBP:p300"/>
+            <Complex cloneref="NF-kBp50:NF-kBp65_p_p">
+                <StateVariable label=""/>
+            </Complex>
+        </Complex>
+        <Process>
+            <Consumption refNode="NF-kBp50:NF-kBp65_p_p"/>
+            <Production refNode="NF-kBp50:NF-kBp65_p_p_:CBP:p300"/>
+            <Consumption refNode="CBP:p300"/>
+        </Process>
+        <Complex ID="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30" cloneref="NF-kBp50:NF-kBp65_p_p_:CBP:p300">
+            <StateVariable label="Ac"/>
+        </Complex>
+        <Process>
+            <Consumption refNode="NF-kBp50:NF-kBp65_p_p_:CBP:p300"/>
+            <Production refNode="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30"/>
+            <Catalysis refNode="NF-kBp50:NF-kBp65_p_p_:CBP:p300"/>
+        </Process>
+        <AndNode ID="AND3">
+            <Logic refNode="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30"/>
+            <Logic refNode="geneIL-12p40"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-12p40" label="IL-12p40">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3593"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-12p40" label="IL-12p40">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3593"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S3"/>
+        <Process>
+            <Consumption refNode="S3"/>
+            <Production refNode="mRNAIL-12p40"/>
+            <NecessaryStimulation refNode="AND3"/>
+            <Inhibition refNode="NF-kBp52:RELB_active"/>
+        </Process>
+        <AndNode ID="AND4">
+            <Logic refNode="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30"/>
+            <Logic refNode="geneIL-10_4"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-10_4" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-10_4" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S4"/>
+        <Process>
+            <Consumption refNode="S4"/>
+            <Production refNode="mRNAIL-10_4"/>
+            <NecessaryStimulation refNode="AND4"/>
+            <Inhibition refNode="NF-kBp52:RELB_active"/>
+        </Process>
+        <AndNode ID="AND5">
+            <Logic refNode="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30"/>
+            <Logic refNode="geneIL-6"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-6" label="IL-6">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3569"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-6" label="IL-6">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNAIL-6" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3569"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S5"/>
+        <Process>
+            <Consumption refNode="S5"/>
+            <Production refNode="mRNAIL-6"/>
+            <NecessaryStimulation refNode="AND5"/>
+            <Inhibition refNode="NF-kBp52:RELB_active"/>
+        </Process>
+        <AndNode ID="AND6">
+            <Logic refNode="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30"/>
+            <Logic refNode="geneIL-12p35"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-12p35" label="IL-12p35">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3593"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-12p35" label="IL-12p35">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3593"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S6"/>
+        <Process>
+            <Consumption refNode="S6"/>
+            <Production refNode="mRNAIL-12p35"/>
+            <NecessaryStimulation refNode="AND6"/>
+            <Inhibition refNode="NF-kBp52:RELB_active"/>
+        </Process>
+        <AndNode ID="AND7">
+            <Logic refNode="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30"/>
+            <Logic refNode="geneIL-1-beta"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-1-beta" label="IL-1-beta">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3553"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-1-beta" label="IL-1-beta">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3553"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S7"/>
+        <Process>
+            <Consumption refNode="S7"/>
+            <Production refNode="mRNAIL-1-beta"/>
+            <NecessaryStimulation refNode="AND7"/>
+            <Inhibition refNode="NF-kBp52:RELB_active"/>
+        </Process>
+        <AndNode ID="AND8">
+            <Logic refNode="NF-kBp50:NF-kBp65_1"/>
+            <Logic refNode="geneTNFalpha"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneTNFalpha" label="TNFalpha">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="7124"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNATNFalpha" label="TNFalpha">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="7124"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S8"/>
+        <Process>
+            <Consumption refNode="S8"/>
+            <Production refNode="mRNATNFalpha"/>
+            <NecessaryStimulation refNode="AND8"/>
+        </Process>
+        <AndNode ID="AND9">
+            <Logic refNode="NF-kBp50:NF-kBp65_1"/>
+            <Logic refNode="geneIL-2"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-2" label="IL-2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3558"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-2" label="IL-2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3558"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S9"/>
+        <Process>
+            <Consumption refNode="S9"/>
+            <Production refNode="mRNAIL-2"/>
+            <NecessaryStimulation refNode="AND9"/>
+        </Process>
+        <AndNode ID="AND10">
+            <Logic refNode="NF-kBp50:NF-kBp65_1"/>
+            <Logic refNode="geneMIP2"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneMIP2" label="MIP2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="2920"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAMIP2" label="MIP2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="2920"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S10"/>
+        <Process>
+            <Consumption refNode="S10"/>
+            <Production refNode="mRNAMIP2"/>
+            <NecessaryStimulation refNode="AND10"/>
+        </Process>
+        <AndNode ID="AND11">
+            <Logic refNode="NF-kBp50:NF-kBp65_1"/>
+            <Logic refNode="geneIL-10"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-10" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-10" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S11"/>
+        <Process>
+            <Consumption refNode="S11"/>
+            <Production refNode="mRNAIL-10"/>
+            <NecessaryStimulation refNode="AND11"/>
+        </Process>
+        <AndNode ID="AND12">
+            <Logic refNode="NF-kBp50:NF-kBp65_1"/>
+            <Logic refNode="geneIL-6_12"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-6_12" label="IL-6">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3569"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-6_12" label="IL-6">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3569"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S12"/>
+        <Process>
+            <Consumption refNode="S12"/>
+            <Production refNode="mRNAIL-6_12"/>
+            <NecessaryStimulation refNode="AND12"/>
+        </Process>
+        <AndNode ID="AND13">
+            <Logic refNode="NF-kBp50:NF-kBp65_1"/>
+            <Logic refNode="geneIL23A"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL23A" label="IL23A">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="51561"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL23A" label="IL23A">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="51561"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S13"/>
+        <Process>
+            <Consumption refNode="S13"/>
+            <Production refNode="mRNAIL23A"/>
+            <NecessaryStimulation refNode="AND13"/>
+        </Process>
+        <Complex ID="NF-kBp52:RELB_active" cloneref="NF-kBp52:RELB">
+            <StateVariable label="active"/>
+        </Complex>
+        <Process>
+            <Consumption refNode="NF-kBp52:RELB"/>
+            <Production refNode="NF-kBp52:RELB_active"/>
+        </Process>
+        <AndNode ID="AND14">
+            <Logic refNode="NF-kBp52:RELB_active"/>
+            <Logic refNode="geneCCL22"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneCCL22" label="CCL22">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="6367"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNACCL22" label="CCL22">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="6367"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S14"/>
+        <Process>
+            <Consumption refNode="S14"/>
+            <Production refNode="mRNACCL22"/>
+            <NecessaryStimulation refNode="AND14"/>
+        </Process>
+        <AndNode ID="AND15">
+            <Logic refNode="NF-kBp52:RELB_active"/>
+            <Logic refNode="geneCCL17"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneCCL17" label="CCL17">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="6361"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNACCL17" label="CCL17">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="6361"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S15"/>
+        <Process>
+            <Consumption refNode="S15"/>
+            <Production refNode="mRNACCL17"/>
+            <NecessaryStimulation refNode="AND15"/>
+        </Process>
+        <Complex ID="ERK-2_p:AP-1-1" cloneref="ERK-2_p:AP-1"/>
+        <AndNode ID="AND16">
+            <Logic refNode="ERK-2_p:AP-1-1"/>
+            <Logic refNode="geneIL-10-2"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-10-2" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-10-2" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S16"/>
+        <Process>
+            <Consumption refNode="S16"/>
+            <Production refNode="mRNAIL-10-2"/>
+            <NecessaryStimulation refNode="AND16"/>
+        </Process>
+        <Complex ID="NFATC1_:NFATC2_-2" cloneref="NFATC1_:NFATC2_"/>
+        <Process>
+            <Consumption refNode="NFATC1_:NFATC2_"/>
+            <Production refNode="NFATC1_:NFATC2_-2"/>
+        </Process>
+        <AndNode ID="AND17">
+            <Logic refNode="NFATC1_:NFATC2_-2"/>
+            <Logic refNode="geneEGR3"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneEGR3" label="EGR3">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="1960"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAEGR3" label="EGR3">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="1960"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S17"/>
+        <Process>
+            <Consumption refNode="S17"/>
+            <Production refNode="mRNAEGR3"/>
+            <NecessaryStimulation refNode="AND17"/>
+        </Process>
+        <AndNode ID="AND18">
+            <Logic refNode="NFATC1_:NFATC2_-2"/>
+            <Logic refNode="geneCOX2"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneCOX2" label="COX2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="5743"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNACOX2" label="COX2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="5743"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S18"/>
+        <Process>
+            <Consumption refNode="S18"/>
+            <Production refNode="mRNACOX2"/>
+            <NecessaryStimulation refNode="AND18"/>
+        </Process>
+        <AndNode ID="AND19">
+            <Logic refNode="NFATC1_:NFATC2_-2"/>
+            <Logic refNode="geneIL10-3"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL10-3" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-10-3" label="IL-10">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3586"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S19"/>
+        <Process>
+            <Consumption refNode="S19"/>
+            <Production refNode="mRNAIL-10-3"/>
+            <NecessaryStimulation refNode="AND19"/>
+        </Process>
+        <AndNode ID="AND20">
+            <Logic refNode="NFATC1_:NFATC2_-2"/>
+            <Logic refNode="geneIL-2-2"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneIL-2-2" label="IL-2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3559"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAIL-2-2" label="IL-2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="3558"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S20"/>
+        <Process>
+            <Consumption refNode="S20"/>
+            <Production refNode="mRNAIL-2-2"/>
+            <NecessaryStimulation refNode="AND20"/>
+        </Process>
+        <AndNode ID="AND21">
+            <Logic refNode="NFATC1_:NFATC2_-2"/>
+            <Logic refNode="genePTGSE2"/>
+        </AndNode>
+        <NucleicAcidFeature ID="genePTGSE2" label="PTGSE2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="80142"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAPTGSE2" label="PTGSE2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="80142"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S21"/>
+        <Process>
+            <Consumption refNode="S21"/>
+            <Production refNode="mRNAPTGSE2"/>
+            <NecessaryStimulation refNode="AND21"/>
+        </Process>
+        <AndNode ID="AND22">
+            <Logic refNode="NFATC1_:NFATC2_-2"/>
+            <Logic refNode="geneEGR2"/>
+        </AndNode>
+        <NucleicAcidFeature ID="geneEGR2" label="EGR2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="gene" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="1959"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <NucleicAcidFeature ID="mRNAEGR2" label="EGR2">
+            <Finding>
+                <Organism>Mus Musculus</Organism>
+                <OrganismPart>Bone Marrow</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+            </Finding>
+            <UnitOfInformation label="mRNA" prefix="ct"/>
+            <MacroModule>Outcome</MacroModule>
+            <Organism name="HS">
+                <annotation DB="EntrezGeneID" ID="1959"/>
+            </Organism>
+        </NucleicAcidFeature>
+        <Source ID="S22"/>
+        <Process>
+            <Consumption refNode="S22"/>
+            <Production refNode="mRNAEGR2"/>
+            <NecessaryStimulation refNode="AND22"/>
+        </Process>
+    </Compartment>
+</sbgn:SBGN.PD.L1>
