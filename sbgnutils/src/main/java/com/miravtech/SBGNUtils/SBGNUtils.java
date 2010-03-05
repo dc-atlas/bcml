@@ -288,8 +288,6 @@ public class SBGNUtils {
 					dt.getContent().add(node);
 				}
 
-				//TODO process shape must be smaller.
-				
 				NodeLabelType nlt = new NodeLabelType();
 				String label = n.getLabel();
 				if (n instanceof OmittedProcessType)
@@ -366,8 +364,7 @@ public class SBGNUtils {
 					theNode.setGraph(inner);
 					mapping.put(n, inner);
 				} else {
-					if (n instanceof ProcessType || n instanceof AuxiliaryUnitType
-							|| n instanceof LogicalOperatorNodeType) {
+					if (n instanceof ProcessType || n instanceof LogicalOperatorNodeType) {
 						// simple node
 						ShapeNode s = new ShapeNode();
 						s.setFill(new NodeType.Fill());
@@ -387,6 +384,14 @@ public class SBGNUtils {
 						if (n instanceof LogicalOperatorNodeType)
 							sh.setType(ShapeTypeType.ELLIPSE);
 						s.setShape(sh);
+
+						if (n instanceof ProcessType) {
+							// processes are shown smaller
+							s.setGeometry(new GeometryType());
+							s.getGeometry().setHeight(15);
+							s.getGeometry().setWidth(15);
+						}
+
 						LineStyleType lst = new LineStyleType();
 						lst.setHasColor(true);
 						lst.setColor(borderColor);

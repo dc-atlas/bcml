@@ -208,11 +208,13 @@ public class Main {
 	}
 	
 	static void setColor(SBGNNodeType node, String color) {
-		//TODO - set fill color; set text color on black or white, depending on fill color
 		if (node.getGraphic() == null)
 			node.setGraphic(new GraphicType());
-		node.getGraphic().setBorderColor(color);
-		node.getGraphic().setColor(color);
+		node.getGraphic().setBgColor(color);
+//		node.getGraphic().setBorderColor(color);
+		Color crtCol = PaintNode.getColor(color);
+		String textcolor = PaintNode.toColorString(ColorManager.getMostContrastantColor(crtCol, Color.WHITE, Color.BLACK));
+		node.getGraphic().setColor(textcolor);
 	}
 
 	static public Double computeValue(Collection<Double> vals, String algorithm) {
