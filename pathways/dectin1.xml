@@ -353,7 +353,7 @@
                 <annotation DB="EntrezGeneID" ID="5594"/>
             </Organism>
         </Macromolecule>
-        <Macromolecule ID="ERK-2_p" cloneref="ERK-2_">
+        <Macromolecule ID="ERK-2_p" cloneref="ERK-2_" label="ERK-2">
             <StateVariable label="p"/>
         </Macromolecule>
         <Process>
@@ -388,14 +388,9 @@
             </Macromolecule>
         </Complex>
         <Complex ID="ERK-2_p:AP-1">
-            <Macromolecule cloneref="ERK-2_p"/>
+            <Macromolecule cloneref="ERK-2_p" label="ERK-2"/>
             <Complex cloneref="AP-1"/>
         </Complex>
-        <Association>
-            <Production refNode="ERK-2_p:AP-1"/>
-            <Consumption refNode="ERK-2_p"/>
-            <Consumption refNode="AP-1"/>
-        </Association>
         <Complex ID="IKBa:NF-kBp52:RELB">
             <Macromolecule ID="IKBa" label="IKBa">
                 <Finding>
@@ -438,15 +433,9 @@
             <StateVariable label=""/>
             <StateVariable label=""/>
         </Macromolecule>
-        <Macromolecule ID="IKBa-2_ub_p-2" cloneref="IKBa-2_ub_p" label="IKBa"/>
         <Process>
             <Consumption refNode="IKBa-1__"/>
-            <Production refNode="IKBa-2_ub_p-2"/>
-        </Process>
-        <Sink ID="S2"/>
-        <Process>
-            <Consumption refNode="IKBa-2_ub_p-2"/>
-            <Production refNode="S2"/>
+            <Production refNode="IKBa-2_ub_p"/>
         </Process>
         <Complex ID="NF-kBp52:RELB">
             <Macromolecule cloneref="NF-kBp52"/>
@@ -490,14 +479,10 @@
                 <StateVariable label=""/>
             </Macromolecule>
         </Complex>
-        <Macromolecule ID="IKBa-2" cloneref="IKBa">
-            <StateVariable label=""/>
-            <StateVariable label=""/>
-        </Macromolecule>
         <Dissociation>
             <Consumption refNode="IKBa:NF-kBp50:NF-kBp65"/>
             <Production refNode="NF-kBp50:NF-kBp65_"/>
-            <Production refNode="IKBa-2"/>
+            <Production refNode="IKBa-1__"/>
             <Modulation refNode="CARD9_p:MALT1:BCL10:TRAF6"/>
         </Dissociation>
         <Macromolecule ID="IKBa-2_ub_p" cloneref="IKBa" label="IKBa">
@@ -667,11 +652,11 @@
                 <StateVariable label=""/>
             </Complex>
         </Complex>
-        <Process>
+        <Association>
             <Consumption refNode="NF-kBp50:NF-kBp65_p_p"/>
             <Production refNode="NF-kBp50:NF-kBp65_p_p_:CBP:p300"/>
             <Consumption refNode="CBP:p300"/>
-        </Process>
+        </Association>
         <Complex ID="NF-kBp50:NF-kBp65_p_p_Ac:CBP:p30" cloneref="NF-kBp50:NF-kBp65_p_p_:CBP:p300">
             <StateVariable label="Ac"/>
         </Complex>
@@ -1159,6 +1144,10 @@
             <Consumption refNode="S15"/>
             <Production refNode="mRNACCL17"/>
             <NecessaryStimulation refNode="AND15"/>
+        </Process>
+        <Process>
+            <Consumption refNode="ERK-2_p:AP-1"/>
+            <Production refNode="ERK-2_p:AP-1-1"/>
         </Process>
         <Complex ID="ERK-2_p:AP-1-1" cloneref="ERK-2_p:AP-1"/>
         <AndNode ID="AND16">
