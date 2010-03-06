@@ -9,6 +9,8 @@ import org.xml.sax.SAXException;
 
 public class Main {
 
+	static int files = 0;
+
 	/**
 	 * @param args
 	 * @throws JAXBException
@@ -32,6 +34,7 @@ public class Main {
 		} else {
 			sbgnCheck(srcDir);
 		}
+		System.out.println("Number of files checked: " + files);
 	}
 
 	public static void sbgnCheck(File srcSBGN) throws JAXBException,
@@ -45,7 +48,7 @@ public class Main {
 
 			}
 		}
-
+		files++;
 	}
 
 }

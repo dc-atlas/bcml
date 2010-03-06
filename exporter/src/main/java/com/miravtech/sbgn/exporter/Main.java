@@ -14,6 +14,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+
 import com.miravtech.SBGNUtils.SBGNUtils;
 import com.miravtech.sbgn.SBGNPDl1;
 
@@ -29,53 +32,84 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		
-		String source;
-		String destination;
-		String organism = "HS";
-		String db = "EntrezGeneID";
-		String method = "GeneList";
-		if (args.length >= 5) {
-			source = args[0];
-			destination = args[1];
-			organism = args[2];
-			db = args[3];
-			method = args[4];
-		} else {
-			throw new Exception("Please provide the source file, the source destination, the organism, the database and the method.");
+		String organism ;
+		String db ;
+		String method ;
+		File srcDir;
+		File destDir;
+		boolean filtering = true;
+
+		OptionParser parser = new OptionParser();
+		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
+				.withRequiredArg().ofType(File.class).describedAs("file path");
+		parser.accepts("outFile", "The target file.").withRequiredArg().ofType(
+				File.class).describedAs("file path");
+
+		parser.accepts("organism", "The name of the organism to consider")
+				.withOptionalArg().ofType(String.class).describedAs("Organism")
+				.defaultsTo("HS");
+		parser.accepts("db", "The database to consider.").withOptionalArg()
+				.ofType(String.class).describedAs("Database").defaultsTo(
+						"EntrezGeneID");
+
+		parser.accepts("method", "The method to use.").withOptionalArg()
+				.ofType(String.class).describedAs("GeneList").defaultsTo(
+						"GeneList");
+
+		parser.accepts("disableFilter", "Disable filtering.");
+
+		try {
+			OptionSet opts = parser.parse(args);
+
+			srcDir = (File) opts.valueOf("srcSBGN");
+			destDir = (File) opts.valueOf("outFile");
+
+			method = (String) opts.valueOf("method");
+			organism = (String) opts.valueOf("organism");
+			db = (String) opts.valueOf("db");
+			
+			if (opts.has("disableFilter"))
+				filtering = false;
+			
+			if (srcDir.getAbsolutePath().compareToIgnoreCase(
+					destDir.getAbsolutePath()) == 0)
+				throw new RuntimeException(
+						"Source and destination directories or files cannot be identical!");
+
+			jaxbContext = JAXBContext
+					.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
+			unmarshaller = jaxbContext.createUnmarshaller();
+			marshaller = jaxbContext.createMarshaller();
+
+		} catch (Exception e) {
+			System.out.println("Exception occured: " + e.toString()
+					+ "\nPossible commands:\n");
+			parser.printHelpOn(System.out);
+			return;
 		}
-		File srcDir = new File(source);
-		File destDir = new File(destination);
 
-		if (srcDir.getAbsolutePath().compareToIgnoreCase(
-				destDir.getAbsolutePath()) == 0)
-			throw new RuntimeException(
-					"Source and destination directories or files cannot be identical!");
-
-		
-		jaxbContext = JAXBContext
-				.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
-		unmarshaller = jaxbContext.createUnmarshaller();
-		marshaller = jaxbContext.createMarshaller();
-
+		// run the function, we have the arguments;
 		if (method.equalsIgnoreCase("GeneList"))
-			exportSBGN(srcDir, destDir, organism,db,true); //TODO - the useFilter should be captured from cmdline, default true
+			exportSBGN(srcDir, destDir, organism, db, filtering);
 		else
-			throw new Exception("Method not supported, currently supported: GeneList");
+			throw new Exception(
+					"Method not supported, currently supported: GeneList");
+
 	}
 
 	public static void exportSBGN(File sourceSBGN, File destFile,
-			final String organism, final String db, final boolean usefilter) throws JAXBException, IOException {
+			final String organism, final String db, final boolean usefilter)
+			throws JAXBException, IOException {
 
 		SBGNPDl1 sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
 		SBGNUtils utils = new SBGNUtils(sbgnpath.getValue());
 
 		utils.fillRedundantData();
-		
-		Set<String> genes =  utils.getSymbols(organism, db, usefilter);
+
+		Set<String> genes = utils.getSymbols(organism, db, usefilter);
 		FileOutputStream fos = new FileOutputStream(destFile);
 		PrintWriter pr = new PrintWriter(fos);
-		for (String g: genes)
+		for (String g : genes)
 			pr.println(g);
 		pr.close();
 

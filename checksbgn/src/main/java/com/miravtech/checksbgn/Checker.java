@@ -120,8 +120,8 @@ public class Checker {
 
 		// TODO check the loops in the logic operators. If AND1 and OR1 are
 		// nodes, this is illegal:
-		// AND1 ---> OR1 ----> AND1
-
+		// AND1 --+---> OR1 -----+----> AND1
+		// .......+--->Node1 ....+----> NODE2
 		// check there are no reactions between
 		// items within of a complex
 		r.addAll(checkComplexReaction());

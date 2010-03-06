@@ -29,11 +29,9 @@ public class Main {
 	JAXBContext jaxbContext;
 	Unmarshaller unmarshaller;
 	Marshaller marshaller;
-	
+
 	/*
-	String sbgnFileSource;
-	String textFileSource;
-	String sbgnFileDest;
+	 * String sbgnFileSource; String textFileSource; String sbgnFileDest;
 	 */
 	boolean filterExcludedSelection = true;
 	String organism;
@@ -71,8 +69,7 @@ public class Main {
 				if (n instanceof StatefulEntiyPoolNodeType) {
 					StatefulEntiyPoolNodeType inner = (StatefulEntiyPoolNodeType) n;
 					double val;
-					if (nodeFCs.containsKey(inner.getID()))
-					{
+					if (nodeFCs.containsKey(inner.getID())) {
 						val = nodeFCs.get(inner.getID());
 						vals.add(val);
 					}
@@ -87,6 +84,10 @@ public class Main {
 			return null;
 	}
 
+	File sourceSBGN;
+	File textFileSource;
+	File outFile;
+
 	private void run(String args[]) throws Exception {
 
 		jaxbContext = JAXBContext
@@ -94,72 +95,102 @@ public class Main {
 		unmarshaller = jaxbContext.createUnmarshaller();
 		marshaller = jaxbContext.createMarshaller();
 
+		// Blue Green Darkgray Orange Red %.2f
 
-		// Blue Green Darkgray   Orange   Red %.2f
+		OptionParser parser = new OptionParser();
+		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
+				.withRequiredArg().ofType(File.class).describedAs("file path");
+		parser.accepts("varFile",
+				"The two column file to annotate in the pathway.")
+				.withRequiredArg().ofType(File.class).describedAs("file path");
+		parser.accepts("outFile", "The target SBGN file.").withRequiredArg()
+				.ofType(File.class).describedAs("file path");
+		parser.accepts("alg", "The algorithm to use, can be MIN, MAX or AVG.")
+				.withOptionalArg().ofType(String.class).describedAs(
+						"MIN|MAX|AVG").defaultsTo("AVG");
+		parser.accepts("varName", "The name of the variable to annotate.")
+				.withOptionalArg().ofType(String.class).describedAs("VAR")
+				.defaultsTo("FC");
+		parser.accepts("organism", "The name of the organism to consider")
+				.withOptionalArg().ofType(String.class).describedAs("Organism")
+				.defaultsTo("HS");
+		parser.accepts("db", "The database to consider.").withOptionalArg()
+				.ofType(String.class).describedAs("Database").defaultsTo(
+						"EntrezGeneID");
 
-        OptionParser parser = new OptionParser();
-        parser.accepts("srcSBGN", "Name of the SBGN file to use.").withRequiredArg().ofType(File.class).describedAs("file path");
-        parser.accepts("varFile", "The two column file to annotate in the pathway.").withRequiredArg().ofType(File.class).describedAs("file path");
-        parser.accepts("outFile", "The target SBGN file.").withRequiredArg().ofType(File.class).describedAs("file path");
-        parser.accepts("alg", "The algorithm to use, can be MIN, MAX or AVG.").withOptionalArg().ofType(String.class).describedAs("MIN|MAX|AVG").defaultsTo("AVG");
-        parser.accepts("varName", "The name of the variable to annotate.").withOptionalArg().ofType(String.class).describedAs("VAR").defaultsTo("FC");
-        parser.accepts("organism", "The name of the organism to consider").withOptionalArg().ofType(String.class).describedAs("Organism").defaultsTo("HS");
-        parser.accepts("db", "The database to consider.").withOptionalArg().ofType(String.class).describedAs("Database").defaultsTo("EntrezGeneID");
+		parser.accepts("minNegCol",
+				"The color of the most extreme negative value.")
+				.withOptionalArg().ofType(String.class).describedAs("Color")
+				.defaultsTo("Blue");
+		parser.accepts("maxNegCol",
+				"The color of the less extreme negative value.")
+				.withOptionalArg().ofType(String.class).describedAs("Color")
+				.defaultsTo("Green");
+		parser.accepts("zeroCol", "The color of the zero value.")
+				.withOptionalArg().ofType(String.class).describedAs("Color")
+				.defaultsTo("White");
+		parser.accepts("minPosCol",
+				"The color of the less extreme positive value.")
+				.withOptionalArg().ofType(String.class).describedAs("Color")
+				.defaultsTo("Orange");
+		parser.accepts("maxPosCol",
+				"The color of the most extreme positive value.")
+				.withOptionalArg().ofType(String.class).describedAs("Color")
+				.defaultsTo("Red");
 
-        parser.accepts("minNegCol", "The color of the most extreme negative value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Blue");
-        parser.accepts("maxNegCol", "The color of the less extreme negative value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Green");
-        parser.accepts("zeroCol", "The color of the zero value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("White");
-        parser.accepts("minPosCol", "The color of the less extreme positive value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Orange");
-        parser.accepts("maxPosCol", "The color of the most extreme positive value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Red");
+		try {
+			OptionSet opts = parser.parse(args);
 
-        parser.printHelpOn(System.out);
-        
-        OptionSet opts = parser.parse(args);
-        
-        File sourceSBGN = (File) opts.valueOf("srcSBGN");
-        File textFileSource = (File) opts.valueOf("varFile");
-        File outFile = (File) opts.valueOf("outFile");
-        
-        varName = (String) opts.valueOf("varName");
-        algorithm = (String) opts.valueOf("alg");
-        organism = (String) opts.valueOf("organism");
-        db = (String) opts.valueOf("db");
+			sourceSBGN = (File) opts.valueOf("srcSBGN");
+			textFileSource = (File) opts.valueOf("varFile");
+			outFile = (File) opts.valueOf("outFile");
 
-		Color c;
-		String col;
+			varName = (String) opts.valueOf("varName");
+			algorithm = (String) opts.valueOf("alg");
+			organism = (String) opts.valueOf("organism");
+			db = (String) opts.valueOf("db");
 
-		col = (String) opts.valueOf("minNegCol");
-		c = PaintNode.getColor(col);
-		if (c == null)
-			throw new Exception("Cannot build color from: " + col);
-		colorMan.setColMinFC(c);
+			Color c;
+			String col;
 
-		col = (String) opts.valueOf("maxNegCol");
-		c = PaintNode.getColor(col);
-		if (c == null)
-			throw new Exception("Cannot build color from: " + col);
-		colorMan.setColZeroNegFC(c);
+			col = (String) opts.valueOf("minNegCol");
+			c = PaintNode.getColor(col);
+			if (c == null)
+				throw new Exception("Cannot build color from: " + col);
+			colorMan.setColMinFC(c);
 
-		col = (String) opts.valueOf("zeroCol");
-		c = PaintNode.getColor(col);
-		if (c == null)
-			throw new Exception("Cannot build color from: " + col);
-		colorMan.setColZero(c);
+			col = (String) opts.valueOf("maxNegCol");
+			c = PaintNode.getColor(col);
+			if (c == null)
+				throw new Exception("Cannot build color from: " + col);
+			colorMan.setColZeroNegFC(c);
 
-		col = (String) opts.valueOf("minPosCol");
-		c = PaintNode.getColor(col);
-		if (c == null)
-			throw new Exception("Cannot build color from: " + col);
-		colorMan.setColZeroPosFC(c);
+			col = (String) opts.valueOf("zeroCol");
+			c = PaintNode.getColor(col);
+			if (c == null)
+				throw new Exception("Cannot build color from: " + col);
+			colorMan.setColZero(c);
 
-		col = (String) opts.valueOf("maxPosCol");
-		c = PaintNode.getColor(col);
-		if (c == null)
-			throw new Exception("Cannot build color from: " + col);
-		colorMan.setColMaxFC(c);
+			col = (String) opts.valueOf("minPosCol");
+			c = PaintNode.getColor(col);
+			if (c == null)
+				throw new Exception("Cannot build color from: " + col);
+			colorMan.setColZeroPosFC(c);
 
-		sl = new SymbolList(new FileInputStream(textFileSource));
-		colorMan.setValues(sl.values());
+			col = (String) opts.valueOf("maxPosCol");
+			c = PaintNode.getColor(col);
+			if (c == null)
+				throw new Exception("Cannot build color from: " + col);
+			colorMan.setColMaxFC(c);
+
+			sl = new SymbolList(new FileInputStream(textFileSource));
+			colorMan.setValues(sl.values());
+		} catch (Exception e) {
+			System.out.println("Exception occured: " + e.toString()
+					+ "\nPossible commands:\n");
+			parser.printHelpOn(System.out);
+
+		}
 
 		// load the SBGN pathway
 		sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
@@ -228,14 +259,15 @@ public class Main {
 		marshaller.marshal(sbgnpath2, outFile);
 
 	}
-	
+
 	static void setColor(SBGNNodeType node, String color) {
 		if (node.getGraphic() == null)
 			node.setGraphic(new GraphicType());
 		node.getGraphic().setBgColor(color);
-//		node.getGraphic().setBorderColor(color);
+		// node.getGraphic().setBorderColor(color);
 		Color crtCol = PaintNode.getColor(color);
-		String textcolor = PaintNode.toColorString(ColorManager.getMostContrastantColor(crtCol, Color.WHITE, Color.BLACK));
+		String textcolor = PaintNode.toColorString(ColorManager
+				.getMostContrastantColor(crtCol, Color.WHITE, Color.BLACK));
 		node.getGraphic().setColor(textcolor);
 	}
 
