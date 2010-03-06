@@ -27,6 +27,7 @@ import org.xml.sax.SAXParseException;
 
 import com.miravtech.SBGNUtils.LSInputSAXWrapper;
 import com.miravtech.SBGNUtils.SBGNIterator;
+import com.miravtech.SBGNUtils.SBGNUtils;
 import com.miravtech.checksbgn.CheckReport.ERRORCODES;
 import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.AssociationType;
@@ -121,8 +122,9 @@ public class Checker {
 		// nodes, this is illegal:
 		// AND1 ---> OR1 ----> AND1
 
-		// TODO check there are no reactions between
+		// check there are no reactions between
 		// items within of a complex
+		r.addAll(checkComplexReaction());
 
 		return r; // no errors
 	}
@@ -573,6 +575,34 @@ public class Checker {
 											ERRORCODES.ERROR_THIS_EPN_CANNOT_BE_MULTIMER,
 											n.getID()));
 						}
+					}
+				}
+			};
+		}.run(sbgnpath);
+		return ret;
+
+	}
+
+	private List<CheckReport> checkComplexReaction() throws JAXBException {
+		final List<CheckReport> ret = new LinkedList<CheckReport>();
+		final SBGNUtils ut = new SBGNUtils(sbgnpath);
+		ut.setEmptyIDs();
+
+		new SBGNIterator() {
+			public void iterateNode(SBGNNodeType n) {
+				if (ut.getEdges(n).size() == 0)
+					return; // not connected
+				// contained in a complex?
+				if ((getLastNode() instanceof ComplexType)) {
+
+					// show an error for each arch found
+					for (ArcType a : ut.getEdges(n)) {
+						SBGNNodeType target = ut.getOtherNode(a, n);
+						ret
+								.add(new CheckReport(
+										ERRORCODES.ERROR_THIS_EPN_CANNOT_BE_IN_REACTION,
+										n.getID(), getLastNode().getID(),
+										target.getID()));
 					}
 				}
 			};

@@ -59,7 +59,7 @@ public class Main {
 		marshaller = jaxbContext.createMarshaller();
 
 		if (method.equalsIgnoreCase("GeneList"))
-			exportSBGN(srcDir, destDir, organism,db,true);
+			exportSBGN(srcDir, destDir, organism,db,true); //TODO - the useFilter should be captured from cmdline, default true
 		else
 			throw new Exception("Method not supported, currently supported: GeneList");
 	}

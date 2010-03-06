@@ -5,10 +5,7 @@
 	<Complex ID="c1">
 		<Macromolecule ID="m1" />  <!-- Valid -->
 		<Macromolecule ID="m2" />
-		<Process ID="p1"><!-- Invalid placement, cannot be here in the complex -->
-			<Consumption refNode="m1" />
-			<Production refNode="m2" />
-		</Process>
+		<UncertainProcess ID="p1" /><!-- Invalid placement, cannot be here in the complex -->
 
 	</Complex>
 

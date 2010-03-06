@@ -11,6 +11,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+
 import com.miravtech.SBGNUtils.SBGNIterator;
 import com.miravtech.SBGNUtils.SBGNUtils;
 import com.miravtech.sbgn.SBGNNodeType;
@@ -26,15 +29,18 @@ public class Main {
 	JAXBContext jaxbContext;
 	Unmarshaller unmarshaller;
 	Marshaller marshaller;
+	
+	/*
 	String sbgnFileSource;
 	String textFileSource;
 	String sbgnFileDest;
-	String algorithm;
-	String varName;
+	 */
+	boolean filterExcludedSelection = true;
 	String organism;
 	String db;
-	boolean filterExcludedSelection = true;
-	String format;
+	String varName;
+	String algorithm;
+	String format = "%.3f"; // can be changed in future, if desided
 
 	SBGNPDl1 sbgnpath;
 	SBGNUtils utils;
@@ -89,57 +95,74 @@ public class Main {
 		marshaller = jaxbContext.createMarshaller();
 
 
-		if (args.length > 12) {
-			int arg = 0;
-			sbgnFileSource = args[arg++];
-			textFileSource = args[arg++];
-			sbgnFileDest = args[arg++];
-			algorithm = args[arg++];
-			varName = args[arg++];
-			organism = args[arg++];
-			db = args[arg++];
+		// Blue Green Darkgray   Orange   Red %.2f
 
-			String col = args[arg++];
-			Color c = PaintNode.getColor(col);
-			if (c == null)
-				throw new Exception("Cannot build color from: " + col);
-			colorMan.setColMinFC(c);
+        OptionParser parser = new OptionParser();
+        parser.accepts("srcSBGN", "Name of the SBGN file to use.").withRequiredArg().ofType(File.class).describedAs("file path");
+        parser.accepts("varFile", "The two column file to annotate in the pathway.").withRequiredArg().ofType(File.class).describedAs("file path");
+        parser.accepts("outFile", "The target SBGN file.").withRequiredArg().ofType(File.class).describedAs("file path");
+        parser.accepts("alg", "The algorithm to use, can be MIN, MAX or AVG.").withOptionalArg().ofType(String.class).describedAs("MIN|MAX|AVG").defaultsTo("AVG");
+        parser.accepts("varName", "The name of the variable to annotate.").withOptionalArg().ofType(String.class).describedAs("VAR").defaultsTo("FC");
+        parser.accepts("organism", "The name of the organism to consider").withOptionalArg().ofType(String.class).describedAs("Organism").defaultsTo("HS");
+        parser.accepts("db", "The database to consider.").withOptionalArg().ofType(String.class).describedAs("Database").defaultsTo("EntrezGeneID");
 
-			col = args[arg++];
-			c = PaintNode.getColor(col);
-			if (c == null)
-				throw new Exception("Cannot build color from: " + col);
-			colorMan.setColZeroNegFC(c);
+        parser.accepts("minNegCol", "The color of the most extreme negative value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Blue");
+        parser.accepts("maxNegCol", "The color of the less extreme negative value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Green");
+        parser.accepts("zeroCol", "The color of the zero value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("White");
+        parser.accepts("minPosCol", "The color of the less extreme positive value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Orange");
+        parser.accepts("maxPosCol", "The color of the most extreme positive value.").withOptionalArg().ofType(String.class).describedAs("Color").defaultsTo("Red");
 
-			col = args[arg++];
-			c = PaintNode.getColor(col);
-			if (c == null)
-				throw new Exception("Cannot build color from: " + col);
-			colorMan.setColZero(c);
+        parser.printHelpOn(System.out);
+        
+        OptionSet opts = parser.parse(args);
+        
+        File sourceSBGN = (File) opts.valueOf("srcSBGN");
+        File textFileSource = (File) opts.valueOf("varFile");
+        File outFile = (File) opts.valueOf("outFile");
+        
+        varName = (String) opts.valueOf("varName");
+        algorithm = (String) opts.valueOf("alg");
+        organism = (String) opts.valueOf("organism");
+        db = (String) opts.valueOf("db");
 
-			col = args[arg++];
-			c = PaintNode.getColor(col);
-			if (c == null)
-				throw new Exception("Cannot build color from: " + col);
-			colorMan.setColZeroPosFC(c);
+		Color c;
+		String col;
 
-			col = args[arg++];
-			c = PaintNode.getColor(col);
-			if (c == null)
-				throw new Exception("Cannot build color from: " + col);
-			colorMan.setColMaxFC(c);
+		col = (String) opts.valueOf("minNegCol");
+		c = PaintNode.getColor(col);
+		if (c == null)
+			throw new Exception("Cannot build color from: " + col);
+		colorMan.setColMinFC(c);
 
-			format = args[arg++];
+		col = (String) opts.valueOf("maxNegCol");
+		c = PaintNode.getColor(col);
+		if (c == null)
+			throw new Exception("Cannot build color from: " + col);
+		colorMan.setColZeroNegFC(c);
 
-		} else
-			throw new Exception(
-					"Please provide the following arguments: sbgn file source, text file source, sbgn file destination, algorithm, variable_name");
+		col = (String) opts.valueOf("zeroCol");
+		c = PaintNode.getColor(col);
+		if (c == null)
+			throw new Exception("Cannot build color from: " + col);
+		colorMan.setColZero(c);
+
+		col = (String) opts.valueOf("minPosCol");
+		c = PaintNode.getColor(col);
+		if (c == null)
+			throw new Exception("Cannot build color from: " + col);
+		colorMan.setColZeroPosFC(c);
+
+		col = (String) opts.valueOf("maxPosCol");
+		c = PaintNode.getColor(col);
+		if (c == null)
+			throw new Exception("Cannot build color from: " + col);
+		colorMan.setColMaxFC(c);
 
 		sl = new SymbolList(new FileInputStream(textFileSource));
 		colorMan.setValues(sl.values());
 
 		// load the SBGN pathway
-		sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(new File(sbgnFileSource));
+		sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
 		utils = new SBGNUtils(sbgnpath.getValue());
 
 		// expand the data
@@ -157,8 +180,7 @@ public class Main {
 		}.runBottomUp(sbgnpath.getValue());
 
 		// reload the SBGN pathway
-		SBGNPDl1 sbgnpath2 = (SBGNPDl1) unmarshaller.unmarshal(new File(
-				sbgnFileSource));
+		SBGNPDl1 sbgnpath2 = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
 		final SBGNUtils utils2 = new SBGNUtils(sbgnpath2.getValue());
 
 		// fill the IDs that are not specified
@@ -203,7 +225,7 @@ public class Main {
 		utils2.removeAssignedIDs();
 
 		// save the file to the destination
-		marshaller.marshal(sbgnpath2, new File(sbgnFileDest));
+		marshaller.marshal(sbgnpath2, outFile);
 
 	}
 	

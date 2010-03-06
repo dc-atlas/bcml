@@ -243,4 +243,19 @@ public class CheckerTest {
 
 	// TODO COMPARTMENTS_CANNOT_BE_CONTAINED
 
+	@Test
+	public void TestComplexPartInReaction() throws JAXBException, SAXException {
+		Checker c = new Checker();
+		List<CheckReport> ret = c.check(CheckerTest.class
+				.getResource("/complexpartinreaction.xml"));
+		if (ret.size() != 2)
+			throw new RuntimeException("Two errors were expected!");
+		if (ret.get(0).code != ERRORCODES.ERROR_THIS_EPN_CANNOT_BE_IN_REACTION)
+			throw new RuntimeException(
+					"ERROR_THIS_EPN_CANNOT_BE_IN_REACTION error expected!");
+		if (ret.get(1).code != ERRORCODES.ERROR_THIS_EPN_CANNOT_BE_IN_REACTION)
+			throw new RuntimeException(
+					"ERROR_THIS_EPN_CANNOT_BE_IN_REACTION error expected!");
+	}
+
 }

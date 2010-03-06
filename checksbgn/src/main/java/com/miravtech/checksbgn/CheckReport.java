@@ -52,7 +52,9 @@ class CheckReport {
 				"Tag node %s may only have one equivalence arc."), //
 		THIS_PROCESS_MUST_HAVE_AT_LEAST_ONE_CONSUMPTION_AND_ONE_PRODUCTION(
 				"The process %s must have at least one consumption and at least one production"), //
-		ERROR_THIS_EPN_CANNOT_BE_MULTIMER("The node %s cannot be a multimer!")
+		ERROR_THIS_EPN_CANNOT_BE_MULTIMER("The node %s cannot be a multimer!"), //
+		ERROR_THIS_EPN_CANNOT_BE_IN_REACTION(
+				"The node %s is contained in the complex %s but also used in the process %s!")
 
 		;
 

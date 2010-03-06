@@ -206,6 +206,9 @@ public class SBGNUtils {
 
 	// private static int count = 0;
 
+	/**
+	 * @return
+	 */
 	public Graphml asGraphML() {
 		final Graphml graphml = new Graphml();
 		Key k;
@@ -238,8 +241,10 @@ public class SBGNUtils {
 		main.setEdgedefault(GraphEdgedefaultType.DIRECTED);
 		main.setId("MainGraph");
 
+		// the graphical representation of each node
 		final Map<SBGNNodeType, Graph> mapping = new HashMap<SBGNNodeType, Graph>();
 		mapping.put(null, main);
+		
 		new SBGNIterator() {
 			public void iterateNode(SBGNNodeType n) {
 				GraphicType g = n.getGraphic();
@@ -680,6 +685,21 @@ public class SBGNUtils {
 
 	Map<SBGNNodeType, Collection<ArcType>> connections = null;
 	
+	/**
+	 * Returns all the edges of an arch
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public Collection<ArcType> getEdges(SBGNNodeType node) {
+		getEdges();
+		Collection<ArcType> ret = connections.get(node);
+		if (ret == null)
+			ret = new HashSet<ArcType>();
+		return ret;
+		
+	}
+
 	public SBGNNodeType getOtherNode(ArcType arc, SBGNNodeType node) {
 		getEdges();
 		for (Map.Entry<SBGNNodeType, Collection<ArcType>> e : connections.entrySet())

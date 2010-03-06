@@ -42,6 +42,7 @@ import com.miravtech.sbgn.UnitOfInformationType;
 import com.miravtech.sbgn.UnspecifiedEntityType;
 import com.miravtech.sbgn_graphics.GraphicType;
 
+
 public class PaintNode {
 
 	/**
