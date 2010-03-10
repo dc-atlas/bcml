@@ -1,8 +1,8 @@
-.PHONY: all checksbgn graphmlconvert exporter filter
+.PHONY: all checksbgn graphmlconvert exporter filter annotator
 
 TESTFLAGS=-Dmaven.test.skip=true
 
-all: prep checksbgn graphmlconvert exporter filter
+all: prep checksbgn graphmlconvert exporter filter annotator
 
 prep:
 	echo "Preparing..."
@@ -21,3 +21,6 @@ exporter:
 
 filter: 
 	cd ./filter; mvn assembly:assembly $(TESTFLAGS)
+
+annotator:
+	cf ./annotator; mvn assembly:assembly $(TESTFLAGS)
