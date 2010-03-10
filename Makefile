@@ -17,7 +17,7 @@ graphmlconvert:
 	cd ./graphmlconvert; mvn assembly:assembly $(TESTFLAGS)
 
 exporter:
-	cd ./exporteri; mvn assembly:assembly $(TESTFLAGS)
+	cd ./exporter; mvn assembly:assembly $(TESTFLAGS)
 
 filter: 
 	cd ./filter; mvn assembly:assembly $(TESTFLAGS)
