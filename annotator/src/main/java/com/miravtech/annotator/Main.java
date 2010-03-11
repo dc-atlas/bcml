@@ -6,11 +6,13 @@ import java.io.FileInputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
@@ -95,48 +97,84 @@ public class Main {
 		unmarshaller = jaxbContext.createUnmarshaller();
 		marshaller = jaxbContext.createMarshaller();
 
-		// Blue Green Darkgray Orange Red %.2f
+		Properties p = new Properties();
+		try {
+			p.load(new FileInputStream("SBGN.ini"));
+		} catch (Exception e) {
+			// ignore the exception
+			System.err.println("Warning, SBGN.ini cannot be loaded");
+		}
 
 		OptionParser parser = new OptionParser();
-		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
+		ArgumentAcceptingOptionSpec<File> aaos_file;
+		String prop;
+		aaos_file = parser.accepts("srcSBGN", "Name of the SBGN file to use.")
 				.withRequiredArg().ofType(File.class).describedAs("file path");
-		parser.accepts("varFile",
+		prop = p.getProperty("annotator.input");
+		if (prop != null)
+			aaos_file.defaultsTo(new File(prop));
+
+		aaos_file = parser.accepts("varFile",
 				"The two column file to annotate in the pathway.")
 				.withRequiredArg().ofType(File.class).describedAs("file path");
-		parser.accepts("outFile", "The target SBGN file.").withRequiredArg()
+		prop = p.getProperty("annotator.varFile");
+		if (prop != null)
+			aaos_file.defaultsTo(new File(prop));
+
+		aaos_file = parser.accepts("outFile", "The target SBGN file.").withRequiredArg()
 				.ofType(File.class).describedAs("file path");
+		prop = p.getProperty("annotator.outFile");
+		if (prop != null)
+			aaos_file.defaultsTo(new File(prop));
+		
+		
+		prop = p.getProperty("annotator.alg","AVG");
 		parser.accepts("alg", "The algorithm to use, can be MIN, MAX or AVG.")
 				.withOptionalArg().ofType(String.class).describedAs(
-						"MIN|MAX|AVG").defaultsTo("AVG");
+						"MIN|MAX|AVG").defaultsTo(prop);
+
+		prop = p.getProperty("varname","FC");
 		parser.accepts("varName", "The name of the variable to annotate.")
 				.withOptionalArg().ofType(String.class).describedAs("VAR")
-				.defaultsTo("FC");
+				.defaultsTo(prop);
+		
+		prop = p.getProperty("organism","HS");
 		parser.accepts("organism", "The name of the organism to consider")
 				.withOptionalArg().ofType(String.class).describedAs("Organism")
-				.defaultsTo("HS");
+				.defaultsTo(prop);
+		
+		prop = p.getProperty("database","EntrezGeneID");
 		parser.accepts("db", "The database to consider.").withOptionalArg()
-				.ofType(String.class).describedAs("Database").defaultsTo(
-						"EntrezGeneID");
+				.ofType(String.class).describedAs("Database").defaultsTo(prop);
 
+		prop = p.getProperty("minNegCol","Blue");
 		parser.accepts("minNegCol",
 				"The color of the most extreme negative value.")
 				.withOptionalArg().ofType(String.class).describedAs("Color")
-				.defaultsTo("Blue");
+				.defaultsTo(prop);
+		
+		prop = p.getProperty("maxNegCol","Green");
 		parser.accepts("maxNegCol",
 				"The color of the less extreme negative value.")
 				.withOptionalArg().ofType(String.class).describedAs("Color")
-				.defaultsTo("Green");
+				.defaultsTo(prop);
+		
+		prop = p.getProperty("zeroCol","White");
 		parser.accepts("zeroCol", "The color of the zero value.")
 				.withOptionalArg().ofType(String.class).describedAs("Color")
-				.defaultsTo("White");
+				.defaultsTo(prop);
+		
+		prop = p.getProperty("minPosCol","Orange");
 		parser.accepts("minPosCol",
 				"The color of the less extreme positive value.")
 				.withOptionalArg().ofType(String.class).describedAs("Color")
-				.defaultsTo("Orange");
+				.defaultsTo(prop);
+		
+		prop = p.getProperty("maxPosCol","Red");
 		parser.accepts("maxPosCol",
 				"The color of the most extreme positive value.")
 				.withOptionalArg().ofType(String.class).describedAs("Color")
-				.defaultsTo("Red");
+				.defaultsTo(prop);
 
 		try {
 			OptionSet opts = parser.parse(args);
@@ -144,6 +182,13 @@ public class Main {
 			sourceSBGN = (File) opts.valueOf("srcSBGN");
 			textFileSource = (File) opts.valueOf("varFile");
 			outFile = (File) opts.valueOf("outFile");
+
+			if (sourceSBGN == null)
+				throw new Exception("srcSBGN argument not present!");
+			if (textFileSource == null)
+				throw new Exception("varFile file argument not present!");
+			if (outFile == null)
+				throw new Exception("outFile file argument not present!");
 
 			varName = (String) opts.valueOf("varName");
 			algorithm = (String) opts.valueOf("alg");
@@ -189,6 +234,7 @@ public class Main {
 			System.out.println("Exception occured: " + e.toString()
 					+ "\nPossible commands:\n");
 			parser.printHelpOn(System.out);
+			return;
 
 		}
 

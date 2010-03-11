@@ -39,6 +39,8 @@ public class Main {
 		File destDir;
 		boolean filtering = true;
 
+		// TODO - ability to read the fields from INI !!
+		
 		OptionParser parser = new OptionParser();
 		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
 				.withRequiredArg().ofType(File.class).describedAs("file path");
