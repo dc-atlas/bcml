@@ -56,6 +56,7 @@ public class Main {
 				.defaultsTo(prop);
 		
 		
+		prop = p.getProperty("database","EntrezGeneID");
 		parser.accepts("db", "The database to consider.").withOptionalArg()
 				.ofType(String.class).describedAs("Database").defaultsTo(
 						prop);
