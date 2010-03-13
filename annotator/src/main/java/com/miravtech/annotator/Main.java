@@ -12,10 +12,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
+import com.miravtech.SBGNUtils.INIConfiguration;
 import com.miravtech.SBGNUtils.SBGNIterator;
 import com.miravtech.SBGNUtils.SBGNUtils;
 import com.miravtech.sbgn.SBGNNodeType;
@@ -97,35 +97,29 @@ public class Main {
 		unmarshaller = jaxbContext.createUnmarshaller();
 		marshaller = jaxbContext.createMarshaller();
 
-		Properties p = new Properties();
-		try {
-			p.load(new FileInputStream("SBGN.ini"));
-		} catch (Exception e) {
-			// ignore the exception
-			System.err.println("Warning, SBGN.ini cannot be loaded");
-		}
+		Properties p = INIConfiguration.getConfiguration();
 
 		OptionParser parser = new OptionParser();
-		ArgumentAcceptingOptionSpec<File> aaos_file;
+//		ArgumentAcceptingOptionSpec<File> aaos_file;
 		String prop;
-		aaos_file = parser.accepts("srcSBGN", "Name of the SBGN file to use.")
+		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
 				.withRequiredArg().ofType(File.class).describedAs("file path");
-		prop = p.getProperty("annotator.input");
-		if (prop != null)
-			aaos_file.defaultsTo(new File(prop));
+//		prop = p.getProperty("annotator.input");
+//		if (prop != null)
+//			aaos_file.defaultsTo(new File(prop));
 
-		aaos_file = parser.accepts("varFile",
+		parser.accepts("varFile",
 				"The two column file to annotate in the pathway.")
 				.withRequiredArg().ofType(File.class).describedAs("file path");
-		prop = p.getProperty("annotator.varFile");
-		if (prop != null)
-			aaos_file.defaultsTo(new File(prop));
+//		prop = p.getProperty("annotator.varFile");
+//		if (prop != null)
+//			aaos_file.defaultsTo(new File(prop));
 
-		aaos_file = parser.accepts("outFile", "The target SBGN file.").withRequiredArg()
+		parser.accepts("outFile", "The target SBGN file.").withRequiredArg()
 				.ofType(File.class).describedAs("file path");
-		prop = p.getProperty("annotator.outFile");
-		if (prop != null)
-			aaos_file.defaultsTo(new File(prop));
+//		prop = p.getProperty("annotator.outFile");
+//		if (prop != null)
+//			aaos_file.defaultsTo(new File(prop));
 		
 		
 		prop = p.getProperty("annotator.alg","AVG");
@@ -255,6 +249,11 @@ public class Main {
 				}
 			}
 		}.runBottomUp(sbgnpath.getValue());
+		
+		if (nodeFCs.size() == 0) { // no node was computed
+			System.out.println("No output file will be writte, since no entry could be assigned to the pathway");
+			return;
+		}
 
 		// reload the SBGN pathway
 		SBGNPDl1 sbgnpath2 = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);

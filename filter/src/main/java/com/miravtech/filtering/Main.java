@@ -101,12 +101,14 @@ public class Main {
 			@Override
 			public void iterateGlyph(SBGNGlyphType n) {
 
+				Collection<FindingType> c = new HashSet<FindingType>();
+				c.addAll(n.getFinding());
+				
 				if (n.getFinding().size() == 0) {
-					selected.add(n.getID()); // if no finding, consider it
-					// unlimited
+					c.add(new FindingType()); // this should match any finding fact
 				}
 
-				for (FindingType f : n.getFinding()) {
+				for (FindingType f : c) {
 					// build the expression evaluator
 					try {
 						ByteArrayInputStream bais = new ByteArrayInputStream(
@@ -116,6 +118,7 @@ public class Main {
 						CommonTokenStream tokens = new CommonTokenStream(lexer);
 						FilteringParser parser = new FilteringParser(tokens);
 						parser.toEval = f;
+						parser.glyphToEval = n;
 						boolean ret = parser.expr();
 						if (ret) {
 							selected.add(n.getID()); // positive finding

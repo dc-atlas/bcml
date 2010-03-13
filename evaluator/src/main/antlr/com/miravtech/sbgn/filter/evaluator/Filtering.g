@@ -6,6 +6,7 @@ package com.miravtech.sbgn.filter.evaluator;
 import java.util.HashMap;
 
 import com.miravtech.sbgn.FindingType;
+import com.miravtech.sbgn.SBGNGlyphType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,10 +15,14 @@ import java.util.List;
 }
 
 
-@lexer::header {package com.miravtech.sbgn.filter.evaluator;}
+@lexer::header {package com.miravtech.sbgn.filter.evaluator;
+
+
+}
 
 @members {
 	public FindingType toEval;
+	public SBGNGlyphType glyphToEval;
 
     	@Override
     	public void recoverFromMismatchedToken(IntStream arg0,
@@ -31,32 +36,6 @@ import java.util.List;
     		super.reportError(arg0);
     		throw new RuntimeException(arg0);
     	}
-	
-	@SuppressWarnings("unchecked")
-	public static boolean contains(FindingType f,  String  property, String val1 )  {
-	    String value = val1.substring(1,val1.length() - 1);
-		try{
-		    //System.out.println("Evaluating: " + property+"="+value);
-			String prop = property.substring(0, 1).toUpperCase() + property.substring(1);
-			String method =  "get"+prop;
-			String enumType = "com.miravtech.sbgn."+prop+"Enum";
-			Method getter = FindingType.class.getMethod(method);
-			Object o = getter.invoke(f);
-			List l = (List)o;
-			if (l.size() == 0)
-				return true;
-			Class enumClass = Class.forName(enumType);
-			Method getValue = enumClass.getMethod("value");
-			for (Object o1: l) {
-				String val = (String)getValue.invoke(o1);
-				if (val.equalsIgnoreCase(value))
-					return true;
-			}
-			return false;
-		} catch (Exception e ){
-			throw new RuntimeException(e);
-		}
-	}
 }
 
 prog:   expr EOF ;
@@ -78,7 +57,7 @@ a=atom {$value = $a.value;}
     
 atom returns [boolean value]
     :   BOOL {$value = Boolean.parseBoolean($BOOL.text);}
-    |   e=ID '=' v=VAL {$value = contains(toEval, $e.text, $v.text);}   
+    |   e=ID '=' v=VAL {$value = com.miravtech.filterMatcher.Matcher.contains(glyphToEval,toEval, $e.text, $v.text);}   
     |   '(' e1=expr ')' {$value = $e1.value;}
     ;
 

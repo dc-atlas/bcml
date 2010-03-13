@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,7 @@ import javax.xml.bind.Unmarshaller;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
+import com.miravtech.SBGNUtils.INIConfiguration;
 import com.miravtech.SBGNUtils.SBGNUtils;
 import com.miravtech.sbgn.SBGNPDl1;
 
@@ -39,7 +41,7 @@ public class Main {
 		File destDir;
 		boolean filtering = true;
 
-		// TODO - ability to read the fields from INI !!
+		Properties p = INIConfiguration.getConfiguration();
 		
 		OptionParser parser = new OptionParser();
 		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
@@ -47,16 +49,22 @@ public class Main {
 		parser.accepts("outFile", "The target file.").withRequiredArg().ofType(
 				File.class).describedAs("file path");
 
+		String prop;
+		prop = p.getProperty("organism","HS");
 		parser.accepts("organism", "The name of the organism to consider")
 				.withOptionalArg().ofType(String.class).describedAs("Organism")
-				.defaultsTo("HS");
+				.defaultsTo(prop);
+		
+		
 		parser.accepts("db", "The database to consider.").withOptionalArg()
 				.ofType(String.class).describedAs("Database").defaultsTo(
-						"EntrezGeneID");
+						prop);
 
+		
+		prop = p.getProperty("exporter.method","GeneList");
 		parser.accepts("method", "The method to use.").withOptionalArg()
 				.ofType(String.class).describedAs("GeneList").defaultsTo(
-						"GeneList");
+						prop);
 
 		parser.accepts("disableFilter", "Disable filtering.");
 

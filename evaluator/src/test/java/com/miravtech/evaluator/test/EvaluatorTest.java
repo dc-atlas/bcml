@@ -44,9 +44,6 @@ public class EvaluatorTest {
 		f.getOrganism().add(OrganismEnum.HOMO_SAPIENS);
 		f.getOrganism().add(OrganismEnum.MUS_MUSCULUS);
 		f.getOrganismPart().add(OrganismPartEnum.BONE_MARROW);
-		assert(FilteringParser.contains(f,"organism", "'Homo sapiens'"));
-		assert(!FilteringParser.contains(f,"organism", "'Homo sapiens1'"));
-		assert(FilteringParser.contains(f,"cellType", "'test'"));
 		
 		assert(evaluate("organism='Homo sapiens'",f));
 		assert(evaluate("cellType='Test'",f));
