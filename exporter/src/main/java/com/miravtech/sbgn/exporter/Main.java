@@ -5,8 +5,10 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +30,9 @@ public class Main {
 	static Unmarshaller unmarshaller;
 	static Marshaller marshaller;
 
+	
+	static OptionSet opts;
+	
 	/**
 	 * @param args
 	 * @throws JAXBException
@@ -40,6 +45,7 @@ public class Main {
 		File srcDir;
 		File destDir;
 		boolean filtering = true;
+		
 
 		Properties p = INIConfiguration.getConfiguration();
 		
@@ -67,10 +73,15 @@ public class Main {
 				.ofType(String.class).describedAs("GeneList").defaultsTo(
 						prop);
 
+		parser.accepts("var", "The variable to export the value together with the symbol.").withOptionalArg()
+		.ofType(String.class).describedAs("Variable").defaultsTo(
+				prop);
+
+		
 		parser.accepts("disableFilter", "Disable filtering.");
 
 		try {
-			OptionSet opts = parser.parse(args);
+			opts = parser.parse(args);
 
 			srcDir = (File) opts.valueOf("srcSBGN");
 			destDir = (File) opts.valueOf("outFile");
@@ -116,13 +127,21 @@ public class Main {
 		SBGNUtils utils = new SBGNUtils(sbgnpath.getValue());
 
 		utils.fillRedundantData();
-
-		Set<String> genes = utils.getSymbols(organism, db, usefilter);
 		FileOutputStream fos = new FileOutputStream(destFile);
 		PrintWriter pr = new PrintWriter(fos);
-		for (String g : genes)
-			pr.println(g);
-		pr.close();
+
+		if (opts.has("var")) { // gene + variable
+			Map<String,String> genes = utils.getVariable(organism, db, usefilter,(String)opts.valueOf("var"));
+			for (Entry<String, String> g : genes.entrySet())
+				pr.println(g.getKey()+"\t"+g.getValue());
+			pr.close();
+			
+		} else { // gene list
+			Set<String> genes = utils.getSymbols(organism, db, usefilter);
+			for (String g : genes)
+				pr.println(g);
+			pr.close();
+		}
 
 	}
 }
