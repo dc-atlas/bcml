@@ -35,20 +35,34 @@
 		</xs:annotation>
 	</xs:element>
 
-		<xs:complexType name = "SBGNPDL1Type">
+	<xs:complexType name="SBGNPDL1Type">
 
-			<xs:sequence maxOccurs="unbounded" id="nodes">
-				<xs:annotation>
-					<xs:appinfo>
-						<jxb:property name="glyphs" />
-					</xs:appinfo>
-					<xs:documentation>
-						The list of glyphs contained in the diagram.
-					</xs:documentation>
-				</xs:annotation>
+		<xs:sequence maxOccurs="unbounded" id="nodes">
+			<xs:annotation>
+				<xs:appinfo>
+					<jxb:property name="glyphs" />
+				</xs:appinfo>
+				<xs:documentation>
+					The list of glyphs contained in the diagram.
+				</xs:documentation>
+			</xs:annotation>
 			&allNodes;
-			</xs:sequence>
-		</xs:complexType>
+		</xs:sequence>
+		<xs:attribute name="pathwayID" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The identifier of the pathway.
+					</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="pathwayName" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					The name of the pathway.
+					</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
 
 
 	<xs:complexType name="SBGNGlyphType" abstract="true">
@@ -59,7 +73,8 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="graphic" type="sg:GraphicType" minOccurs="0" maxOccurs="1">
+			<xs:element name="graphic" type="sg:GraphicType"
+				minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>
 						Graphic hint(s) for the current element.
