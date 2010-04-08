@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.miravtech.com/SBGN ../sbgnpdschema/src//main/xsd/dcthera.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.miravtech.com/SBGN ../sbgnpdschema/src//main/xsd/SBGN-ext.xsd"
     pathwayID="DECTIN1" pathwayName="Dectin 1">
     <Compartment label="extracellular">
         <Macromolecule ID="13betaglucan" cardinality="2" label="1,3-Beta-Glucan">

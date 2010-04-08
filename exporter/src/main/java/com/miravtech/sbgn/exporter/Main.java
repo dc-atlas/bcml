@@ -65,7 +65,7 @@ public class Main {
 		parser.accepts("db", "The database to consider.").withOptionalArg()
 				.ofType(String.class).describedAs("Database").defaultsTo(prop);
 
-		prop = p.getProperty("exporter.method", "GeneList");
+		prop = p.getProperty("exporter.method", "GeneList or SPIA");
 		parser.accepts("method", "The method to use.").withOptionalArg()
 				.ofType(String.class).describedAs("GeneList").defaultsTo(prop);
 

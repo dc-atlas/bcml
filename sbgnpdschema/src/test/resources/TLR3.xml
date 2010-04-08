@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SBGN.PD.L1 xmlns="http://www.miravtech.com/SBGN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/dcthera.xsd">
+	xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/SBGN-ext.xsd">
 	<Compartment xmlns="" label="endosome">
 		<Macromolecule ID="Poly(I:C)" label="Poly(I:C)">
 			<UnitOfInformation label="schemc" prefix="ct" />

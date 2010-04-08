@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/dcthera.xsd">
+	xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/SBGN-ext.xsd">
 
 	<Compartment label="extracellular">
 

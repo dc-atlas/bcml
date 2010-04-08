@@ -249,7 +249,7 @@ public class Checker {
 		SchemaFactory sf = SchemaFactory
 				.newInstance("http://www.w3.org/2001/XMLSchema");
 		sf.setResourceResolver(new MyResourceResolver());
-		Schema s = sf.newSchema(SBGNPDl1.class.getResource("/dcthera.xsd"));
+		Schema s = sf.newSchema(SBGNPDl1.class.getResource("/SBGN-ext.xsd"));
 		unmarshaller.setSchema(s);
 
 		sbgnpath = null;
