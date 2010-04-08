@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbgn:SBGN.PD.L1 xmlns:sbgn="http://www.miravtech.com/SBGN"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.miravtech.com/SBGN ../../main/xsd/dcthera.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.miravtech.com/SBGN ../sbgnpdschema/src//main/xsd/dcthera.xsd"
+    pathwayID="DECTIN1" pathwayName="Dectin 1">
     <Compartment label="extracellular">
         <Macromolecule ID="13betaglucan" cardinality="2" label="1,3-Beta-Glucan">
             <UnitOfInformation label="psac" prefix="mt"/>
@@ -10,7 +11,7 @@
         <SimpleChemical ID="Ca2+2" cloneref="Ca2+" label="Ca2+"/>
         <Macromolecule ID="IP3R_open" label="IP3R">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -37,7 +38,7 @@
         <Complex ID="STIM1:STIM2">
             <Macromolecule ID="STIM1" label="STIM1">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -49,7 +50,7 @@
             </Macromolecule>
             <Macromolecule ID="STIM2" label="STIM2">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -70,7 +71,7 @@
         </Association>
         <Macromolecule ID="ORAI1_close" label="ORAI1">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -101,7 +102,7 @@
         <!-- place this under extracellular -->
         <Macromolecule ID="Dectin-1" cardinality="2" label="Dectin-1">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -133,7 +134,7 @@
         </Macromolecule>
         <Macromolecule ID="RAF1" label="RAF1">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -167,7 +168,7 @@
         </Process>
         <Macromolecule ID="SYK" label="SYK">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -199,7 +200,7 @@
         </Process>
         <Macromolecule ID="CARD9_" label="CARD9">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -221,7 +222,7 @@
         <Complex ID="MALT1:BCL10">
             <Macromolecule ID="MALT1" label="MALT1">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -233,7 +234,7 @@
             </Macromolecule>
             <Macromolecule ID="BCL10" label="BCL10">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -250,7 +251,7 @@
         </Complex>
         <Macromolecule ID="PLCgamma-2_" label="PLCgamma-2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -269,7 +270,7 @@
         </Association>
         <Macromolecule ID="TRAF6" label="TRAF6">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -299,7 +300,7 @@
         <Complex ID="GRB2:SOS_">
             <Macromolecule ID="GRB2" label="GRB2">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -311,7 +312,7 @@
             </Macromolecule>
             <Macromolecule ID="SOS" label="SOS">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -342,7 +343,7 @@
         </Process>
         <Macromolecule ID="ERK-2_" label="ERK-2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -364,7 +365,7 @@
         <Complex ID="AP-1">
             <Macromolecule ID="FOS" label="FOS">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -376,7 +377,7 @@
             </Macromolecule>
             <Macromolecule ID="JUN" label="JUN">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -394,7 +395,7 @@
         <Complex ID="IKBa:NF-kBp52:RELB">
             <Macromolecule ID="IKBa" label="IKBa">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -406,7 +407,7 @@
             </Macromolecule>
             <Macromolecule ID="NF-kBp52" label="NF-kB p52">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -418,7 +419,7 @@
             </Macromolecule>
             <Macromolecule ID="RELB" label="RELB">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -450,7 +451,7 @@
             <Macromolecule cloneref="IKBa"/>
             <Macromolecule ID="NF-kBp50" label="NF-kB p50">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -462,7 +463,7 @@
             </Macromolecule>
             <Macromolecule ID="NF-kBp65" label="NF-kB p65">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -508,7 +509,7 @@
         </Association>
         <Macromolecule ID="p38_" label="p38">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -529,7 +530,7 @@
         </Process>
         <Macromolecule ID="JNK_" label="JNK">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -550,7 +551,7 @@
         </Process>
         <Macromolecule ID="Calcineurin" label="Calcineurin">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -566,7 +567,7 @@
         <Complex ID="NFATC1_:NFATC2_">
             <Macromolecule ID="NFATC1_" label="NFATC1">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -579,7 +580,7 @@
             </Macromolecule>
             <Macromolecule ID="NFATC2_" label="NFATC2">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -623,7 +624,7 @@
         <Complex ID="CBP:p300">
             <Macromolecule ID="CBP" label="CBP">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -635,7 +636,7 @@
             </Macromolecule>
             <Macromolecule ID="p300" label="p300">
                 <Finding>
-                    <Organism>Mus Musculus</Organism>
+                    <Organism>Mus musculus</Organism>
                     <OrganismPart>Bone Marrow</OrganismPart>
                     <CellType>Dendritic cells (DC)</CellType>
                     <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -671,7 +672,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-12p40" label="IL-12p40">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -684,7 +685,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-12p40" label="IL-12p40">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -708,7 +709,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-10_4" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -721,7 +722,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-10_4" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -745,7 +746,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-6" label="IL-6">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -758,7 +759,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-6" label="IL-6">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -782,7 +783,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-12p35" label="IL-12p35">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -795,7 +796,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-12p35" label="IL-12p35">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -819,7 +820,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-1-beta" label="IL-1-beta">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -832,7 +833,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-1-beta" label="IL-1-beta">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -856,7 +857,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneTNFalpha" label="TNFalpha">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -869,7 +870,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNATNFalpha" label="TNFalpha">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -892,7 +893,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-2" label="IL-2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -905,7 +906,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-2" label="IL-2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -928,7 +929,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneMIP2" label="MIP2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -941,7 +942,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAMIP2" label="MIP2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -964,7 +965,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-10" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -977,7 +978,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-10" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1000,7 +1001,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-6_12" label="IL-6">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1013,7 +1014,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-6_12" label="IL-6">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1036,7 +1037,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL23A" label="IL23A">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1049,7 +1050,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL23A" label="IL23A">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1079,7 +1080,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneCCL22" label="CCL22">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1092,7 +1093,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNACCL22" label="CCL22">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1115,7 +1116,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneCCL17" label="CCL17">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1128,7 +1129,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNACCL17" label="CCL17">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1156,7 +1157,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-10-2" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1169,7 +1170,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-10-2" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1197,7 +1198,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneEGR3" label="EGR3">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1210,7 +1211,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAEGR3" label="EGR3">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1233,7 +1234,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneCOX2" label="COX2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1246,7 +1247,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNACOX2" label="COX2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1269,7 +1270,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL10-3" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1282,7 +1283,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-10-3" label="IL-10">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1305,7 +1306,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneIL-2-2" label="IL-2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1318,7 +1319,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAIL-2-2" label="IL-2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1341,7 +1342,7 @@
         </AndNode>
         <NucleicAcidFeature ID="genePTGSE2" label="PTGSE2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1354,7 +1355,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAPTGSE2" label="PTGSE2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1377,7 +1378,7 @@
         </AndNode>
         <NucleicAcidFeature ID="geneEGR2" label="EGR2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>
@@ -1390,7 +1391,7 @@
         </NucleicAcidFeature>
         <NucleicAcidFeature ID="mRNAEGR2" label="EGR2">
             <Finding>
-                <Organism>Mus Musculus</Organism>
+                <Organism>Mus musculus</Organism>
                 <OrganismPart>Bone Marrow</OrganismPart>
                 <CellType>Dendritic cells (DC)</CellType>
                 <ProvenIn>Dendritic cells (DC)</ProvenIn>

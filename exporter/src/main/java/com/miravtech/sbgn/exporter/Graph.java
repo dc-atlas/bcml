@@ -329,6 +329,7 @@ abstract public class Graph<N, E> {
 						if (!ret.containsKey(getEnd(e1))) {
 							List<E> newList = new LinkedList<E>();
 							newList.addAll(e.getValue());
+							newList.add(e1);
 							add.put(getEnd(e1), newList);
 						}
 					}

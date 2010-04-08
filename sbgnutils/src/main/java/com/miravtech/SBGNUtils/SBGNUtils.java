@@ -524,7 +524,17 @@ public class SBGNUtils {
 		return ret;
 	}
 
-	// TODO this function does not work for a hierarchical AND/OR construction
+	public ArcType getOutArcOfLogic(LogicalOperatorNodeType n) {
+		// TODO this function does not work for a hierarchical AND/OR
+		// construction
+		getEdges();
+		for (ArcType a : connections.get(n)) {
+			if (!(a instanceof LogicArcType)) {
+				return a;
+			}
+		}
+		throw new RuntimeException("Hierarchical AND/OR not implemented");
+	}
 
 	/**
 	 * Returns the output for this logic operator node
@@ -534,13 +544,7 @@ public class SBGNUtils {
 	 * @return
 	 */
 	public SBGNNodeType getOutNodeOfLogic(LogicalOperatorNodeType n) {
-		getEdges();
-		for (ArcType a : connections.get(n)) {
-			if (!(a instanceof LogicArcType)) {
-				return getOtherNode(a, n);
-			}
-		}
-		throw new RuntimeException("Hierarchical AND/OR not implemented");
+		return getOtherNode(getOutArcOfLogic(n), n);
 	}
 
 	/**
@@ -639,7 +643,7 @@ public class SBGNUtils {
 		target.setCloneref(null); // remove the clone attribute.
 	}
 
-	static Map<String, StateVariableType> getNodeVariables(SBGNNodeType n) {
+	public static Map<String, StateVariableType> getNodeVariables(SBGNNodeType n) {
 		Map<String, StateVariableType> ret = new HashMap<String, StateVariableType>();
 		for (SBGNNodeType n1 : n.getInnerNodes()) {
 			if (n1 instanceof StateVariableType) {
@@ -661,6 +665,38 @@ public class SBGNUtils {
 		return ret;
 	}
 
+	/**
+	 * Returns the list of the symbols for node Goes recursively for the inner
+	 * nodes
+	 * 
+	 * @param organism
+	 * @param db
+	 * @param filterExcludedSelection
+	 * @param n
+	 * @return
+	 */
+	public static Set<String> getSymbols(final String organism, final String db,
+			final boolean filterExcludedSelection, SBGNNodeType n) {
+		Set<String> ret = new HashSet<String>();
+		if (n instanceof StatefulEntiyPoolNodeType) {
+			StatefulEntiyPoolNodeType sepnt = (StatefulEntiyPoolNodeType) n;
+			if (!(filterExcludedSelection && n.getSelected() == SelectType.EXCLUDE))
+				ret.addAll(getSymbols(organism, db, sepnt));
+			for (SBGNNodeType n1 : n.getInnerNodes()) {
+				ret.addAll(getSymbols(organism, db, filterExcludedSelection ,n1));				
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * Returns the list of the symbols for an organism and database
+	 * 
+	 * @param organism
+	 * @param db
+	 * @param filterExcludedSelection
+	 * @return
+	 */
 	public Set<String> getSymbols(final String organism, final String db,
 			final boolean filterExcludedSelection) {
 		final Set<String> ret = new HashSet<String>();
@@ -737,6 +773,18 @@ public class SBGNUtils {
 
 	}
 
+	public Set<SBGNNodeType> getRelatedNodes(SBGNNodeType node,
+			Class<?> archType) {
+		Set<SBGNNodeType> ret = new HashSet<SBGNNodeType>();
+		for (ArcType a : getEdges(node)) {
+			if (archType != null && !archType.isAssignableFrom(a.getClass()))
+				continue;
+			SBGNNodeType rel = getOtherNode(a, node);
+			ret.add(rel);
+		}
+		return ret;
+	}
+
 	public SBGNNodeType getOtherNode(ArcType arc, SBGNNodeType node) {
 		getEdges();
 		for (Map.Entry<SBGNNodeType, Collection<ArcType>> e : connections
@@ -744,8 +792,8 @@ public class SBGNUtils {
 			if (e.getValue().contains(arc) && e.getKey() != node)
 				return e.getKey();
 		throw new RuntimeException("Other side of the arc not found!"); // should
-																		// not
-																		// happen
+		// not
+		// happen
 	}
 
 	public Map<SBGNNodeType, Collection<ArcType>> getEdges() {

@@ -189,7 +189,7 @@
 		</annotation>
 		<restriction base="string">
 			<enumeration value="Homo sapiens"></enumeration>
-			<enumeration value="Mus Musculus"></enumeration>
+			<enumeration value="Mus musculus"></enumeration>
 			<enumeration value="Fungi"></enumeration>
 			<enumeration value="Other"></enumeration>
 		</restriction>

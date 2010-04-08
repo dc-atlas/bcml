@@ -52,7 +52,7 @@ public class Main {
 
 		String source;
 		String destination;
-		String filterExpression = "organism='Mus Musculus'";
+		String filterExpression = "organism='Mus musculus'";
 		if (args.length >= 3) {
 			source = args[0];
 			destination = args[1];

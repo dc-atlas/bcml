@@ -14,6 +14,7 @@ import com.miravtech.sbgn.ArcType;
 import com.miravtech.sbgn.AuxiliaryUnitType;
 import com.miravtech.sbgn.CompartmentType;
 import com.miravtech.sbgn.ConsumptionArcType;
+import com.miravtech.sbgn.InhibitionArcType;
 import com.miravtech.sbgn.ModulationArcType;
 import com.miravtech.sbgn.ProcessType;
 import com.miravtech.sbgn.ProductionArcType;
@@ -31,6 +32,7 @@ import com.miravtech.sbgn.StateVariableType;
 public class SBGNGraph extends Graph<SBGNNodeType, SBGNGraphRelation> {
 	private SBGNUtils utils;
 	
+	public Set<ArcType> procArc = new HashSet<ArcType>();
 	public SBGNGraph(final SBGNPDL1Type s) {
 		try {
 			utils = new SBGNUtils(s);
@@ -41,11 +43,14 @@ public class SBGNGraph extends Graph<SBGNNodeType, SBGNGraphRelation> {
 					if (!(n instanceof CompartmentType ) && ! (n instanceof  AuxiliaryUnitType) ) {
 						nodes.add(n);
 						
-						for (ArcType a : utils.getEdges(n)) {
-							SBGNNodeType target = utils.getOtherNode(a, n);
-							edges.add(new SBGNGraphRelation(n,target,a));
-							edges.add(new SBGNGraphRelation(target,n,a));
-						}
+						for (ArcType a : utils.getEdges(n)) 
+							if (!procArc.contains(a))
+							{
+								SBGNNodeType target = utils.getOtherNode(a, n);
+								edges.add(new SBGNGraphRelation(n,target,a));
+								edges.add(new SBGNGraphRelation(target,n,a));
+								procArc.add(a);
+							}
 					}
 				}
 				
@@ -110,28 +115,26 @@ public class SBGNGraph extends Graph<SBGNNodeType, SBGNGraphRelation> {
 	
 	
 	/**
-	 *  Determine cathalyzed reactions and their actual type.
+	 *  Determine catalyzed reactions and their actual type.
 	 * Fills inferredRelNames.
 	 */
 	public void adaptCatalystReactions() {
 		for (SBGNNodeType n : nodes)
 			if (n instanceof ProcessType) {
-				Collection<SBGNGraphRelation> arcs = getFrom(n);
 				Set< SBGNGraphRelation> prod = new HashSet<SBGNGraphRelation>();
 				Set< SBGNGraphRelation> cons = new HashSet<SBGNGraphRelation>();
 				Set< SBGNGraphRelation> catalyst = new HashSet<SBGNGraphRelation>();
-				for (SBGNGraphRelation r : arcs) {
+				for (SBGNGraphRelation r : getFrom(n)) {
 					if (r.getReaction() instanceof ModulationArcType) {
 						catalyst.add(r);
-					}
-					if (r.getReaction() instanceof ProductionArcType) {
-						prod.add(r);
 					}
 					if (r.getReaction() instanceof ConsumptionArcType) {
 						cons.add(r);
 					}
-					
+					if (r.getReaction() instanceof ProductionArcType)
+						prod.add(r);
 				}
+				
 				if (catalyst.size() != 0) {
 					// get differences between Prod and Cons
 					Set<String> prodVar = new HashSet<String>();
@@ -165,24 +168,23 @@ public class SBGNGraph extends Graph<SBGNNodeType, SBGNGraphRelation> {
 						rels.add(getRelationName(s, 1));
 					for (String s: consVar)
 						rels.add(getRelationName(s, -1));
-					if (rels.size() == 0)
-						rels.add("Activation"); // the default one //TODO - can be inhibition as well
-					
-					//TODO - if the reaction is inhibition, then the type is "inhibition-phosphorylation" !!
-					
-					// "brandish" the cathalysis arcs with the computed relation name
-					for (SBGNGraphRelation g : catalyst) 
-						inferredRelNames.put(g,rels);
-					
+							
+					if (rels.size() != 0) {
+						rels.add("");
+					}
 					disconnect(n); // remove all p's connections
 					// move the cathalysis relation from the process to the nodes
 					for (SBGNGraphRelation c : catalyst) 
 						for (SBGNGraphRelation p : prod) 
 						{
-							edges.add(new SBGNGraphRelation(c.getFrom(), p.getFrom(), c.getReaction()));
-							edges.add(new SBGNGraphRelation(p.getFrom(), c.getFrom(), c.getReaction()));
+							// "brandish" the cathalysis arcs with the computed relation name
+							SBGNGraphRelation r1 = new SBGNGraphRelation(c.getFrom(), p.getFrom(), c.getReaction());
+							Set<String> names = new HashSet<String>();
+							for (String s1: rels)
+								names.add(getRelationNameByActivityType(s1, c.getReaction() instanceof InhibitionArcType?-1:1));
+							inferredRelNames.put(r1,names); 
+							edges.add(r1);
 						}
-							
 				}
 			}
 	}
@@ -231,37 +233,55 @@ public class SBGNGraph extends Graph<SBGNNodeType, SBGNGraphRelation> {
 			if (inferredRelNames.containsKey(r))
 				return inferredRelNames.get(r);
 		Set<String> ret = new HashSet<String>();
-		ret.add("Activation");
+		ret.add("activation");
 		return ret;
 
 		
 	}
 	
 	
+	public String getRelationNameByActivityType(String name, int act_inh) {
+		String ret = name;
+		if (name.length() != 0 && act_inh == -1)
+			ret = name+"_inhibition";
+		if (name.length() == 0)
+			if (act_inh == -1)
+				ret = "inhibition";
+			else
+				ret = "activation";
+		return ret;
+	}
+	
 	public String getRelationName(String var, int dir) {
 		if (var.equals("P") && dir == 1) {
-			return "Phosphorylation";
+			return "phosphorylation";
 		}
 		if (var.equals("P") && dir == -1) {
-			return "Dephosphorylation";
+			return "dephosphorylation";
 		}
 		if (var.equals("UB") && dir == 1) {
-			return "Ubiquination";
+			return "ubiquination";
 		}
 		if (var.equals("UB") && dir == -1) {
-			return "Deubiquination";
+			return "ueubiquination";
 		}
 		if (var.equals("AC") && dir == 1) {
-			return "Acetilation";
+			return "acetilation";
 		}
 		if (var.equals("AC") && dir == -1) {
-			return "Deacetilation";
+			return "deacetilation";
 		}
 		if (var.equals("ACTIVE") && dir == 1) {
-			return "Activation";
+			return "activation";
 		}
 		if (var.equals("ACTIVE") && dir == -1) {
-			return "Deactivation";
+			return "deactivation";
+		}
+		if (var.equals("INACTIVE") && dir == -1) {
+			return "activation";
+		}
+		if (var.equals("INACTIVE") && dir == 1) {
+			return "deactivation";
 		}
 		// unknown, improvise!!
 		if (dir == 1)

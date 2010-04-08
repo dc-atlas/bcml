@@ -137,9 +137,13 @@ public class Main {
 			data.put(root, SBGNFileAsSPIAGraph(root,organism,db,usefilter));
 		}
 		
-		// list of existing reactions
+		// list of all existing reactions
 		Set<String> reacttypes = new HashSet<String>();
-
+		reacttypes.add("activation"); // required !!		
+		for (Entry<SBGNPDL1Type, SPIAGeneGraph> e : data.entrySet()) 
+			for (GeneGeneRel r : e.getValue().getEdges())
+				reacttypes.add(r.getReaction());
+		
 		// output file
 		PrintStream ps = new PrintStream(destFile);
 		ps.println("path.info=list()");
@@ -167,15 +171,11 @@ public class Main {
 			ps
 					.println("names(crtpath)=c(\"title\",\"nodes\",\"NumberOfReactions\")");
 
-			Set<String> crtreacttypes = new HashSet<String>();
 
-			for (GeneGeneRel r : k.getEdges())
-				crtreacttypes.add(r.getReaction());
-			reacttypes.addAll(crtreacttypes);
 
 			GeneGeneRel rels[][] = new GeneGeneRel[sz][sz];
 
-			for (String relation : crtreacttypes) {
+			for (String relation : reacttypes) {
 				ps.println("m = matrix(data=0,nrow=" + sz + ",ncol=" + sz
 						+ ", byrow=TRUE)");
 				k.getEdgeMatrix(rels);
