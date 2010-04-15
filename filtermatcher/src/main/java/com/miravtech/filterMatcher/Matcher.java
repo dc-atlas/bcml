@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.miravtech.sbgn.FindingType;
 import com.miravtech.sbgn.SBGNGlyphType;
+import com.miravtech.sbgn.StatefulEntiyPoolNodeType;
 
 
 
@@ -17,6 +18,20 @@ public class Matcher {
 	};
 	
 	public static boolean contains(SBGNGlyphType g, FindingType f, String property, String val1) {
+		String value = val1.substring(1, val1.length() - 1);
+		if ( property.equalsIgnoreCase("Macromodule") ) {
+			if (g instanceof StatefulEntiyPoolNodeType) {
+				StatefulEntiyPoolNodeType sepn = (StatefulEntiyPoolNodeType) g;
+				for (String s: sepn.getMacroModule())
+					if (s.equalsIgnoreCase(value))
+						return true;
+					return false;
+				
+			} else {
+				return true; // not filtrable by this cr
+			}
+		}
+		
 		SearchResult r = contains(f,property,val1);
 		if (r == SearchResult.FIELDNOTFOUND) {
 			// search the other places
