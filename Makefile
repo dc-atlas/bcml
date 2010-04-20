@@ -23,4 +23,4 @@ filter:
 	cd ./filter; mvn assembly:assembly $(TESTFLAGS)
 
 annotator:
-	cf ./annotator; mvn assembly:assembly $(TESTFLAGS)
+	cd ./annotator; mvn assembly:assembly $(TESTFLAGS)
