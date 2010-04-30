@@ -233,6 +233,8 @@
 			<enumeration value="Tumor Biopsy"></enumeration>
 			<enumeration value="Thymus"></enumeration>
 			<enumeration value="Intestinal mucosa"></enumeration>
+			<enumeration value="Nervous system"></enumeration>
+			<enumeration value="Kidney"></enumeration>
 		</restriction>
 	</simpleType>
 
@@ -256,6 +258,13 @@
 			<enumeration value="Langerhans cell (LC)"></enumeration>
 			<enumeration value="Natural killer cell (NK)"></enumeration>
 			<enumeration value="Intestinal epithelial cell (IEC)"></enumeration>
+			<enumeration value="HeLa cell line"></enumeration>
+			<enumeration value="COS-7 cell line"></enumeration>
+			<enumeration value="Jurkat cell line"></enumeration>
+			<enumeration value="Embryonic cells"></enumeration>
+			<enumeration value="B cells"></enumeration>
+			<enumeration value="Kidney cells"></enumeration>
+			<enumeration value="Fibroblasts"></enumeration>
 		</restriction>
 	</simpleType>
 
@@ -279,6 +288,7 @@
 			<enumeration value="Not proven"></enumeration>
 			<enumeration value="Bioinformatic inference"></enumeration>
 			<enumeration value="Controversial"></enumeration>
+			<enumeration value="Two-hybrid system"></enumeration>
 		</restriction>
 	</simpleType>
 
