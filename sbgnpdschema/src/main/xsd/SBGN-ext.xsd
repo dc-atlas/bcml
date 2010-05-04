@@ -235,6 +235,7 @@
 			<enumeration value="Intestinal mucosa"></enumeration>
 			<enumeration value="Nervous system"></enumeration>
 			<enumeration value="Kidney"></enumeration>
+			<enumeration value="Uterus"></enumeration>
 		</restriction>
 	</simpleType>
 
@@ -242,6 +243,7 @@
 	<simpleType name="CellTypeEnum">
 		<annotation>
 			<documentation>
+				The cell type where the reaction happens.
 			</documentation>
 		</annotation>
 		<restriction base="string">
@@ -258,13 +260,11 @@
 			<enumeration value="Langerhans cell (LC)"></enumeration>
 			<enumeration value="Natural killer cell (NK)"></enumeration>
 			<enumeration value="Intestinal epithelial cell (IEC)"></enumeration>
-			<enumeration value="HeLa cell line"></enumeration>
-			<enumeration value="COS-7 cell line"></enumeration>
-			<enumeration value="Jurkat cell line"></enumeration>
 			<enumeration value="Embryonic cells"></enumeration>
-			<enumeration value="B cells"></enumeration>
-			<enumeration value="Kidney cells"></enumeration>
-			<enumeration value="Fibroblasts"></enumeration>
+			<enumeration value="B cell"></enumeration>
+			<enumeration value="Kidney cell"></enumeration>
+			<enumeration value="Fibroblast"></enumeration>
+			<enumeration value="Cancer cell"></enumeration>
 		</restriction>
 	</simpleType>
 
@@ -273,6 +273,7 @@
 	<simpleType name="ProvenInEnum">
 		<annotation>
 			<documentation>
+				The cell type where the reaction was actually described as a result of experimental evidence.
 			</documentation>
 		</annotation>
 		<restriction base="string">
@@ -285,6 +286,15 @@
 			<enumeration value="Intestinal epithelial cell (IEC)"></enumeration>
 			<enumeration value="Fibroblasts"></enumeration>
 			<enumeration value="Other"></enumeration>
+			<enumeration value="Cell line"></enumeration>
+			<enumeration value="HEK 293 cell line"></enumeration>
+			<enumeration value="HeLa cell line"></enumeration>
+			<enumeration value="COS-7 cell line"></enumeration>
+			<enumeration value="Jurkat cell line"></enumeration>
+			<enumeration value="Precursor B cells"></enumeration>
+			<enumeration value="RAW 264.7 cell line"></enumeration>
+			<enumeration value="Raji cell line"></enumeration>
+			<enumeration value="Mouse embryonic fibroblasts"></enumeration>
 			<enumeration value="Not proven"></enumeration>
 			<enumeration value="Bioinformatic inference"></enumeration>
 			<enumeration value="Controversial"></enumeration>
