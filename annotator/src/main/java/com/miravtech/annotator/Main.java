@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -270,7 +271,7 @@ public class Main {
 				if (n instanceof StatefulEntiyPoolNodeType) {
 					Double val = nodeFCs.get(n.getID());
 					if (val != null) {
-						String dispVal = String.format(format, val);
+						String dispVal = String.format(Locale.US, format, val);
 						StateVariableType sv = null;
 						for (SBGNNodeType v1 : SBGNUtils.getInnerNodesOfType(n,
 								StateVariableType.class).values()) {

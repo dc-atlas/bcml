@@ -2,6 +2,7 @@ package com.miravtech.graphmlconvert;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
 
 import org.graphdrawing.graphml.xmlns.graphml.Graphml;
 
@@ -21,19 +25,36 @@ public class Main {
 	/**
 	 * @param args
 	 * @throws JAXBException
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws JAXBException {
+	public static void main(String[] args) throws JAXBException, IOException {
 
-		String source, destination;
-		if (args.length >= 2) {
-			source = args[0];
-			destination = args[1];
-		} else {
-			throw new IllegalArgumentException(
-					"Must provide source and destination directory");
+		OptionParser parser = new OptionParser();
+		parser.accepts("srcSBGN", "Name of the SBGN file to transform to GraphML.")
+				.withRequiredArg().ofType(File.class).describedAs("file path");
+		parser.accepts("targetGraphML", "Name of the target GraphML file to output.")
+		.withRequiredArg().ofType(File.class).describedAs("file path");
+		
+//		String source, destination;
+//		if (args.length >= 2) {
+//			source = args[0];
+//			destination = args[1];
+//		} else {
+//			throw new IllegalArgumentException(
+//					"Must provide source and destination directory");
+//		}
+
+		OptionSet opts = parser.parse(args);
+		
+		File srcDir = (File) opts.valueOf("srcSBGN");
+		File destDir = (File) opts.valueOf("targetGraphML");
+		if (srcDir == null || destDir == null) {
+			parser.printHelpOn(System.out);
+			throw new RuntimeException("both srcSBGN and targetGraphML arguments are mandatory");			
 		}
-		File srcDir = new File(source);
-		File destDir = new File(destination);
+		
+		//File srcDir = new File(source);
+		//File destDir = new File(destination);
 		int convert = 0;
 		if (srcDir.isDirectory()) {
 		for (File f : srcDir.listFiles(new XMLFiles())) {

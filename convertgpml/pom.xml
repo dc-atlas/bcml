@@ -13,16 +13,16 @@
 	</description>
 
 	<dependencies>
-	<dependency>
-		<artifactId>sbgnpdschema</artifactId>
-		<groupId>com.miravtech.sbgn</groupId>
-		<version>${version}</version>
-	</dependency>
-	<dependency>
-		<artifactId>gpmlschema</artifactId>
-		<groupId>com.miravtech.sbgn</groupId>
-		<version>${version}</version>
-	</dependency>
+		<dependency>
+			<artifactId>sbgnutils</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>gpmlschema</artifactId>
+			<groupId>com.miravtech.sbgn</groupId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 
 </project>

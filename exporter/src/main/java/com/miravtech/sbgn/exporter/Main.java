@@ -65,14 +65,13 @@ public class Main {
 		parser.accepts("db", "The database to consider.").withOptionalArg()
 				.ofType(String.class).describedAs("Database").defaultsTo(prop);
 
-		prop = p.getProperty("exporter.method", "GeneList or SPIA");
+		prop = p.getProperty("exporter.method", "GeneList");
 		parser.accepts("method", "The method to use.").withOptionalArg()
-				.ofType(String.class).describedAs("GeneList").defaultsTo(prop);
+				.ofType(String.class).describedAs("GeneList  or SPIA").defaultsTo(prop);
 
 		parser.accepts("var",
-				"The variable to export the value together with the symbol.")
-				.withOptionalArg().ofType(String.class).describedAs("Variable")
-				.defaultsTo(prop);
+				"The variable to export the value together with the symbol, for example FC.")
+				.withOptionalArg().ofType(String.class).describedAs("Variable");
 
 		parser.accepts("disableFilter", "Disable filtering.");
 
@@ -149,6 +148,12 @@ public class Main {
 		ps.println("path.info=list()");
 		int count = 1; // pathway number, if not specified		
 		for (Entry<SBGNPDL1Type, SPIAGeneGraph> e : data.entrySet()) {
+			String name = e.getKey().getPathwayName();
+			if (name == null)
+				name = "Unknown";
+			String ID = e.getKey().getPathwayID();
+			if (ID == null)
+				ID = "Unknown" + count++;
 			SPIAGeneGraph k = e.getValue();
 			int sz = k.getNodes().size();
 			StringBuffer strNodes = new StringBuffer();
@@ -157,15 +162,13 @@ public class Main {
 				strNodes.append(s); // id of the node
 				strNodes.append("\",");
 			}
+			if (strNodes.length() == 0) {
+				System.err.println("No gene could be identified within the pathway " + name);
+				throw new RuntimeException();
+			}
 			strNodes.deleteCharAt(strNodes.length() - 1);
 			ps.println("nodes=c(" + strNodes + ")");
 			ps.println("listnodes=as.list(nodes)");
-			String name = e.getKey().getPathwayName();
-			if (name == null)
-				name = "Unknown";
-			String ID = e.getKey().getPathwayID();
-			if (ID == null)
-				ID = "Unknown" + count++;
 			ps.println("crtpath=list(\"" + name + "\",listnodes,"
 					+ k.getEdges().size() + ")");
 			ps
@@ -292,11 +295,17 @@ public class Main {
 			for (Entry<String, String> g : genes.entrySet())
 				pr.println(g.getKey() + "\t" + g.getValue());
 			pr.close();
+			if (genes.size() == 0) {
+				System.err.println("Warning, the output list is empty!");
+			}
 
 		} else { // gene list
 			Set<String> genes = utils.getSymbols(organism, db, usefilter);
 			for (String g : genes)
 				pr.println(g);
+			if (genes.size() == 0) {
+				System.err.println("Warning, the output list is empty!");
+			}
 			pr.close();
 		}
 
