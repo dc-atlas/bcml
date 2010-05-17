@@ -236,6 +236,10 @@
 			<enumeration value="Nervous system"></enumeration>
 			<enumeration value="Kidney"></enumeration>
 			<enumeration value="Uterus"></enumeration>
+			<enumeration value="Lung"></enumeration>
+			<enumeration value="Respiratory system"></enumeration>
+			<enumeration value="Digestive system"></enumeration>
+			<enumeration value="Spleen"></enumeration>
 		</restriction>
 	</simpleType>
 
@@ -265,6 +269,7 @@
 			<enumeration value="Kidney cell"></enumeration>
 			<enumeration value="Fibroblast"></enumeration>
 			<enumeration value="Cancer cell"></enumeration>
+			<enumeration value="Epithelial cell"></enumeration>
 		</restriction>
 	</simpleType>
 
@@ -299,6 +304,9 @@
 			<enumeration value="Bioinformatic inference"></enumeration>
 			<enumeration value="Controversial"></enumeration>
 			<enumeration value="Two-hybrid system"></enumeration>
+			<enumeration value="NHBE cell line"></enumeration>
+			<enumeration value="KG1 cell line"></enumeration>
+			<enumeration value="BEAS-2B cell line"></enumeration>
 		</restriction>
 	</simpleType>
 
