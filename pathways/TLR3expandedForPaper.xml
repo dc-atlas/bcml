@@ -309,9 +309,9 @@
             </Organism>
         </Macromolecule>
         <Association>
-            <Consumption ID="" refNode="Poly(I:C):TLR3:TRIF:TRAF6-2:RIP1_Ub:TAB2"/>
-            <Consumption ID="" refNode="TAB1"/>
-            <Production ID="" refNode="Poly(I:C):TLR3:TRIF:TRAF6-2:RIP1_Ub:TAB2:TAB1"/>
+            <Consumption refNode="Poly(I:C):TLR3:TRIF:TRAF6-2:RIP1_Ub:TAB2"/>
+            <Consumption refNode="TAB1"/>
+            <Production refNode="Poly(I:C):TLR3:TRIF:TRAF6-2:RIP1_Ub:TAB2:TAB1"/>
         </Association>
         <Complex ID="Poly(I:C):TLR3:TRIF:TRAF6-2:RIP1_Ub:TAB2:TAB1" type="And">
             <Macromolecule cloneref="Poly(I:C)"/>
@@ -392,7 +392,7 @@
         <Complex ID="Poly(I:C):TLR3:TRIF-1">
             <Macromolecule cloneref="Poly(I:C)"/>
             <Macromolecule cloneref="TLR3"/>
-            <Macromolecule cloneref="TRIF-1"/>
+            <Macromolecule cloneref="TRIF"/>
         </Complex>
         <Complex ID="TRAF6-2:RIP1_Ub:TAB2:TAB1:TAK1:PKR" type="And">
             <Macromolecule cloneref="Poly(I:C)"/>
@@ -455,7 +455,7 @@
             <Macromolecule cloneref="RIP1_Ub"/>
             <Macromolecule cloneref="TAB2"/>
             <Macromolecule cloneref="TAB1"/>
-            <Macromolecule ID="TAK1-1__" label="TAK1">
+            <Macromolecule ID="TAK1-1__-1" label="TAK1">
                 <Finding>
                     <Organism>Homo sapiens</Organism>
                     <Organism>Fungi</Organism>
@@ -850,7 +850,7 @@
             <Production refNode="IRF3x2_"/>
             <Consumption refNode="IRF3-2"/>
             <Stimulation refNode="Poly(I:C):TLR3:TRIF"/>
-            <Stimulation ID="" refNode="TRIF:TRAF3:IKBKE:TBK1">
+            <Stimulation refNode="TRIF:TRAF3:IKBKE:TBK1">
                 <Finding>
                     <Organism>Homo sapiens</Organism>
                     <CellType>Embryonic cells</CellType>
@@ -995,10 +995,10 @@
                 <StateVariable label="p"/>
                 <MacroModule>Transduction</MacroModule>
                 <Organism name="HS">
-                    <annotation DB="EntrezGeneID" ID="3351"/>
+                    <annotation DB="EntrezGeneID" ID="3551"/>
                 </Organism>
                 <Organism name="MM">
-                    <annotation DB="EntrezGeneID" ID=""/>
+                    <annotation DB="EntrezGeneID" ID="16150"/>
                 </Organism>
             </Macromolecule>
             <Macromolecule cloneref="IKKg" label="IKKg"/>
@@ -1053,7 +1053,7 @@
                     <annotation DB="EntrezGeneID" ID="4792"/>
                 </Organism>
                 <Organism name="MM">
-                    <annotation DB="EntrezGeneID" ID=""/>
+                    <annotation DB="EntrezGeneID" ID="18035"/>
                 </Organism>
             </Macromolecule>
             <Macromolecule ID="NF-kBp50" label="NF-kBp50">
@@ -1123,7 +1123,7 @@
                     <annotation DB="EntrezGeneID" ID="4792"/>
                 </Organism>
                 <Organism name="MM">
-                    <annotation DB="EntrezGeneID" ID=""/>
+                    <annotation DB="EntrezGeneID" ID="18035"/>
                 </Organism>
             </Macromolecule>
             <Macromolecule cloneref="NF-kBp50"/>
@@ -2343,7 +2343,7 @@
             <Production refNode="mRNASTAT4"/>
             <NecessaryStimulation refNode="AND7"/>
         </Process>
-        <NucleicAcidFeature ID="geneIP-10" label="IP-10">
+        <NucleicAcidFeature ID="geneIP-10-3" label="IP-10">
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="HS">
@@ -2355,9 +2355,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND8">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
-            <Logic refNode="geneIP-10"/>
+            <Logic refNode="geneIP-10-3"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIP-10" label="IP-10">
+        <NucleicAcidFeature ID="mRNAIP-10-3" label="IP-10">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <OrganismPart>Pheripheral Blood</OrganismPart>
@@ -2377,7 +2377,7 @@
         <Source ID="S8"/>
         <Process>
             <Consumption refNode="S8"/>
-            <Production refNode="mRNAIP-10"/>
+            <Production refNode="mRNAIP-10-3"/>
             <NecessaryStimulation refNode="AND8"/>
         </Process>
         <NucleicAcidFeature ID="geneIFN-beta-3" cloneref="geneIFN-beta" label="IFN-beta">
@@ -2447,7 +2447,7 @@
                 <annotation DB="EntrezGeneID" ID="1387"/>
             </Organism>
             <Organism name="MM">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="12914"/>
             </Organism>
         </Macromolecule>
         <Complex ID="CBP:IRF3x2_p-2" type="And">
@@ -3296,10 +3296,7 @@
         <NucleicAcidFeature ID="geneIL-8-2" label="IL-8">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
-                <annotation DB="EntrezGeneID" ID=""/>
-            </Organism>
-            <Organism name="MM">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3576"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND32">
@@ -3327,7 +3324,7 @@
             <Production refNode="mRNAIL-8-2"/>
             <NecessaryStimulation refNode="AND32"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL-6" label="IL-6">
+        <NucleicAcidFeature ID="geneIL-6-1" label="IL-6">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="3576"/>
@@ -3335,9 +3332,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND33">
             <Logic refNode="CBP:IRF3x2_p-2"/>
-            <Logic refNode="geneIL-6"/>
+            <Logic refNode="geneIL-6-1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIL-6" label="IL-6">
+        <NucleicAcidFeature ID="mRNAIL-6-1" label="IL-6">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <Organism>Mus musculus</Organism>
@@ -3362,10 +3359,10 @@
         <Source ID="S33"/>
         <Process>
             <Consumption refNode="S33"/>
-            <Production refNode="mRNAIL-6"/>
+            <Production refNode="mRNAIL-6-1"/>
             <NecessaryStimulation refNode="AND33"/>
         </Process>
-        <NucleicAcidFeature ID="geneIP-10" label="IP-10">
+        <NucleicAcidFeature ID="geneIP-10-4" label="IP-10">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="3627"/>
@@ -3376,9 +3373,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND34">
             <Logic refNode="CBP:IRF3x2_p-2"/>
-            <Logic refNode="geneIP-10"/>
+            <Logic refNode="geneIP-10-4"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIP-10" label="IP-10">
+        <NucleicAcidFeature ID="mRNAIP-10-4" label="IP-10">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <Organism>Mus musculus</Organism>
@@ -3402,16 +3399,16 @@
         <Source ID="S34"/>
         <Process>
             <Consumption refNode="S34"/>
-            <Production refNode="mRNAIP-10"/>
+            <Production refNode="mRNAIP-10-4"/>
             <NecessaryStimulation refNode="AND34"/>
         </Process>
         <NucleicAcidFeature ID="geneGRO-a" label="GRO-a">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="2919"/>
             </Organism>
             <Organism name="MM">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="14825"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND35">
@@ -3444,7 +3441,7 @@
             <Production refNode="mRNAGRO-a"/>
             <NecessaryStimulation refNode="AND35"/>
         </Process>
-        <NucleicAcidFeature ID="geneCCL3" label="CCL3">
+        <NucleicAcidFeature ID="geneCCL3-1" label="CCL3">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="6348"/>
@@ -3455,9 +3452,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND36">
             <Logic refNode="CBP:IRF3x2_p-2"/>
-            <Logic refNode="geneCCL3"/>
+            <Logic refNode="geneCCL3-1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNACCL3" label="CCL3">
+        <NucleicAcidFeature ID="mRNACCL3-1" label="CCL3">
             <Finding>
                 <Organism>Mus musculus</Organism>
                 <OrganismPart>Lung</OrganismPart>
@@ -3480,7 +3477,7 @@
         <Source ID="S36"/>
         <Process>
             <Consumption refNode="S36"/>
-            <Production refNode="mRNACCL3"/>
+            <Production refNode="mRNACCL3-1"/>
             <NecessaryStimulation refNode="AND36"/>
         </Process>
         <NucleicAcidFeature ID="geneCCL5" label="CCL5">
@@ -3608,10 +3605,7 @@
         <NucleicAcidFeature ID="geneIL-8-3" label="IL-8">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
-                <annotation DB="EntrezGeneID" ID=""/>
-            </Organism>
-            <Organism name="MM">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3576"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND40">
@@ -3642,7 +3636,7 @@
             <Production refNode="mRNAIL-8-3"/>
             <NecessaryStimulation refNode="AND40"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL-6" label="IL-6">
+        <NucleicAcidFeature ID="geneIL-6-3" label="IL-6">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="3576"/>
@@ -3650,9 +3644,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND41">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
-            <Logic refNode="geneIL-6"/>
+            <Logic refNode="geneIL-6-3"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIL-6" label="IL-6">
+        <NucleicAcidFeature ID="mRNAIL-6-3" label="IL-6">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <Organism>Mus musculus</Organism>
@@ -3677,7 +3671,7 @@
         <Source ID="S41"/>
         <Process>
             <Consumption refNode="S41"/>
-            <Production refNode="mRNAIL-6"/>
+            <Production refNode="mRNAIL-6-3"/>
             <NecessaryStimulation refNode="AND41"/>
         </Process>
         <NucleicAcidFeature ID="geneIP-10" label="IP-10">
@@ -3720,20 +3714,20 @@
             <Production refNode="mRNAIP-10"/>
             <NecessaryStimulation refNode="AND42"/>
         </Process>
-        <NucleicAcidFeature ID="geneGRO-a" label="GRO-a">
+        <NucleicAcidFeature ID="geneGRO-a-1" label="GRO-a">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="2919"/>
             </Organism>
             <Organism name="MM">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="14825"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND43">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
-            <Logic refNode="geneGRO-a"/>
+            <Logic refNode="geneGRO-a-1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAGRO-a" label="GRO-a">
+        <NucleicAcidFeature ID="mRNAGRO-a-1" label="GRO-a">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <Organism>Mus musculus</Organism>
@@ -3756,10 +3750,10 @@
         <Source ID="S43"/>
         <Process>
             <Consumption refNode="S43"/>
-            <Production refNode="mRNAGRO-a"/>
+            <Production refNode="mRNAGRO-a-1"/>
             <NecessaryStimulation refNode="AND43"/>
         </Process>
-        <NucleicAcidFeature ID="geneCCL5" label="CCL5">
+        <NucleicAcidFeature ID="geneCCL5-1" label="CCL5">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="6352"/>
@@ -3770,9 +3764,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND44">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
-            <Logic refNode="geneCCL5"/>
+            <Logic refNode="geneCCL5-1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNACCL5" label="CCL5">
+        <NucleicAcidFeature ID="mRNACCL5-1" label="CCL5">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <Organism>Mus musculus</Organism>
@@ -3797,10 +3791,10 @@
         <Source ID="S44"/>
         <Process>
             <Consumption refNode="S44"/>
-            <Production refNode="mRNACCL5"/>
+            <Production refNode="mRNACCL5-1"/>
             <NecessaryStimulation refNode="AND44"/>
         </Process>
-        <NucleicAcidFeature ID="geneGMCSF" label="GMCSF">
+        <NucleicAcidFeature ID="geneGMCSF-1" label="GMCSF">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="1537"/>
@@ -3811,9 +3805,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND45">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
-            <Logic refNode="geneGMCSF"/>
+            <Logic refNode="geneGMCSF-1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAGMCSF" label="GMCSF">
+        <NucleicAcidFeature ID="mRNAGMCSF-1" label="GMCSF">
             <Finding>
                 <Organism>Mus musculus</Organism>
                 <Organism>Homo sapiens</Organism>
@@ -3838,10 +3832,10 @@
         <Source ID="S45"/>
         <Process>
             <Consumption refNode="S45"/>
-            <Production refNode="mRNAGMCSF"/>
+            <Production refNode="mRNAGMCSF-1"/>
             <NecessaryStimulation refNode="AND45"/>
         </Process>
-        <NucleicAcidFeature ID="geneCCL20" label="CCL20">
+        <NucleicAcidFeature ID="geneCCL20-1" label="CCL20">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="6364"/>
@@ -3852,9 +3846,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND46">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
-            <Logic refNode="geneCCL20"/>
+            <Logic refNode="geneCCL20-1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNACCL20" label="CCL20">
+        <NucleicAcidFeature ID="mRNACCL20-1" label="CCL20">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <Organism>Mus musculus</Organism>
@@ -3878,7 +3872,7 @@
         <Source ID="S46"/>
         <Process>
             <Consumption refNode="S46"/>
-            <Production refNode="mRNACCL20"/>
+            <Production refNode="mRNACCL20-1"/>
             <NecessaryStimulation refNode="AND46"/>
         </Process>
         <NucleicAcidFeature ID="geneTNF" label="TNF">
@@ -3994,7 +3988,7 @@
             <Production refNode="mRNAIL1B"/>
             <NecessaryStimulation refNode="AND49"/>
         </Process>
-        <NucleicAcidFeature ID="geneCD54" label="CD54">
+        <NucleicAcidFeature ID="geneCD54-1" label="CD54">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="3383"/>
@@ -4005,9 +3999,9 @@
         </NucleicAcidFeature>
         <AndNode ID="AND50">
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
-            <Logic refNode="geneCD54"/>
+            <Logic refNode="geneCD54-1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNACD54" label="CD54">
+        <NucleicAcidFeature ID="mRNACD54-1" label="CD54">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <OrganismPart>Lung</OrganismPart>
@@ -4028,7 +4022,7 @@
         <Source ID="S50"/>
         <Process>
             <Consumption refNode="S50"/>
-            <Production refNode="mRNACD54"/>
+            <Production refNode="mRNACD54-1"/>
             <NecessaryStimulation refNode="AND50"/>
         </Process>
         <NucleicAcidFeature ID="geneIFNG" label="IFNG">
@@ -4325,7 +4319,7 @@
         <Source ID="S61"/>
         <Process>
             <Consumption refNode="S61"/>
-            <Production refNode="mRNAIFB1"/>
+            <Production refNode="mRNAIFNB1"/>
             <NecessaryStimulation refNode="AND61"/>
         </Process>
     </Compartment>
