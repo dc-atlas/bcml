@@ -7,6 +7,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.miravtech.sbgn.CellTypeEnum;
 import com.miravtech.sbgn.FindingType;
 import com.miravtech.sbgn.OrganismEnum;
 import com.miravtech.sbgn.OrganismPartEnum;
@@ -44,9 +45,11 @@ public class EvaluatorTest {
 		f.getOrganism().add(OrganismEnum.HOMO_SAPIENS);
 		f.getOrganism().add(OrganismEnum.MUS_MUSCULUS);
 		f.getOrganismPart().add(OrganismPartEnum.BONE_MARROW);
+		f.getCellType().add(CellTypeEnum.DENDRITIC_CELLS_DC);
 		
 		assert(evaluate("organism='Homo sapiens'",f));
-		assert(evaluate("cellType='Test'",f));
+		assert(!evaluate("cellType='Test'",f));
+		assert(evaluate("cellType='Dendritic cells (DC)'",f));
 		assert(!evaluate("organism='Homo sapienss'",f));
 		assert(!evaluate("organism='Homo sapienss' and organism='Homo sapiens'",f));
 		assert(evaluate("organism='Homo sapienss' or organism='Homo sapiens'",f));

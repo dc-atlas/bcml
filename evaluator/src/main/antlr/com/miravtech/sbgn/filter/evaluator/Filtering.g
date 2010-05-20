@@ -65,6 +65,6 @@ atom returns [boolean value]
 
 BOOL :   'true'|'false';
 ID  :   ('a'..'z'|'A'..'Z')+ ;
-VAL  :   '\''('a'..'z'|'A'..'Z'|' ')+'\'' ;
+VAL  :   '\''(~'\'')+'\'' ;
 NEWLINE:'\r'? '\n' ;
 WS  :   (' '|'\t')+ {skip();} ;
