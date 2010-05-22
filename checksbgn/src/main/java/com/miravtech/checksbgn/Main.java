@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+
 import org.xml.sax.SAXException;
 
 public class Main {
@@ -18,23 +21,31 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		String source;
-		if (args.length >= 1) {
-			source = args[0];
-		} else {
-			throw new Exception(
-					"Please provide the directory or the file to check!");
-		}
-		File srcDir = new File(source);
+		OptionParser parser = new OptionParser();
+		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
+				.withRequiredArg().ofType(File.class).describedAs("file path");
 
-		if (srcDir.isDirectory()) {
-			for (File f : srcDir.listFiles()) {
-				sbgnCheck(f);
+		File srcDir = null;
+		try {
+			OptionSet opts = parser.parse(args);
+
+			srcDir = (File) opts.valueOf("srcSBGN");
+			if (srcDir.isDirectory()) {
+				for (File f : srcDir.listFiles()) {
+					sbgnCheck(f);
+				}
+			} else {
+				sbgnCheck(srcDir);
 			}
-		} else {
-			sbgnCheck(srcDir);
+			System.out.println("Number of files checked: " + files);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception occured: " + e.toString()
+					+ "\nPossible commands:\n");
+			parser.printHelpOn(System.out);
+			return;
 		}
-		System.out.println("Number of files checked: " + files);
+
 	}
 
 	public static void sbgnCheck(File srcSBGN) throws JAXBException,

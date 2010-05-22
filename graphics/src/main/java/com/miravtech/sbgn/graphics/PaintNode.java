@@ -13,6 +13,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.math.BigInteger;
@@ -20,6 +21,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -33,6 +37,8 @@ import com.miravtech.sbgn.MacromoleculeType;
 import com.miravtech.sbgn.NucleicAcidFeatureType;
 import com.miravtech.sbgn.PerturbingAgentType;
 import com.miravtech.sbgn.SBGNNodeType;
+import com.miravtech.sbgn.SBGNPDL1Type;
+import com.miravtech.sbgn.SBGNPDl1;
 import com.miravtech.sbgn.SimpleChemicalType;
 import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
@@ -62,47 +68,76 @@ public class PaintNode {
 				// DrawSyncSource((Graphics2D) g);
 
 				ComplexType nft = new ComplexType();
-				nft.setLabel("Test");
-				nft.setGraphic(new GraphicType());
-				nft.getGraphic().setBorderColor("green");
-				nft.getGraphic().setColor("blue");
-				nft.getGraphic().setBgColor("white");
-
-				nft.setCardinality(new BigInteger("5"));
-				// g1.translate(90, -90);
-				// DrawNode(g1, nft);
-				UnitOfInformationType u1 = new UnitOfInformationType();
-				u1.setLabel("Info1");
-				nft.getInnerNodes().add(u1);
-				u1 = new UnitOfInformationType();
-				u1.setLabel("Info2");
-				u1.setPrefix("pre");
-				nft.getInnerNodes().add(u1);
-
-				StateVariableType sv = new StateVariableType();
-				sv.setLabel("val");
-				sv.setVariable("variable");
-				nft.getInnerNodes().add(sv);
-
-				
-				MacromoleculeType mac1 = new MacromoleculeType();
-				mac1.setLabel("testLabel1");
-				mac1.setCardinality(new BigInteger("1000000"));
-				mac1.getInnerNodes().add(u1);
-
-				sv = new StateVariableType();
-				sv.setLabel("val");
-				sv.setVariable("variable11111111111111111111");
-				mac1.getInnerNodes().add(sv);
-
-				
-				MacromoleculeType mac2 = new MacromoleculeType();
-				mac2.setLabel("testLabel2");
-				mac2.getInnerNodes().add(u1);
-				
-				nft.getInnerNodes().add(mac1);
-				nft.getInnerNodes().add(mac2);
+				MacromoleculeType m1;
+				for (int i = 0; i != 10; i++) {
+					m1 = new MacromoleculeType();
+					m1.setLabel("m"+i);
+					nft.getInnerNodes().add(m1);
+				}
+				//nft.setLabel("test");
 				DrawNode(g1, nft);
+
+				
+				
+//				ComplexType nft = new ComplexType();
+//				nft.setLabel("Test");
+//				nft.setGraphic(new GraphicType());
+//				nft.getGraphic().setBorderColor("green");
+//				nft.getGraphic().setColor("blue");
+//				nft.getGraphic().setBgColor("white");
+//
+//				nft.setCardinality(new BigInteger("5"));
+//				// g1.translate(90, -90);
+//				// DrawNode(g1, nft);
+//				UnitOfInformationType u1 = new UnitOfInformationType();
+//				u1.setLabel("Info1");
+//				nft.getInnerNodes().add(u1);
+//				u1 = new UnitOfInformationType();
+//				u1.setLabel("Info2");
+//				u1.setPrefix("pre");
+//				nft.getInnerNodes().add(u1);
+//
+//				StateVariableType sv = new StateVariableType();
+//				sv.setLabel("val");
+//				sv.setVariable("variable");
+//				nft.getInnerNodes().add(sv);
+//
+//				
+//				MacromoleculeType mac1 = new MacromoleculeType();
+//				mac1.setLabel("testLabel1");
+//				mac1.setCardinality(new BigInteger("1000000"));
+//				mac1.getInnerNodes().add(u1);
+//
+//				sv = new StateVariableType();
+//				sv.setLabel("val");
+//				sv.setVariable("variable11111111111111111111");
+//				mac1.getInnerNodes().add(sv);
+//
+//				
+//				MacromoleculeType mac2 = new MacromoleculeType();
+//				mac2.setLabel("testLabel2");
+//				mac2.getInnerNodes().add(u1);
+//				
+//				nft.getInnerNodes().add(mac1);
+//				nft.getInnerNodes().add(mac2);
+		
+				
+//				JAXBContext jaxbContext;
+//				try {
+//					jaxbContext = JAXBContext
+//					.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
+//		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+//		
+//		SBGNPDl1 root1 = (SBGNPDl1) unmarshaller.unmarshal(new File("../pathways/TLR3expandedForPaper1.xml"));
+//		SBGNPDL1Type root = root1.getValue();
+//		SBGNNodeType n1 = root.getGlyphs().get(0);
+//		
+//				 
+//		DrawNode(g1, n1);
+//				} catch (JAXBException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}   //
 
 			}
 		});
@@ -242,8 +277,9 @@ public class PaintNode {
 		g2d.draw(s);
 		g2d.translate(0, -from);
 
+		int y = 0;
 		if (n instanceof ComplexType) {
-			int y = START_Y_COMPLEX;
+			y = START_Y_COMPLEX;
 			for (SBGNNodeType nt: n.getInnerNodes()) {
 				if (nt instanceof EntityPoolNodeType) {
 					g2d.translate(INSET_X_COMPLEX, y);
@@ -255,7 +291,7 @@ public class PaintNode {
 			}
 		} else {
 			// draw text
-			Rectangle r = new Rectangle(0, from, shSize.x, from + shSize.y);
+			Rectangle r = new Rectangle(y, from, shSize.x, from + shSize.y);
 			OutText(r, getPaintingLabel(n), g2d, n);
 		}
 
@@ -433,8 +469,11 @@ public class PaintNode {
 					+ INSET_Y_DECO);
 			return ret;
 		}
-		Point pLabel = getTextLabelSize(g2d, node);
-		pLabel.x += INSET_X_NODE;
+		Point pLabel = new Point (0,0);
+		if (! (node instanceof ComplexType) ) {
+			pLabel = getTextLabelSize(g2d, node);
+			pLabel.x += INSET_X_NODE;
+		}
 
 		Point pAux = getNodeDecoratorSize(g2d, node);
 		if (pAux.getX() > pLabel.getX()) {
