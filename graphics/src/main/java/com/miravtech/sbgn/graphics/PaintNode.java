@@ -13,17 +13,12 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -37,8 +32,6 @@ import com.miravtech.sbgn.MacromoleculeType;
 import com.miravtech.sbgn.NucleicAcidFeatureType;
 import com.miravtech.sbgn.PerturbingAgentType;
 import com.miravtech.sbgn.SBGNNodeType;
-import com.miravtech.sbgn.SBGNPDL1Type;
-import com.miravtech.sbgn.SBGNPDl1;
 import com.miravtech.sbgn.SimpleChemicalType;
 import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
@@ -175,6 +168,7 @@ public class PaintNode {
 	public static final int INSET_X_COMPLEX = 5;
 	public static final int START_Y_COMPLEX = 25;
 	public static final int DISTANCE_Y_COMPLEX = 20;
+	public static final int DISTANCE_X_COMPLEX = 10;
 	
 	public static final int DECOSTART_X = 20; // where to start the decorators
 
@@ -279,15 +273,13 @@ public class PaintNode {
 
 		int y = 0;
 		if (n instanceof ComplexType) {
-			y = START_Y_COMPLEX;
-			for (SBGNNodeType nt: n.getInnerNodes()) {
-				if (nt instanceof EntityPoolNodeType) {
-					g2d.translate(INSET_X_COMPLEX, y);
-					DrawNode(g2d, nt);
-					g2d.translate(-INSET_X_COMPLEX, -y);					
-					Point p = getNodeShapeSize(g2d, nt);
-					y+= p.y + DISTANCE_Y_COMPLEX;
-				}
+//			y = START_Y_COMPLEX;
+			ArrangeComplex ac = new ArrangeComplex((ComplexType)n, g2d);
+			for (SBGNNodeType nt: ac.arrangement.keySet()) {
+				Point loc = ac.arrangement.get(nt);
+				g2d.translate(INSET_X_COMPLEX+loc.getX(), START_Y_COMPLEX + loc.getY());
+				DrawNode(g2d, nt);
+				g2d.translate(-(INSET_X_COMPLEX+loc.getX()), -(START_Y_COMPLEX + loc.getY()));
 			}
 		} else {
 			// draw text
@@ -486,14 +478,10 @@ public class PaintNode {
 		}
 
 		if (node instanceof ComplexType) {
-			for (SBGNNodeType nt: node.getInnerNodes()) {
-				if (nt instanceof EntityPoolNodeType) {
-					Point p = getNodeShapeSize(g2d, nt);
-					pLabel.y += p.y + DISTANCE_Y_COMPLEX;
-					if (pLabel.x  < p.x + INSET_X_COMPLEX * 2)
-						pLabel.x  = p.x + INSET_X_COMPLEX * 2;
-				}
-			}
+			
+			ArrangeComplex ac = new ArrangeComplex((ComplexType)node, g2d);
+			pLabel.y+=DISTANCE_Y_COMPLEX + ac.height;
+			pLabel.x+=INSET_X_COMPLEX * 2 + ac.width;
 		}
 
 		pLabel.y += INSET_Y_NODE + pAux.getY() / 2;
