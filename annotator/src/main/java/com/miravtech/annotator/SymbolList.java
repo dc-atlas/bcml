@@ -30,8 +30,10 @@ public class SymbolList extends HashMap<String, Double> {
 			if (line == null)
 				break;
 			Matcher m = lineFormat.matcher(line);
-			if (!m.matches()) 
-				throw new Exception("Cannot parse line number: "+lnr.getLineNumber()+" content is:"+line);
+			if (!m.matches()) {
+				System.err.println("Warning, ignored line number: "+lnr.getLineNumber()+" content is:"+line);
+				continue;
+			}
 			String symbol = m.group(1);
 			Double value = Double.parseDouble(m.group(2));
 			put(symbol, value);
