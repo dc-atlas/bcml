@@ -82,7 +82,8 @@ public class Main {
 
 
 		SBGNPDl1 sbgnpath = filterSBGN(sourceSBGN,expression);
-		marshaller.marshal(sbgnpath, destSBGN);
+		if (sbgnpath != null)
+			marshaller.marshal(sbgnpath, destSBGN);
 	}
 	
 		public static SBGNPDl1 filterSBGN(final File sourceSBGN,
@@ -132,6 +133,12 @@ public class Main {
 				}
 			}
 		}.run(sbgnpath.getValue());
+		
+		if (selected.size() == 0) {
+			// nothing matched
+			System.err.println("No output file will be written, since no entry could be assigned to the pathway");
+			return null;
+		}
 
 		// reread the file, set the values and remove the introduced IDs.
 		sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);

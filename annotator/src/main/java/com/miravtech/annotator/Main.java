@@ -252,7 +252,7 @@ public class Main {
 		}.runBottomUp(sbgnpath.getValue());
 		
 		if (nodeFCs.size() == 0) { // no node was computed
-			System.out.println("No output file will be writte, since no entry could be assigned to the pathway");
+			System.out.println("No output file will be written, since no entry could be assigned to the pathway");
 			return;
 		}
 
