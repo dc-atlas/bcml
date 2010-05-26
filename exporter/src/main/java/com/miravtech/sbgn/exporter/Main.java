@@ -297,16 +297,18 @@ public class Main {
 			pr.close();
 			if (genes.size() == 0) {
 				System.err.println("Warning, the output list is empty!");
+				destFile.delete();
 			}
 
 		} else { // gene list
 			Set<String> genes = utils.getSymbols(organism, db, usefilter);
 			for (String g : genes)
 				pr.println(g);
+			pr.close();
 			if (genes.size() == 0) {
 				System.err.println("Warning, the output list is empty!");
+				destFile.delete();				
 			}
-			pr.close();
 		}
 
 	}
