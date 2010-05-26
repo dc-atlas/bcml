@@ -136,7 +136,7 @@ public class Main {
 		
 		if (selected.size() == 0) {
 			// nothing matched
-			System.err.println("No output file will be written, since no entry could be assigned to the pathway");
+			System.err.println("No output file will be written, since no entry could be identified");
 			return null;
 		}
 
