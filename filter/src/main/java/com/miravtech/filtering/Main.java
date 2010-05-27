@@ -15,6 +15,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 
@@ -50,49 +53,73 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		String source;
-		String destination;
-		String filterExpression = "organism='Mus musculus'";
-		if (args.length >= 3) {
-			source = args[0];
-			destination = args[1];
-			filterExpression = args[2];
-		} else {
-			throw new Exception("Please provide source file, destination and the expression");
+		// String source;
+		// String destination;
+		// String filterExpression = "organism='Mus musculus'";
+		// if (args.length >= 3) {
+		// source = args[0];
+		// destination = args[1];
+		// filterExpression = args[2];
+		// } else {
+		// throw new
+		// Exception("Please provide source file, destination and the expression");
+		// }
+		OptionParser parser = new OptionParser();
+		parser.accepts("srcSBGN", "Name of the SBGN file to use.")
+				.withRequiredArg().ofType(File.class).describedAs("file path");
+
+		parser.accepts("outFile", "The target SBGN file.").withRequiredArg()
+				.ofType(File.class).describedAs("file path");
+
+		parser.accepts("filterExpr", "The expression to filter on.")
+				.withRequiredArg().ofType(String.class).describedAs("expr");
+
+		try {
+			OptionSet opts = parser.parse(args);
+			// File srcDir = new File(source);
+			// File destDir = new File(destination);
+			// String filterExpression = args[2];
+
+			File srcDir = (File) opts.valueOf("srcSBGN");
+			File destDir = (File) opts.valueOf("outFile");
+			String filterExpression = (String) opts.valueOf("filterExpr");
+
+			if (srcDir.getAbsolutePath().compareToIgnoreCase(
+					destDir.getAbsolutePath()) == 0)
+				throw new RuntimeException(
+						"Source and destination directories or files cannot be identical!");
+
+			jaxbContext = JAXBContext
+					.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
+			unmarshaller = jaxbContext.createUnmarshaller();
+			marshaller = jaxbContext.createMarshaller();
+
+			filterSBGN(srcDir, destDir, filterExpression);
+		} catch (Exception e) {
+			System.out.println("Exception occured: " + e.toString()
+					+ "\nCommand line options:\n");
+			parser.printHelpOn(System.out);
+			return;
+
 		}
-		File srcDir = new File(source);
-		File destDir = new File(destination);
-
-		if (srcDir.getAbsolutePath().compareToIgnoreCase(
-				destDir.getAbsolutePath()) == 0)
-			throw new RuntimeException(
-					"Source and destination directories or files cannot be identical!");
-
-		jaxbContext = JAXBContext
-				.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics");
-		unmarshaller = jaxbContext.createUnmarshaller();
-		marshaller = jaxbContext.createMarshaller();
-
-		filterSBGN(srcDir, destDir, filterExpression);
 
 	}
 
 	public static void filterSBGN(File sourceSBGN, File destSBGN,
 			final String expression) throws JAXBException {
 
-
-		SBGNPDl1 sbgnpath = filterSBGN(sourceSBGN,expression);
+		SBGNPDl1 sbgnpath = filterSBGN(sourceSBGN, expression);
 		if (sbgnpath != null)
 			marshaller.marshal(sbgnpath, destSBGN);
 	}
-	
-		public static SBGNPDl1 filterSBGN(final File sourceSBGN,
-				final String expression) throws JAXBException {
+
+	public static SBGNPDl1 filterSBGN(final File sourceSBGN,
+			final String expression) throws JAXBException {
 
 		SBGNPDl1 sbgnpath = (SBGNPDl1) unmarshaller.unmarshal(sourceSBGN);
 
 		SBGNUtils utils = new SBGNUtils(sbgnpath.getValue());
-		
+
 		utils.setEmptyIDs();
 		utils.expandClones();
 
@@ -104,9 +131,10 @@ public class Main {
 
 				Collection<FindingType> c = new HashSet<FindingType>();
 				c.addAll(n.getFinding());
-				
+
 				if (n.getFinding().size() == 0) {
-					c.add(new FindingType()); // this should match any finding fact
+					c.add(new FindingType()); // this should match any finding
+												// fact
 				}
 
 				for (FindingType f : c) {
@@ -133,10 +161,11 @@ public class Main {
 				}
 			}
 		}.run(sbgnpath.getValue());
-		
+
 		if (selected.size() == 0) {
 			// nothing matched
-			System.err.println("No output file will be written, since no entry could be identified");
+			System.err
+					.println("No output file will be written, since no entry could be identified");
 			return null;
 		}
 
@@ -200,13 +229,13 @@ public class Main {
 								hasSel = true;
 						}
 					}
-					//composed of both selected and unselected
+					// composed of both selected and unselected
 					if (hasSel && hasUnSel)
-						c.setSelected(SelectType.AFFECTED); 
+						c.setSelected(SelectType.AFFECTED);
 
-					// if composed of excluded only, it becomes excluded					
+					// if composed of excluded only, it becomes excluded
 					if (!hasSel && hasUnSel)
-						c.setSelected(SelectType.EXCLUDE); 
+						c.setSelected(SelectType.EXCLUDE);
 				}
 
 			};
@@ -220,17 +249,19 @@ public class Main {
 				boolean isOr = (n instanceof OrNodeType);
 				if (!isAnd && !isOr)
 					return; // not our business
-				Collection<SBGNNodeType> inNodes = utils2.getInNodesOfLogic((LogicalOperatorNodeType)n);
+				Collection<SBGNNodeType> inNodes = utils2
+						.getInNodesOfLogic((LogicalOperatorNodeType) n);
 				boolean hasInclude = false;
 				boolean hasNonInclude = false;
-				for ( SBGNNodeType node: inNodes ) {
+				for (SBGNNodeType node : inNodes) {
 					if (node.getSelected() == SelectType.INCLUDE)
 						hasInclude = true;
 					else
 						hasNonInclude = true;
 				}
-				if ( (isOr && ! hasInclude) || (isAnd && hasNonInclude)) {
-					setAffected(utils2.getOutNodeOfLogic((LogicalOperatorNodeType)n));
+				if ((isOr && !hasInclude) || (isAnd && hasNonInclude)) {
+					setAffected(utils2
+							.getOutNodeOfLogic((LogicalOperatorNodeType) n));
 					setAffected(n);
 					for (ArcType a : n.getArcs()) {
 						if (a.getSelected() != SelectType.INCLUDE)
@@ -251,12 +282,13 @@ public class Main {
 					for (ArcType a : d.getArcs()) {
 						if (a instanceof ConsumptionArcType) {
 							c = (ConsumptionArcType) a;
-							if (c.getSelected() != SelectType.INCLUDE) 
+							if (c.getSelected() != SelectType.INCLUDE)
 								setAffected(a);
 						}
 					}
 					if (c.getSelected() != SelectType.INCLUDE) {
-						// set affected all the products, production arcs and the appropriate consumption arcs
+						// set affected all the products, production arcs and
+						// the appropriate consumption arcs
 						for (ArcType a : d.getArcs()) {
 							if (a instanceof ProductionArcType) {
 								SBGNNodeType prod = utils2.getOtherNode(a, n);
@@ -270,7 +302,6 @@ public class Main {
 			}
 		}.run(sbgnpath.getValue());
 
-		
 		// color the objects
 		new SBGNIterator() {
 			@Override
