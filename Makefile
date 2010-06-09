@@ -33,7 +33,7 @@ annotator:
 	cd ./annotator; mvn assembly:assembly $(TESTFLAGS)
 
 copy-jars:
-	find ./ -name \*-with-dependencies.jar -exec cp {} bin/ \;
+	find ./ -path './bin' -prune -o -name \*-with-dependencies.jar -exec cp {} bin/ \;
 
 setup-jar:
 	cd bin; sed -i.bak 's?^JAR_LOCATION="*."?JAR_LOCATION=""?1' *.sh
