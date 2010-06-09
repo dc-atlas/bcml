@@ -47,6 +47,8 @@ import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
 import com.miravtech.sbgn.StateVariableType;
 import com.miravtech.sbgn.StatefulEntiyPoolNodeType;
+import com.miravtech.sbgn.SubmapType;
+import com.miravtech.sbgn.TagType;
 import com.miravtech.sbgn.UncertainProcessType;
 import com.miravtech.sbgn.StatefulEntiyPoolNodeType.Organism;
 import com.miravtech.sbgn.StatefulEntiyPoolNodeType.Organism.Annotation;
@@ -274,7 +276,7 @@ public class SBGNUtils {
 
 				if (n instanceof SinkType || n instanceof AuxiliaryUnitType
 						|| n instanceof SourceType
-						|| (n instanceof EntityPoolNodeType)) {
+						|| (n instanceof EntityPoolNodeType || n instanceof TagType)) {
 					int sz = res.getResources().size();
 					String ID = "" + (sz + 1);
 					String xml = PaintNode.DrawNode(n);
@@ -318,7 +320,7 @@ public class SBGNUtils {
 				nlt.setValue(label);
 				nlt.setTextColor(textColor);
 
-				if (n instanceof CompartmentType) {
+				if (n instanceof CompartmentType || n instanceof SubmapType) {
 					nlt.setModelName(NodeLabelModelType.INTERNAL);
 					nlt.setModelPosition(NodeLabelPositionType.TR);
 					ProxyShapeNode p = new ProxyShapeNode();
@@ -331,7 +333,7 @@ public class SBGNUtils {
 					if (n instanceof CompartmentType)
 						gnt.getShape().setType(ShapeTypeType.ROUNDRECTANGLE);
 					else
-						gnt.getShape().setType(ShapeTypeType.RECTANGLE); // complex
+						gnt.getShape().setType(ShapeTypeType.RECTANGLE); // submap
 					gnt.setFill(new Fill());
 					gnt.getFill().setHasColor(true);
 					gnt.getFill().setColor(bgColor);

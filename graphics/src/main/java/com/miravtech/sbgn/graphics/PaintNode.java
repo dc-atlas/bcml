@@ -60,16 +60,19 @@ public class PaintNode {
 				g1.translate(100, 100);
 				// DrawSyncSource((Graphics2D) g);
 
-				ComplexType nft = new ComplexType();
-				MacromoleculeType m1;
-				for (int i = 0; i != 10; i++) {
-					m1 = new MacromoleculeType();
-					m1.setLabel("m"+i);
-					nft.getInnerNodes().add(m1);
-				}
+//				ComplexType nft = new ComplexType();
+//				MacromoleculeType m1;
+//				for (int i = 0; i != 10; i++) {
+//					m1 = new MacromoleculeType();
+//					m1.setLabel("m"+i);
+//					nft.getInnerNodes().add(m1);
+//				}
 				//nft.setLabel("test");
-				DrawNode(g1, nft);
+//				DrawNode(g1, nft);
 
+				TagType t = new TagType();
+				t.setLabel("TheTag");
+				DrawNode(g1, t);
 				
 				
 //				ComplexType nft = new ComplexType();
@@ -563,7 +566,7 @@ public class PaintNode {
 		if (n instanceof SinkType || n instanceof SourceType) {
 			DrawSyncSource(svgGenerator,  (EntityPoolNodeType)n);
 		} else if ((n instanceof EntityPoolNodeType)
-				|| (n instanceof AuxiliaryUnitType) ) {
+				|| (n instanceof AuxiliaryUnitType || n instanceof TagType) ) {
 			DrawNode(svgGenerator,  n);
 		} else {
 			throw new RuntimeException(
