@@ -3,8 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to BCML's documentation!
-================================
+Biological Connection Markup Language documentation
+===================================================
+
+This document describes the Biological Connection Markup Language, a data format and a framework to describe and analyze biological pathways. 
+
+For further information, see the :doc:`Introduction section <introduction>`.
 
 Contents:
 
@@ -17,11 +21,11 @@ Contents:
    validation
    measurements
    analysis
+   references
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
