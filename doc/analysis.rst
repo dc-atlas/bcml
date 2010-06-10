@@ -1,7 +1,7 @@
 Using BCML pathways for analysis
 ================================
 
-BCML files can be converted into formats suitable for use with common pathway analysis algorithms such as the Fisher's Exact Test[Grosu2002]_, Gene Set Enrichment Analysis[Subramanioan2005]_, and impact analysis[Tarca2009]_ (in the form implemented by the SPIA R package).
+BCML files can be converted into formats suitable for use with common pathway analysis algorithms such as the Fisher's Exact Test [Grosu2002]_, Gene Set Enrichment Analysis [Subramanian2005]_, and impact analysis [Tarca2009]_.
 
 For most of the analysis algorithms, an export to gene list will be sufficient; for impact analysis there is a specialized workflow.
 
@@ -12,6 +12,8 @@ Gene lists (which can then be used for Fisher's Test or GSEA) can be simply expo
 
 Exporting data for impact analysis
 ----------------------------------
+
+The impact analysis format supported by BCML is the one implemented in `the SPIA R package <http://bioconductor.org/packages/2.6/bioc/html/SPIA.html>`_.
 
 Exporting data for use with impact analysis requires different arguments to be passed to ``bcml_export``. Specifically, it must be invoked with different ``--db`` and ``--method`` switches::
 
@@ -26,6 +28,6 @@ The export will produce an R file. This needs to be sourced in R before starting
 
         >>> source("mypathwayfile.r")
 
-.. warning:: SPIA needs to be installed, or the operation will fail. Also, the oepration will write a file to SPIA's installation directory: make sure your user account has sufficient rights to write there.
+.. warning:: SPIA needs to be installed, or the operation will fail. Also, the operation will write a file to SPIA's installation directory: make sure your user account has sufficient rights to write there.
 
 .. note:: You will need the BCML-bundled version of SPIA (spia.r) in order to run analysis on the BCML-exported pathways.

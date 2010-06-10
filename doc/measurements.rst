@@ -31,7 +31,8 @@ The experimental measurements are incorporated in the BCML file with the ``bcml_
 
 In case no match is found, no BCML file is produced and ``bcml_annotate`` issues a warning. There are also other less common options to specify the colors, how to handle multiple values for the same entity in the measurements, and so on. Execute ``bcml_annotate`` without arguments for a full list.
 
-The resulting BCML file can then be either manipulated (filtered, etc.) or viewed after conversion to GraphML. In the latter case, entities affected by experimental measurements will appear colored (depending on the degree of the measurement) along with their actual value. 
+The resulting BCML file can then be either manipulated (filtered, etc.) or viewed after conversion to GraphML. In the latter case, entities affected by experimental measurements will appear colored (depending on the degree of the measurement) along with their actual value.
+
 Exporting measurements from a BCML file
 ---------------------------------------
 
