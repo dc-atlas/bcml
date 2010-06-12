@@ -7,8 +7,10 @@ Examples of XML editors that can be used to write BCML pathways include:
 
  * `XMLSpy <http://www.altova.com/xml-editor/>`_ (commercial)
  * `XMLSpear <http://www.donkeydevelopment.com>`_ (freeware)
+ *  Eclipse IDE (open source)
+ *  Microsoft Visual Studio (free Express version, commercial professional and better).
 
-Describing how to write a SBGN compliant pathway is outside the scope of the document: in any case, you should use the `SBGN Process description specification <http://precedings.nature.com/documents/3721/version/1>`_ as a reference on how to structure your pathway. More detailed information on BCML itself and what it supports are in the schema documentation.
+Describing how to write a SBGN compliant pathway is outside the scope of the document: in any case, you should use the `SBGN Process description specification <http://precedings.nature.com/documents/3721/version/1>`_ as a reference on how to structure your pathway. More detailed information on BCML itself and what it supports are in the schema documentation. Each of the objects of SBGN PD has a homonym correspondent in BCML.
 
 Writing annotations
 -------------------
@@ -27,6 +29,8 @@ The SBGN extension schema provides support for these kinds of annotations. For e
                 </Finding>
         </Macromolecule>
 
+Annotating findings enables the description of generic pathways. The generic pathways can be transformed to specific pathway; the elements not belonging to an organism or cell type of interest, can be removed with the bcml_filter tool.
+
 Other valid information that can be added in Findings include for example PubMed IDs (using the ``PMID`` tag).
 
 Additional annotations outside Findings can be used to indicate gene or protein identifiers, for example:
@@ -40,5 +44,8 @@ Additional annotations outside Findings can be used to indicate gene or protein 
                 </Organism>
         </Macromolecule>
 
-In this case, we indicate the ``EntrezGeneID`` 148022 associated to ``HS`` (which is *Homo sapiens*) for this macromolecule. 
+In this case, we indicate the ``EntrezGeneID`` 148022 associated to ``HS`` (which is *Homo sapiens*) for this macromolecule. Annotation of the macromolecules with known database symbols is a facilitator of analysis techniques and enables representation of experiments within the pathway.
 The full list and description of available annotation features is in the schema documentation.
+
+
+.. comment: providing a few of the SBGN sample pathways in BCML format would enhance the perception of the user regarding BCML capabilities.

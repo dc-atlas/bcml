@@ -47,7 +47,7 @@ Lastly, you will need to export the file. You can do so by choosing "Export" fro
 .. image:: images/export.png
     :align: center
 
-It is recommended to use SVG format, which is scalable and can be converted to other formats with the appropriate software (such as the freely available `Inkscape <http://www.inkscape.org>`_). yEd offers some other exporting options, but SVG is the one with best quality.
+It is recommended to use SVG or other vector format, which is scalable and can be converted to other formats with the appropriate software (such as the freely available `Inkscape <http://www.inkscape.org>`_). yEd offers some other exporting options, but SVG is the one with best quality. yEd provides the capability to publish the results online, by exporting to the HTML / Adobe flash format.
 
 Filtering a BCML file
 ---------------------
