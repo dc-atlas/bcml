@@ -43,40 +43,21 @@
             <UnitOfInformation label="inactive"/>
             <MacroModule>ReceptorSensing</MacroModule>
         </Macromolecule>
-        <Complex ID="Poly(I:C):TLR3:c-src_inactive" type="And">
-            <Macromolecule cloneref="Poly(I:C)"/>
-            <Macromolecule cloneref="TLR3"/>
-            <Macromolecule cloneref="c-src_inactive"/>
-        </Complex>
-        <Complex ID="Poly(I:C):TLR3:c-src_active" type="And">
-            <Macromolecule cloneref="Poly(I:C)"/>
-            <Macromolecule cloneref="TLR3"/>
-            <Macromolecule ID="c-src_active" label="c-src">
-                <Finding>
-                    <Organism>Homo sapiens</Organism>
-                    <OrganismPart>Pheripheral Blood</OrganismPart>
-                    <CellType>Dendritic cells (DC)</CellType>
-                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
-                    <PMID>16858407</PMID>
-                </Finding>
-                <UnitOfInformation label="active"/>
-                <MacroModule>ReceptorSensing</MacroModule>
-            </Macromolecule>
-        </Complex>
-        <Association>
-            <Consumption refNode="Poly(I:C):TLR3">
-                <Finding/>
-            </Consumption>
-            <Consumption refNode="c-src_inactive">
-                <Finding/>
-            </Consumption>
-            <Production refNode="Poly(I:C):TLR3:c-src_inactive">
-                <Finding/>
-            </Production>
-        </Association>
+        <Macromolecule ID="c-src_active" label="c-src">
+            <Finding>
+                <Organism>Homo sapiens</Organism>
+                <OrganismPart>Pheripheral Blood</OrganismPart>
+                <CellType>Dendritic cells (DC)</CellType>
+                <ProvenIn>Dendritic cells (DC)</ProvenIn>
+                <PMID>16858407</PMID>
+            </Finding>
+            <StateVariable label="active"/>
+            <MacroModule>ReceptorSensing</MacroModule>
+        </Macromolecule>
         <Process>
-            <Consumption refNode="Poly(I:C):TLR3:c-src_inactive"/>
-            <Production refNode="Poly(I:C):TLR3:c-src_active"/>
+            <Consumption refNode="c-src_inactive"/>
+            <Production refNode="c-src_active"/>
+            <Stimulation refNode="Poly(I:C):TLR3"/>
         </Process>
         <Complex ID="Poly(I:C):TLR3:TRIF" type="And">
             <Macromolecule cloneref="Poly(I:C)"/>
@@ -186,6 +167,7 @@
             <Consumption refNode="Poly(I:C):TLR3:TRIF:TRAF6-1"/>
             <Production refNode="Poly(I:C):TLR3:TRIF:TRAF6-2"/>
             <Catalysis refNode="Ubc13:Uve1A"/>
+            <Catalysis refNode="Poly(I:C):TLR3:TRIF:TRAF6-1"/>
         </Process>
         <Macromolecule ID="RIP1" label="RIP1">
             <Finding>
@@ -566,7 +548,7 @@
                 <annotation DB="" ID="56480"/>
             </Organism>
         </Macromolecule>
-        <Macromolecule ID="IKBKE" label="IKBKE">
+        <Macromolecule ID="IKBKE" label="IKKe">
             <Finding>
                 <Organism>Mus musculus</Organism>
                 <CellType>Embryonic cells</CellType>
@@ -809,7 +791,7 @@
             <Production refNode="akt_p"/>
             <Consumption refNode="akt_"/>
             <NecessaryStimulation refNode="PI3K_active"/>
-            <NecessaryStimulation refNode="Poly(I:C):TLR3:c-src_active"/>
+            <NecessaryStimulation refNode="c-src_active"/>
         </Process>
         <Macromolecule ID="IRF3" label="IRF3">
             <Finding>
@@ -858,7 +840,7 @@
                 </Finding>
             </Stimulation>
         </Association>
-        <Macromolecule ID="IRF3x2_p" cardinality="2" cloneref="IRF3">
+        <Macromolecule ID="IRF3x2_p" cardinality="2" cloneref="IRF3" label="IRF3">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <OrganismPart>Pheripheral Blood</OrganismPart>
@@ -1135,7 +1117,7 @@
             <Catalysis refNode="IKKa_p:IKKb_p:IKKg"/>
         </Process>
         <Complex ID="IkBa_-2:NF-kBp50:NF-kBp65" type="And">
-            <Macromolecule ID="IkBa_-2" cloneref="IkBa_-1"/>
+            <Macromolecule ID="IkBa_-2" cloneref="IkBa_-1" label="IkBa"/>
             <Macromolecule cloneref="NF-kBp50"/>
             <Macromolecule ID="NF-kBp65" label="NF-kBp65">
                 <Finding>
@@ -1258,92 +1240,6 @@
             <Production refNode="IkBa_p_-1"/>
             <Production refNode="NF-kBp50:NF-kBp65"/>
         </Dissociation>
-        <Complex ID="ERK-2_:ERK-1_" type="And">
-            <Macromolecule ID="ERK-2_" label="ERK-2">
-                <Finding>
-                    <Organism>Homo sapiens</Organism>
-                    <OrganismPart>Pheripheral Blood</OrganismPart>
-                    <CellType>Dendritic cells (DC)</CellType>
-                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
-                    <PMID>16887964</PMID>
-                </Finding>
-                <StateVariable label=""/>
-                <MacroModule>Transduction</MacroModule>
-                <Organism name="HS">
-                    <annotation DB="EntrezGeneID" ID="5594"/>
-                </Organism>
-                <Organism name="MM">
-                    <annotation DB="EntrezGeneID" ID="26413"/>
-                </Organism>
-            </Macromolecule>
-            <Macromolecule ID="ERK-1_" label="ERK-1">
-                <Finding>
-                    <Organism>Homo sapiens</Organism>
-                    <OrganismPart>Pheripheral Blood</OrganismPart>
-                    <CellType>Dendritic cells (DC)</CellType>
-                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
-                    <PMID>16887964</PMID>
-                </Finding>
-                <StateVariable label=""/>
-                <MacroModule>Transduction</MacroModule>
-                <Organism name="HS">
-                    <annotation DB="EntrezGeneID" ID="5595"/>
-                </Organism>
-                <Organism name="MM">
-                    <annotation DB="EntrezGeneID" ID="26417"/>
-                </Organism>
-            </Macromolecule>
-        </Complex>
-        <Complex ID="ERK-2_p:ERK-1_p" type="And">
-            <Macromolecule ID="ERK-2_p" label="ERK-2">
-                <Finding>
-                    <Organism>Homo sapiens</Organism>
-                    <OrganismPart>Pheripheral Blood</OrganismPart>
-                    <CellType>Dendritic cells (DC)</CellType>
-                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
-                    <PMID>16887964</PMID>
-                    <PMID>14991609</PMID>
-                </Finding>
-                <StateVariable label="p"/>
-                <MacroModule>Transduction</MacroModule>
-                <Organism name="HS">
-                    <annotation DB="EntrezGeneID" ID="5594"/>
-                </Organism>
-                <Organism name="MM">
-                    <annotation DB="EntrezGeneID" ID="26413"/>
-                </Organism>
-            </Macromolecule>
-            <Macromolecule ID="ERK-1_p" label="ERK-1">
-                <Finding>
-                    <Organism>Homo sapiens</Organism>
-                    <OrganismPart>Pheripheral Blood</OrganismPart>
-                    <CellType>Dendritic cells (DC)</CellType>
-                    <ProvenIn>Dendritic cells (DC)</ProvenIn>
-                    <PMID>16887964</PMID>
-                </Finding>
-                <StateVariable label="p"/>
-                <MacroModule>Transduction</MacroModule>
-                <Organism name="HS">
-                    <annotation DB="EntrezGeneID" ID="5595"/>
-                </Organism>
-                <Organism name="MM">
-                    <annotation DB="EntrezGeneID" ID="26417"/>
-                </Organism>
-            </Macromolecule>
-        </Complex>
-        <Process>
-            <Consumption refNode="ERK-2_:ERK-1_">
-                <Finding>
-                    <PMID>16887964</PMID>
-                </Finding>
-            </Consumption>
-            <Production refNode="ERK-2_p:ERK-1_p">
-                <Finding>
-                    <PMID>16887964</PMID>
-                </Finding>
-            </Production>
-            <Stimulation refNode="Poly(I:C):TLR3:TRIF:TRAF6-1"/>
-        </Process>
         <Complex ID="AP-1_" type="And">
             <Macromolecule ID="FOS-1" label="FOS">
                 <Finding>
@@ -1469,7 +1365,7 @@
             </Stimulation>
         </Process>
         <OrNode ID="OR1">
-            <Logic refNode="ERK-2_p:ERK-1_p"/>
+            <Logic refNode="ERK2_p:ERK1_p_active"/>
             <Logic refNode="p38_p"/>
             <Logic refNode="JNK_p_active"/>
         </OrNode>
@@ -1757,7 +1653,7 @@
             <Consumption refNode="MEK1_:MEK2__inactive"/>
             <Production refNode="MEK1_p:MEK2_p_active"/>
             <Catalysis refNode="TPL2_active"/>
-            <Catalysis refNode="ERK2_p:ERK1_p_active"/>
+            <Modulation refNode="ERK2_p:ERK1_p_active"/>
         </Process>
         <Complex ID="ERK2_:ERK1__inactive">
             <Macromolecule ID="ERK2_" label="ERK2">
@@ -1849,6 +1745,7 @@
             <Consumption refNode="ERK2_:ERK1__inactive"/>
             <Production refNode="ERK2_p:ERK1_p_active"/>
             <Catalysis refNode="MEK1_p:MEK2_p_active"/>
+            <Stimulation refNode="">Poly(I:C):TLR3:TRIF:TRAF6-1</Stimulation>
         </Process>
         <Complex ID="MKK3_:MKK6__inactive">
             <Macromolecule ID="MKK3_" label="MKK3">
@@ -3875,7 +3772,7 @@
             <Production refNode="mRNACCL20-1"/>
             <NecessaryStimulation refNode="AND46"/>
         </Process>
-        <NucleicAcidFeature ID="geneTNF" label="TNF">
+        <NucleicAcidFeature ID="geneTNF" label="TNF-alpha">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="7124"/>
@@ -3888,7 +3785,7 @@
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
             <Logic refNode="geneTNF"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNATNF" label="TNF">
+        <NucleicAcidFeature ID="mRNATNF" label="TNF-alpha">
             <Finding>
                 <Organism>Mus musculus</Organism>
                 <Organism>Homo sapiens</Organism>
@@ -3951,7 +3848,7 @@
             <Production refNode="mRNACXCL5"/>
             <NecessaryStimulation refNode="AND48"/>
         </Process>
-        <NucleicAcidFeature ID="geneIL1B" label="IL1B">
+        <NucleicAcidFeature ID="geneIL1B" label="IL-1beta">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="3553"/>
@@ -3964,7 +3861,7 @@
             <Logic refNode="NF-kBp50:NF-kBp65-2"/>
             <Logic refNode="geneIL1B"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIL1B" label="IL1B">
+        <NucleicAcidFeature ID="mRNAIL1B" label="IL-1beta">
             <Finding>
                 <Organism>Homo sapiens</Organism>
                 <OrganismPart>Lung</OrganismPart>
@@ -4025,7 +3922,7 @@
             <Production refNode="mRNACD54-1"/>
             <NecessaryStimulation refNode="AND50"/>
         </Process>
-        <NucleicAcidFeature ID="geneIFNG" label="IFNG">
+        <NucleicAcidFeature ID="geneIFNG" label="IFN-gamma">
             <UnitOfInformation label="gene" prefix="ct"/>
             <Organism name="HS">
                 <annotation DB="EntrezGeneID" ID="3458"/>
@@ -4038,7 +3935,7 @@
             <Logic refNode="Poly(I:C):TLR3"/>
             <Logic refNode="geneIFNG"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAIFNG" label="IFNG">
+        <NucleicAcidFeature ID="mRNAIFNG" label="IFN-gamma">
             <Finding>
                 <Organism>Mus musculus</Organism>
                 <Organism>Homo sapiens</Organism>
