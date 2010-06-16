@@ -36,7 +36,7 @@ copy-jars:
 	find ./ -path './bin' -prune -o -name \*-with-dependencies.jar -exec cp {} bin/ \;
 
 setup-jar:
-	cd bin; sed -i.bak 's?^JAR_LOCATION="*."?JAR_LOCATION=""?1' *.sh
+	cd bin; sed -i.bak 's?^JAR_LOCATION="*.*"?JAR_LOCATION=""?1' *.sh
 	cd bin; sed -i 's?JAR_LOCATION="*."?JAR_LOCATION="$(INSTALLED_JAR_DIR)"?1' *.sh
 	cd bin; sed -i 's?\(JAR_LOCATION=\)"\(.*\)"?\1"\2/$(EXPORTER_JAR)"?1' bcml_export.sh
 	cd bin; sed -i 's?\(JAR_LOCATION=\)"\(.*\)"?\1"\2/$(ANNOTATOR_JAR)"?1' bcml_annotate.sh
