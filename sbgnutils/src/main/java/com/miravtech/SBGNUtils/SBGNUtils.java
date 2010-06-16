@@ -1,5 +1,6 @@
 package com.miravtech.SBGNUtils;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,7 +8,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.graphdrawing.graphml.xmlns.graphml.Data;
@@ -33,6 +36,7 @@ import com.miravtech.sbgn.InhibitionArcType;
 import com.miravtech.sbgn.LogicArcType;
 import com.miravtech.sbgn.LogicalOperatorNodeType;
 import com.miravtech.sbgn.ModulationArcType;
+import com.miravtech.sbgn.NecessaryStimulationArcType;
 import com.miravtech.sbgn.NotNodeType;
 import com.miravtech.sbgn.OmittedProcessType;
 import com.miravtech.sbgn.OrNodeType;
@@ -42,6 +46,7 @@ import com.miravtech.sbgn.ProductionArcType;
 import com.miravtech.sbgn.SBGNGlyphType;
 import com.miravtech.sbgn.SBGNNodeType;
 import com.miravtech.sbgn.SBGNPDL1Type;
+import com.miravtech.sbgn.SBGNPDl1;
 import com.miravtech.sbgn.SelectType;
 import com.miravtech.sbgn.SinkType;
 import com.miravtech.sbgn.SourceType;
@@ -488,11 +493,13 @@ public class SBGNUtils {
 				if (n instanceof ProductionArcType)
 					a.setTarget(ArrowTypeType.DELTA);
 				if (n instanceof ModulationArcType)
-					a.setTarget(ArrowTypeType.WHITE_DIAMOND);
+					a.setTarget(ArrowTypeType.WHITE_DELTA);
 				if (n instanceof CatalysisArcType)
 					a.setTarget(ArrowTypeType.TRANSPARENT_CIRCLE);
 				if (n instanceof InhibitionArcType)
 					a.setTarget(ArrowTypeType.T_SHAPE);
+				if (n instanceof NecessaryStimulationArcType)
+					a.setTarget(ArrowTypeType.CONCAVE);
 				plet.setArrows(a);
 				plet.setLineStyle(new LineStyleType());
 				plet.getLineStyle().setColor(borderColor);
@@ -549,6 +556,40 @@ public class SBGNUtils {
 		return getOtherNode(getOutArcOfLogic(n), n);
 	}
 
+	
+	public void expandSuppathways(SBGNNodeType model) throws Exception   {
+		// identify all submaps
+		final JAXBContext jaxbContext = JAXBContext
+		.newInstance("com.miravtech.sbgn:com.miravtech.sbgn_graphics"); //
+		final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+		new SBGNIterator() {
+			public void iterateNode(SBGNNodeType n) {
+				if (n instanceof SubmapType) {
+					SubmapType st = (SubmapType)n;
+					File f = new File(st.getFileLocation());
+					
+					// load the file
+					SBGNPDL1Type root=null;
+					try {
+						root = ((SBGNPDl1) unmarshaller.unmarshal(f)).getValue();
+					} catch (JAXBException e) {
+						throw new RuntimeException(e); // throws the exception as runtime exception
+					}
+					SBGNUtils sbgn = new SBGNUtils(root);
+					// get the submap inner connections
+					
+					// get the submap file connections
+					
+					// identify the connections
+					
+					// add the content of the submap in the current container
+					
+				}
+			}
+		}.run(model);
+	}
+	
 	/**
 	 * Copies the content of model to n1.
 	 * 
@@ -557,6 +598,7 @@ public class SBGNUtils {
 	 */
 	static void CloneBeans(SBGNNodeType n1, SBGNNodeType model) {
 
+		
 		// TODO iterate all the getters!!
 		if (n1.getLabel() == null)
 			n1.setLabel(model.getLabel());

@@ -198,6 +198,7 @@
 			<xs:enumeration value="white_delta" />
 			<xs:enumeration value="t_shape" />
 			<xs:enumeration value="transparent_circle" />
+			<xs:enumeration value="concave" />
 			<xs:enumeration value="none" />
 		</xs:restriction>
 	</xs:simpleType>
