@@ -396,6 +396,7 @@
 		<xs:complexContent>
 			<xs:extension base="AuxiliaryUnitType">
 				<xs:attribute name="prefix" type="xs:string"></xs:attribute>
+				<xs:attribute name="term" type="xs:string" use="optional"></xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
