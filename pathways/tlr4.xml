@@ -133,10 +133,16 @@
             <Macromolecule cloneref="MyD88"/>
             <Macromolecule cloneref="IRAK4"/>
         </Complex>
+        <Macromolecule ID="MyD88a" label="MyD88a">
+            <Organism>
+                <annotation DB="EntrezGeneID" ID="4615"/>
+            </Organism>
+        </Macromolecule>
         <Association>
             <Consumption refNode="MD-2:TLR4:LPS:TIRAP:PIP2:MyD88-x2"/>
             <Consumption refNode="IRAK4"/>
             <Production refNode="MD-2:TLR4:LPS:TIRAP:PIP2:MyD88:IRAK4-x2"/>
+            <Inhibition refNode="MyD88a"/>
         </Association>
         <Complex ID="Tollip:IRAK1">
             <Macromolecule ID="Tollip" label="Tollip">
@@ -214,7 +220,7 @@
             <Macromolecule cloneref="IRAK2"/>
         </Complex>
         <Process>
-            <Consumption refNode="MD-2:TLR4:LPS:TIRAP:PIP2:MyD88:IRAK4:Tollip:IRAK1_-x2"/>
+            <Consumption refNode="MD-2:TLR4:LPS:TIRAP:PIP2:MyD88:IRAK4:Tollip:IRAK1_:IRAK2-x2"/>
             <Production refNode="MD-2:TLR4:LPS:TIRAP:PIP2:MyD88:IRAK4:Tollip:IRAK1_p:IRAK2-x2"/>
             <Catalysis refNode="IRAK4"/>
         </Process>
@@ -386,9 +392,7 @@
         <Process>
             <Consumption refNode="MD-2:TLR4:LPS:TIRAP:PIP2:MyD88:IRAK4:IRAK1_p_p:IRAK2:TRAF6:ECSIT:MEKK1_inactive-x2"/>
             <Production refNode="MD-2:TLR4:LPS:TIRAP:PIP2:MyD88:IRAK4:IRAK1_p_p:IRAK2:TRAF6_:ECSIT:MEKK1_active-x2"/>
-            <Catalysis refNode="S40"/>
         </Process>
-        <Source ID="S40"/>
         <Complex ID="Uev14:Ubc13">
             <Macromolecule ID="Uev1A" label="Uev1A">
                 <Organism name="Hs">
@@ -728,12 +732,10 @@
             <Production refNode="IRAK1_p_p_"/>
             <Production refNode="TAB1:TAB3:TAK1_p_inactive:TAB2_p:TRAF6_Ub"/>
         </Dissociation>
-        <Source ID="S1"/>
         <Sink ID="S2"/>
         <Process>
             <Consumption refNode="IRAK1_p_p_"/>
             <Production refNode="IRAK1_p_p_Ub"/>
-            <Catalysis refNode="S1"/>
         </Process>
         <Process>
             <Consumption refNode="IRAK1_p_p_Ub"/>
@@ -752,11 +754,9 @@
             <Macromolecule cloneref="TAB2_p"/>
             <Macromolecule cloneref="TRAF6_Ub"/>
         </Complex>
-        <Source ID="S3"/>
         <Process>
             <Consumption refNode="TAB1:TAB3:TAK1_p_inactive:TAB2_p:TRAF6_Ub"/>
             <Production refNode="TAB1:TAB3:TAK1_p_active:TAB2_p:TRAF6_Ub"/>
-            <Catalysis refNode="S3"/>
             <Stimulation refNode="TLR4:TRAM:TRIF:RIP1"/>
         </Process>
         <Complex ID="IKKa:IKKb:IKKg">
@@ -834,7 +834,7 @@
                     <annotation DB="EntrezGeneID" ID="5606"/>
                 </Organism>
             </Macromolecule>
-            <Macromolecule ID="MKK6" label="MKK6">
+            <Macromolecule ID="MKK6_" label="MKK6">
                 <StateVariable label=""/>
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="5608"/>
@@ -842,13 +842,13 @@
             </Macromolecule>
         </Complex>
         <Complex ID="MKK3_p:MKK6_p">
-            <Macromolecule ID="MKK3" label="MKK3">
+            <Macromolecule ID="MKK3_p" label="MKK3">
                 <StateVariable label="p"/>
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="5606"/>
                 </Organism>
             </Macromolecule>
-            <Macromolecule ID="MKK6" label="MKK6">
+            <Macromolecule ID="MKK6_p" label="MKK6">
                 <StateVariable label="p"/>
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="5608"/>
@@ -864,12 +864,18 @@
             <StateVariable label=""/>
             <Organism name="Hs">
                 <annotation DB="EntrezGeneID" ID="1432"/>
+                <annotation DB="EntrezGeneID" ID="5600"/>
+                <annotation DB="EntrezGeneID" ID="6300"/>
+                <annotation DB="EntrezGeneID" ID="5603"/>
             </Organism>
         </Macromolecule>
         <Macromolecule ID="p38_p" label="p38">
             <StateVariable label="p"/>
             <Organism name="Hs">
                 <annotation DB="EntrezGeneID" ID="1432"/>
+                <annotation DB="EntrezGeneID" ID="5600"/>
+                <annotation DB="EntrezGeneID" ID="6300"/>
+                <annotation DB="EntrezGeneID" ID="5603"/>
             </Organism>
         </Macromolecule>
         <Process>
@@ -878,35 +884,18 @@
             <Catalysis refNode="MKK3_p:MKK6_p"/>
         </Process>
         <Process>
-            <Consumption refNode="p38_p"/>
-            <Production refNode="p38_p-1"/>
-        </Process>
-        <Macromolecule ID="p38_p-1" cloneref="p38_p"/>
-        <Macromolecule ID="ATF2_" label="ATF2">
-            <StateVariable label=""/>
-            <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID="1386"/>
-            </Organism>
-        </Macromolecule>
-        <Macromolecule ID="ATF2_p" label="ATF2_p">
-            <StateVariable label="p"/>
-            <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID="1386"/>
-            </Organism>
-        </Macromolecule>
-        <Process>
             <Consumption refNode="ATF2_"/>
             <Production refNode="ATF2_p"/>
             <Catalysis refNode="p38_p-1"/>
         </Process>
         <Complex ID="MKK4_:MKK7_">
-            <Macromolecule ID="MKK4" label="MKK4">
+            <Macromolecule ID="MKK4_" label="MKK4">
                 <StateVariable label=""/>
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="6416"/>
                 </Organism>
             </Macromolecule>
-            <Macromolecule ID="MKK7" label="MKK7">
+            <Macromolecule ID="MKK7_" label="MKK7">
                 <StateVariable label=""/>
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="5609"/>
@@ -914,13 +903,13 @@
             </Macromolecule>
         </Complex>
         <Complex ID="MKK4_p:MKK7_p">
-            <Macromolecule ID="MKK4" label="MKK4">
+            <Macromolecule ID="MKK4_p" label="MKK4">
                 <StateVariable label="p"/>
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="6416"/>
                 </Organism>
             </Macromolecule>
-            <Macromolecule ID="MKK7" label="MKK7">
+            <Macromolecule ID="MKK7_p" label="MKK7">
                 <StateVariable label="p"/>
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="5609"/>
@@ -931,81 +920,22 @@
             <Consumption refNode="MKK4_:MKK7_"/>
             <Production refNode="MKK4_p:MKK7_p"/>
         </Process>
-        <Macromolecule ID="JNK_" label="JNK">
+        <Macromolecule ID="MAPK8_" label="MAPK8">
             <StateVariable label=""/>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="5599"/>
             </Organism>
         </Macromolecule>
-        <Macromolecule ID="JNK_p" label="JNK">
+        <Macromolecule ID="MAPK8_p" label="MAPK8">
             <StateVariable label="p"/>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="5599"/>
             </Organism>
         </Macromolecule>
         <Process>
-            <Consumption refNode="JNK_"/>
-            <Production refNode="JNK_p"/>
+            <Consumption refNode="MAPK8_"/>
+            <Production refNode="MAPK8_p"/>
             <Catalysis refNode="MKK4_p:MKK7_p"/>
-        </Process>
-        <Complex ID="MKK4_:MKK6_">
-            <Macromolecule ID="MKK3" label="MKK3">
-                <StateVariable label=""/>
-                <Organism name="Hs">
-                    <annotation DB="EntrezGeneID" ID="5606"/>
-                </Organism>
-            </Macromolecule>
-            <Macromolecule ID="MKK6" label="MKK6">
-                <StateVariable label=""/>
-                <Organism name="Hs">
-                    <annotation DB="EntrezGeneID" ID="5608"/>
-                </Organism>
-            </Macromolecule>
-        </Complex>
-        <Complex ID="MKK3_p:MKK6_p">
-            <Macromolecule ID="MKK3" label="MKK3">
-                <StateVariable label="p"/>
-                <Organism name="Hs">
-                    <annotation DB="EntrezGeneID" ID="5606"/>
-                </Organism>
-            </Macromolecule>
-            <Macromolecule ID="MKK6" label="MKK6">
-                <StateVariable label="p"/>
-                <Organism name="Hs">
-                    <annotation DB="EntrezGeneID" ID="5608"/>
-                </Organism>
-            </Macromolecule>
-        </Complex>
-        <Process>
-            <Consumption refNode="MKK3_:MKK6_"/>
-            <Production refNode="MKK3_p:MKK6_p"/>
-            <Catalysis refNode="TAB1:TAB3:TAK1_p_active:TAB2_p:TRAF6_Ub"/>
-        </Process>
-        <Macromolecule ID="p38_" label="p38">
-            <StateVariable label=""/>
-            <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID="1432"/>
-            </Organism>
-        </Macromolecule>
-        <Macromolecule ID="p38_p" label="p38">
-            <StateVariable label="p"/>
-            <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID="1432"/>
-            </Organism>
-        </Macromolecule>
-        <Process>
-            <Consumption refNode="p38_"/>
-            <Production refNode="p38_p"/>
-            <Catalysis refNode="MKK3_p:MKK6_p"/>
-        </Process>
-        <Process>
-            <Consumption refNode="p38_p"/>
-            <Production refNode="p38_p-1"/>
-        </Process>
-        <Process>
-            <Consumption refNode="ATF2_"/>
-            <Production refNode="ATF2_p"/>
-            <Catalysis refNode="p38_p-1"/>
         </Process>
         <Complex ID="IkBa_:NF-kBp50:NF-kBp52:NF-kBp65">
             <Macromolecule ID="IkBa_" label="IkBa">
@@ -1037,17 +967,17 @@
                     <annotation DB="EntrezGeneID" ID="4792"/>
                 </Organism>
             </Macromolecule>
-            <Macromolecule ID="NF-kBp50" label="NF-kBp50">
+            <Macromolecule cloneref="NF-kBp50">
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="4790"/>
                 </Organism>
             </Macromolecule>
-            <Macromolecule ID="NF-kBp52" label="NF-kBp52">
+            <Macromolecule cloneref="NF-kBp52">
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="4791"/>
                 </Organism>
             </Macromolecule>
-            <Macromolecule ID="NF-kBp65" label="NF-kBp65">
+            <Macromolecule cloneref="NF-kBp65">
                 <Organism name="Hs">
                     <annotation DB="EntrezGeneID" ID="5970"/>
                 </Organism>
@@ -1107,10 +1037,10 @@
     </Compartment>
     <Compartment label="nucleus">
         <Process>
-            <Consumption refNode="JNK_p"/>
-            <Production refNode="JNK_p-1"/>
+            <Consumption refNode="MAPK8_p"/>
+            <Production refNode="MAPK8_p-1"/>
         </Process>
-        <Macromolecule ID="JNK_p-1" cloneref="JNK_p"/>
+        <Macromolecule ID="MAPK8_p-1" cloneref="MAPK8_p"/>
         <Macromolecule ID="JUN_" label="JUN">
             <StateVariable label=""/>
             <Organism name="Hs">
@@ -1126,7 +1056,7 @@
         <Process>
             <Consumption refNode="JUN_"/>
             <Production refNode="JUN_p"/>
-            <Catalysis refNode="JNK_p-1"/>
+            <Catalysis refNode="MAPK8_p-1"/>
         </Process>
         <Macromolecule ID="p38_p-1" cloneref="p38_p"/>
         <Macromolecule ID="ATF2_" label="ATF2">
@@ -1141,6 +1071,10 @@
                 <annotation DB="EntrezGeneID" ID="1386"/>
             </Organism>
         </Macromolecule>
+        <Process>
+            <Consumption refNode="p38_p"/>
+            <Production refNode="p38_p-1"/>
+        </Process>
         <Complex ID="NF-kBp50:NF-kBp52:NF-kBp65-1" cloneref="NF-kBp50:NF-kBp52:NF-kBp65"/>
         <Macromolecule ID="IRF3x2_p-2" cloneref="IRF3x2_p"/>
         <Process>
@@ -1204,7 +1138,7 @@
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="958"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND7">
@@ -1215,7 +1149,7 @@
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="958"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S7"/>
@@ -1228,7 +1162,8 @@
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3107"/>
+                <annotation DB="EntrezGeneID" ID="3133"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND8">
@@ -1239,7 +1174,8 @@
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3107"/>
+                <annotation DB="EntrezGeneID" ID="3133"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S8"/>
@@ -1307,7 +1243,7 @@
             <Logic refNode="geneIL-10"/>
             <Logic refNode="OR1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNA" label="IL-10">
+        <NucleicAcidFeature ID="mRNAIL-10" label="IL-10">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
@@ -1536,28 +1472,28 @@
             <Production refNode="mRNATNF-beta"/>
             <NecessaryStimulation refNode="AND20"/>
         </Process>
-        <NucleicAcidFeature ID="geneRANTES" label="RANTES">
+        <NucleicAcidFeature ID="geneCCL5" label="CCL5">
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6352"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND21">
-            <Logic refNode="geneRANTES"/>
+            <Logic refNode="geneCCL5"/>
             <Logic refNode="OR1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNARANTES" label="RANTES">
+        <NucleicAcidFeature ID="mRNACCL5" label="CCL5">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6352"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S21"/>
         <Process>
             <Consumption refNode="S21"/>
-            <Production refNode="mRNARANTES"/>
+            <Production refNode="mRNACCL5"/>
             <NecessaryStimulation refNode="AND21"/>
         </Process>
         <NucleicAcidFeature ID="geneTRAIL" label="TRAIL">
@@ -1588,7 +1524,12 @@
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3109"/>
+                <annotation DB="EntrezGeneID" ID="3111"/>
+                <annotation DB="EntrezGeneID" ID="3113"/>
+                <annotation DB="EntrezGeneID" ID="3115"/>
+                <annotation DB="EntrezGeneID" ID="3117"/>
+                <annotation DB="EntrezGeneID" ID="3119"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND23">
@@ -1599,7 +1540,12 @@
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3109"/>
+                <annotation DB="EntrezGeneID" ID="3111"/>
+                <annotation DB="EntrezGeneID" ID="3113"/>
+                <annotation DB="EntrezGeneID" ID="3115"/>
+                <annotation DB="EntrezGeneID" ID="3117"/>
+                <annotation DB="EntrezGeneID" ID="3119"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S23"/>
@@ -1632,52 +1578,52 @@
             <Production refNode="mRNACCL19"/>
             <NecessaryStimulation refNode="AND24"/>
         </Process>
-        <NucleicAcidFeature ID="geneMIP1-beta" label="MIP1-beta">
+        <NucleicAcidFeature ID="geneCCL4" label="CCL4">
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6351"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND25">
-            <Logic refNode="geneMIP1-beta"/>
+            <Logic refNode="geneCCL4"/>
             <Logic refNode="OR1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAMIP1-beta" label="">
+        <NucleicAcidFeature ID="mRNACCL4" label="">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6351"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S25"/>
         <Process>
             <Consumption refNode="S25"/>
-            <Production refNode="mRNAMIP1-beta"/>
+            <Production refNode="mRNACCL4"/>
             <NecessaryStimulation refNode="AND25"/>
         </Process>
-        <NucleicAcidFeature ID="geneMIP1-alpha" label="MIP1-alpha">
+        <NucleicAcidFeature ID="geneCCL3" label="CCL3">
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6348"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND26">
-            <Logic refNode="geneMIP1-alpha"/>
+            <Logic refNode="geneCCL3"/>
             <Logic refNode="OR1"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAMIP1-alpha" label="MIP1-alpha">
+        <NucleicAcidFeature ID="mRNACCL3" label="CCL3">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6348"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S26"/>
         <Process>
             <Consumption refNode="S26"/>
-            <Production refNode="mRNAMIP1-alpha"/>
+            <Production refNode="mRNACCL3"/>
             <NecessaryStimulation refNode="AND26"/>
         </Process>
         <NucleicAcidFeature ID="geneIRF3" label="IRF3">
@@ -1756,7 +1702,7 @@
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6359"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND30">
@@ -1767,7 +1713,7 @@
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6359"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S30"/>
@@ -1808,7 +1754,7 @@
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND32">
-            <Logic refNode="gene"/>
+            <Logic refNode="geneIRF7"/>
             <Logic refNode="IRF3x2_p-2"/>
         </AndNode>
         <NucleicAcidFeature ID="mRNAIRF7" label="IRF7">
@@ -1872,35 +1818,35 @@
             <Production refNode="mRNAFN-beta"/>
             <NecessaryStimulation refNode="AND34"/>
         </Process>
-        <NucleicAcidFeature ID="geneRANTES-1" label="RANTES">
+        <NucleicAcidFeature ID="geneCCL5-1" label="CCL5">
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6352"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND35">
-            <Logic refNode="geneRANTES-1"/>
+            <Logic refNode="geneCCL5-1"/>
             <Logic refNode="IRF3x2_p-2"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNARANTES-1" label="RANTES">
+        <NucleicAcidFeature ID="mRNACCL5-1" label="CCL5">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6352"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S35"/>
         <Process>
             <Consumption refNode="S35"/>
-            <Production refNode="mRNARANTES-1"/>
+            <Production refNode="mRNACCL5-1"/>
             <NecessaryStimulation refNode="AND35"/>
         </Process>
         <NucleicAcidFeature ID="geneSTAT1" label="STAT1">
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6772"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND36">
@@ -1911,7 +1857,7 @@
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6772"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S36"/>
@@ -1920,28 +1866,28 @@
             <Production refNode="mRNASTAT1"/>
             <NecessaryStimulation refNode="AND36"/>
         </Process>
-        <NucleicAcidFeature ID="geneMIP1-beta" label="MIP1-beta">
+        <NucleicAcidFeature ID="geneCCL4-1" label="CCL4">
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="6351"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND37">
-            <Logic refNode="geneMIP1-beta"/>
+            <Logic refNode="geneCCL4-1"/>
             <Logic refNode="IRF3x2_p-2"/>
         </AndNode>
-        <NucleicAcidFeature ID="mRNAMIP1-beta" label="MIP1-beta">
+        <NucleicAcidFeature ID="mRNACCL4-1" label="CCL4">
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID="3659"/>
+                <annotation DB="EntrezGeneID" ID="6351"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S37"/>
         <Process>
             <Consumption refNode="S37"/>
-            <Production refNode="mRNAMIP1-beta"/>
+            <Production refNode="mRNACCL4-1"/>
             <NecessaryStimulation refNode="AND37"/>
         </Process>
         <NucleicAcidFeature ID="geneIRF1" label="IRF1">
@@ -1972,7 +1918,7 @@
             <UnitOfInformation label="gene" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3663"/>
             </Organism>
         </NucleicAcidFeature>
         <AndNode ID="AND39">
@@ -1983,7 +1929,7 @@
             <UnitOfInformation label="mRNA" prefix="ct"/>
             <MacroModule>Outcome</MacroModule>
             <Organism name="Hs">
-                <annotation DB="EntrezGeneID" ID=""/>
+                <annotation DB="EntrezGeneID" ID="3663"/>
             </Organism>
         </NucleicAcidFeature>
         <Source ID="S39"/>
