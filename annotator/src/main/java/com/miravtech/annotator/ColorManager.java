@@ -86,6 +86,12 @@ public class ColorManager {
 			return getColor(fc, negMinFC, negMaxFC, colMinFC, colZeroNegFC);
 	}
 
+	/**
+	 * @param background The color of the background
+	 * @param choice1 The first alternative
+	 * @param choice2 The second alternative
+	 * @return One of the two alternative, whichever is more contrastant with the background.
+	 */
 	public static Color getMostContrastantColor(Color background, Color choice1, Color choice2) {
 		
 		double db = ColorManager.getDistance(background, choice1);
@@ -97,8 +103,17 @@ public class ColorManager {
 	}
 	
 	
+	/**
+	 * Returns the distance between two colors
+	 * @param c1 the first color
+	 * @param c2 the second color
+	 * @return a double.
+	 * 
+	 * The green dimension receives a 100% bonus. This is to make green more close to black rather than white.
+	 * 
+	 */
 	public static double getDistance(Color c1, Color c2) {
-		return Math.sqrt(pow2(c1.getRed() - c2.getRed()) + pow2(c1.getGreen() - c2.getGreen()) + pow2(c1.getBlue() - c2.getBlue()) );
+		return Math.sqrt(pow2(c1.getRed() - c2.getRed()) + 4*pow2(c1.getGreen() - c2.getGreen()) + pow2(c1.getBlue() - c2.getBlue()) );
 	}
 	
 	public static double pow2(double d) {
