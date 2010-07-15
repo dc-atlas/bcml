@@ -49,6 +49,7 @@ public class Main {
 	SymbolList sl;
 
 	ColorManager colorMan = new ColorManager();
+	Color ink ;
 
 	/**
 	 * @param args
@@ -171,6 +172,13 @@ public class Main {
 				.withOptionalArg().ofType(String.class).describedAs("Color")
 				.defaultsTo(prop);
 
+		prop = p.getProperty("inkColor","Black");
+		parser.accepts("inkColor",
+				"The color of the text")
+				.withOptionalArg().ofType(String.class).describedAs("Color")
+				.defaultsTo(prop);
+
+
 		try {
 			OptionSet opts = parser.parse(args);
 
@@ -222,6 +230,16 @@ public class Main {
 			if (c == null)
 				throw new Exception("Cannot build color from: " + col);
 			colorMan.setColMaxFC(c);
+			
+			col = (String) opts.valueOf("inkColor");
+			if (col.equalsIgnoreCase("auto")) {
+				ink = null;
+			} else {
+				ink = PaintNode.getColor(col);
+				if (ink == null)
+					throw new Exception("Cannot build color from: " + col);
+			}
+			
 
 			sl = new SymbolList(new FileInputStream(textFileSource));
 			colorMan.setValues(sl.values());
@@ -306,14 +324,19 @@ public class Main {
 
 	}
 
-	static void setColor(SBGNNodeType node, String color) {
+	void setColor(SBGNNodeType node, String color) {
 		if (node.getGraphic() == null)
 			node.setGraphic(new GraphicType());
 		node.getGraphic().setBgColor(color);
 		// node.getGraphic().setBorderColor(color);
 		Color crtCol = PaintNode.getColor(color);
-		String textcolor = PaintNode.toColorString(ColorManager
-				.getMostContrastantColor(crtCol, Color.WHITE, Color.BLACK));
+		String textcolor;
+		if (ink == null) {
+			textcolor = PaintNode.toColorString(ColorManager
+					.getMostContrastantColor(crtCol, Color.WHITE, Color.BLACK));			
+		} else {
+			textcolor = PaintNode.toColorString(ink);
+		}
 		node.getGraphic().setColor(textcolor);
 	}
 
