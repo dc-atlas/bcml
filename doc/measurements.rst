@@ -33,6 +33,13 @@ In case no match is found, no BCML file is produced and ``bcml_annotate`` issues
 
 The resulting BCML file can then be either manipulated (filtered, etc.) or viewed after conversion to GraphML. In the latter case, entities affected by experimental measurements will appear colored (depending on the degree of the measurement) along with their actual value. The colors can be controlled from the command line or from the configuration file.
 
+As a reference, here is an example of a BCML file where up-regulated genes were added:
+
+.. image:: images/expression.png
+    :align: center
+
+SBGN's state variable holds the fold change, in this example, so not only the state of the gene can be known, but also its associated value.
+
 Exporting measurements from a BCML file
 ---------------------------------------
 

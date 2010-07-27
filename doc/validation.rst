@@ -19,7 +19,8 @@ A validation run is triggered by running ``bcml_check`` as follows::
 
 Where ``source BCML file`` is your BCML file. Any errors will be outputted to your screen, along with a brief description of where the error occurred, or what kind of violation was encountered.
 
-``bcml_check`` will also verify that the annotations have been inserted correctly and that the terms match the controlled vocabularies of the schema.
+``bcml_check`` will also verify that the annotations have been inserted correctly and that the terms match the controlled vocabularies of the schema. 
+
 
 Viewing a BCML file
 -------------------
@@ -48,6 +49,12 @@ Lastly, you will need to export the file. You can do so by choosing "Export" fro
     :align: center
 
 It is recommended to use SVG or other vector format, which is scalable and can be converted to other formats with the appropriate software (such as the freely available `Inkscape <http://www.inkscape.org>`_). yEd offers some other exporting options, but SVG is the one with best quality. yEd provides the capability to publish the results online, by exporting to the HTML / Adobe flash format.
+
+An example section of a graphically converted BCML file will look like this:
+
+.. image:: images/representation.png
+    :align: center
+
 
 Filtering a BCML file
 ---------------------
@@ -85,6 +92,12 @@ Viewing filtered pathways
 The file produced from the filtering can be then converted to GraphML for viewing. When viewing the graphical representation, items that do not match the filter expression are shown in light gray.
 
 If a "disabled" element participates an interaction of any kind with another entity of the pathway, the interaction will be shown in blue: this indicates that with the current filter selection, the observed interaction may not have sense from a biological point of view.
+
+An example is shown in the figure below.
+
+.. image:: images/filter_representation.png
+    :align: center
+
 
 .. _exporting:
 
