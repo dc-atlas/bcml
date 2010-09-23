@@ -1,6 +1,6 @@
 .PHONY: all checksbgn graphmlconvert exporter filter annotator copy-jars setup-jar
 
-TESTFLAGS=-Dmaven.test.skip=true
+#TESTFLAGS=-Dmaven.test.skip=true
 INSTALLED_JAR_DIR=$(CURDIR)/bin
 
 EXPORTER_JAR=exporter-1.0-SNAPSHOT-jar-with-dependencies.jar
@@ -13,7 +13,7 @@ all: prep checksbgn graphmlconvert exporter filter annotator copy-jars setup-jar
 
 prep:
 	echo "Preparing..."
-	mvn clean install -Dmaven.test.skip=true
+	mvn clean install $(TESTFLAGS)
 
 checksbgn:
 	echo "Building checksbgn"
