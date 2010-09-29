@@ -1,0 +1,9 @@
+
+Copyright (C) ${year} ${user.name} <${email}>
+
+Licensed under the Test license ..
+
+License content ..
+
+
+
