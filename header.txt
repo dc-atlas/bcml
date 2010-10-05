@@ -1,5 +1,7 @@
 
-Copyright (C) ${year} ${user.name} <${email}>
+Copyright (C) ${year} ${user.name1} <${email1}>
+Copyright (C) ${year} ${user.name2} <${email2}>
+Copyright (C) ${year} ${user.name3} <${email3}>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
