@@ -513,7 +513,7 @@ public class SBGNUtils {
 				if (n instanceof ProductionArcType)
 					a.setTarget(ArrowTypeType.DELTA);
 				if (n instanceof ModulationArcType)
-					a.setTarget(ArrowTypeType.WHITE_DELTA);
+					a.setTarget(ArrowTypeType.DIAMOND);
 				if (n instanceof CatalysisArcType)
 					a.setTarget(ArrowTypeType.TRANSPARENT_CIRCLE);
 				if (n instanceof InhibitionArcType)
