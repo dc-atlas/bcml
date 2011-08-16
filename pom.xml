@@ -27,6 +27,15 @@
 	            <artifactId>maven-license-plugin</artifactId>
 	            <configuration>
 	                <header>header.txt</header>
+					<properties>
+				    	<year>2010</year>
+				    	<user.name1>Razvan Popovici</user.name1>
+				    	<email1>rp@miravtech.com</email1>
+				    	<user.name2>Luca Beltrame</user.name2>
+				    	<email2>luca.beltrame@unifi.it</email2>
+				    	<user.name3>Enrica Calura</user.name3>
+				    	<email3>enrica.calura@gmail.com</email3>
+				  	</properties>	                
 	            </configuration>
 	        </plugin>
         
