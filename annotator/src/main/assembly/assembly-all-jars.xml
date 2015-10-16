@@ -35,6 +35,10 @@
   <fileSets>
     <fileSet>
       <!--  directory>${project.build.outputDirectory}</directory -->
+		<useDefaultExcludes>false</useDefaultExcludes>
+      	<excludes>
+        	<exclude>**/target/**</exclude>
+      	</excludes>
     </fileSet>
   </fileSets>
 </assembly>
